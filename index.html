@@ -242,7 +242,8 @@
     </form>
 
     <script>
-        const dataUrl = 'https://tior.netlify.app/data.json';
+	    fetch('data.json')
+        const dataUrl = 'data.json';
         async function fetchData() {
             try {
                 const response = await fetch(dataUrl);
@@ -253,9 +254,7 @@
                 return null;
             }
         }
-		window.addEventListener('resize', () => {
-			document.querySelectorAll('#routeCalcForm #targetTracker #target, #routeCalcForm #sourceTracker #source').forEach(resizeText);
-		});
+
         window.addEventListener('load', async function() {
             const data = await fetchData();
             if (!data) return;
