@@ -144,7 +144,7 @@
         margin-top: 30px;
         color: var(--light);
         font-size: 13px;
-        max-height: calc(100vh - 200px);
+        max-height: calc(100vh - 250px);
         overflow: auto;
         line-height: 1.6;
         text-align: center;
@@ -182,6 +182,7 @@
         transform: translateX(-50%);
         max-height: 320px;
         overflow: hidden;
+        font-size: 16px;
         background: #f9f9f9;
         padding: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -203,7 +204,11 @@
         white-space: nowrap;
         min-width: max-content;
       }
-
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, auto));
+        gap: 0px;
+      }
       #gridContainer div.border {
         border: 1px solid #000;
       }
@@ -225,11 +230,18 @@
         #routeCalcForm #targetTracker button{
           font-size: 13px;
         }
+        #gridContainer {
+          font-size: 13px;
+        }
       }
+
       @media (max-width: 720px) {
         #routeCalcForm #targetTracker #target,
         #routeCalcForm #sourceTracker #source {
           font-size: 14px;
+        }
+        .grid-container {
+          grid-template-columns: repeat(auto-fit, minmax(120px, auto));
         }
       }
 }
@@ -333,9 +345,7 @@
         if (buttonId === 'target') uniqueKeys.unshift('To');
 
         const container = document.createElement('div');
-        container.style.display = 'grid';
-        container.style.gridTemplateColumns = 'repeat(auto-fit, minmax(150px, auto))';
-        container.style.gap = '0px';
+        container.className = 'grid-container';
 
         uniqueKeys.forEach(key => {
           const item = document.createElement('div');
