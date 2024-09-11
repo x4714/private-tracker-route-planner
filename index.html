@@ -41,13 +41,13 @@
         padding-top: 15px;
         font-size: 16px;
         text-align: center;
-        max-width: 400px;
+        max-width: 30vw;
         height: 60px;
         white-space: normal;
         overflow: hidden;
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3; /* Limit to 2 lines */
+        -webkit-line-clamp: 3;
         text-overflow: ellipsis;
         margin: 0 auto;
       }
@@ -56,18 +56,22 @@
       #routeCalcForm #targetTracker {
         position: absolute;
         top: 50px;
-        width: 240px;
+        width: 12vw;
+        min-width: 100px;
         display: flex;
         flex-direction: column;
+        z-index: 6000;
         justify-content: space-between;
       }
 
       #routeCalcForm #sourceTracker {
-        left: calc(50% - 420px);
+        left: calc(max(110px, 50% - 375px));
+        transform: translateX(-50%);
       }
 
       #routeCalcForm #targetTracker {
-        left: calc(50% + 180px);
+        right: calc(max(110px, 50% - 375px));
+        transform: translateX(+50%);
       }
 
       #routeCalcForm #targetTracker #target,
@@ -78,7 +82,6 @@
         font-weight: bold;
         font-family: inherit;
         cursor: pointer;
-        z-index: 6000;
         overflow: hidden;
         white-space: nowrap;
       }
@@ -108,14 +111,18 @@
       }
 
       #prevroute {
-        left: calc(50% - 470px);
+        left: calc(max(25px, 50% - 520px));
+        transform: translateX(-50%);
       }
 
       #nextroute {
-        left: calc(50% + 430px);
+        right: calc(max(25px, 50% - 520px));
+        transform: translateX(+50%);
       }
+
       table {
-        width: 960px;
+        width: 95vw;
+        max-width: 1080px;
         margin: 0 auto;
         text-align: left;
         border-collapse: collapse;
@@ -167,7 +174,8 @@
       #gridContainer {
         display: none;
         position: absolute;
-        width: 800px;
+        width: 90vw;
+        max-width: 960px;
         top: 180px;
         left: 50%;
         transform: translateX(-50%);
@@ -198,6 +206,8 @@
       #gridContainer div.border {
         border: 1px solid #000;
       }
+
+}
   </style>
 </head>
 <body>
@@ -224,7 +234,7 @@
   </form>
 
   <script>
-    const dataUrl = 'https://raw.githubusercontent.com/ti-or/ti-or.github.io/main/data';
+    const dataUrl = 'data';
     async function fetchData() {
       try {
         const response = await fetch(dataUrl);
@@ -263,6 +273,13 @@
 
       document.getElementById('nextroute').addEventListener('click', () => {
         showRoute(1);
+      });
+      
+      document.addEventListener('click', (event) => {
+        const gridContainer = document.getElementById('gridContainer');
+        if (gridContainer.style.display === 'block' && !gridContainer.contains(event.target) && !['source', 'target'].includes(event.target.id)) {
+          gridContainer.style.display = 'none';
+        }
       });
       
       let allRoutes = [];
@@ -323,9 +340,11 @@
         const resultDescription = document.getElementById('routeText');
         const prevRouteButton = document.getElementById('prevroute');
         const nextRouteButton = document.getElementById('nextroute');
+        const resultFooter = document.getElementById('routeFooter');
 
         resultTitle.innerText = '';
         resultDescription.innerHTML = '';
+        resultFooter.innerText = '';
         prevRouteButton.style.display = 'none';
         nextRouteButton.style.display = 'none';
 
@@ -460,7 +479,7 @@
             let tableHTML = `
               <table>
                 <colgroup>
-                  <col style="width: 260px;" />
+                  <col style="width: 240px;" />
                   <col />
                 </colgroup>
                 <tr>
