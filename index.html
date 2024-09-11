@@ -1,536 +1,491 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrackersInfo official_recruitments</title>
-    <style>
-			#routeCalcForm {
-				--light: hsl(0, 0%, 100%);
-				--background: linear-gradient(to right bottom, hsl(0, 0%, 0%), hsl(0, 30%, 30%));
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				box-sizing: border-box;
-				overflow: hidden;
-				background: var(--background);
-				padding: 20px;
-				user-select: none;
-				z-index: 9999;
-			}
-			#routeCalcForm label {
-				display: block;
-				margin-bottom: 5px;
-			}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrackersInfo official_recruitments</title>
+  <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
 
-			#routeCalcForm select {
-				background: transparent;
-				color: var(--light);
-			}
+      #routeCalcForm {
+        --light: hsl(0, 0%, 100%);
+        --background: linear-gradient(to right bottom, hsl(0, 0%, 0%), hsl(0, 30%, 30%));
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        box-sizing: border-box;
+        overflow: hidden;
+        background: var(--background);
+        user-select: none;
+      }
 
-			#routeCalcForm button {
-				padding: 16px 16px;
-				color: var(--light);
-				background: transparent;
-				font-family: inherit;
-				letter-spacing: 2px;
-				cursor: pointer;
-			}
+      #routeContainer {
+        display: flex;
+        margin-top: 25px;
+        align-items: center;
+        color: var(--light);
+        background: transparent;
+        justify-content: space-between;
+        padding: 10px;
+        position: relative;
+      }
 
-			#routeCalcForm #result {
-				margin-top: 10px;
-			}
+      #routeTitle {
+        padding-top: 15px;
+        font-size: 16px;
+        text-align: center;
+        max-width: 450px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0 auto;
+      }
 
-			#routeContainer {
-				display: flex;
-				margin-top: 25px;
-				align-items: center;
-				justify-content: space-between;
-				padding: 10px;
-				position: relative;
-			}
+      #routeCalcForm #sourceTracker,
+      #routeCalcForm #targetTracker {
+        position: absolute;
+        top: 50px;
+        width: 240px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
 
-			#routeTitle {
-				color: var(--light);
-				background: transparent;
-				padding-top: 15px;
-				font-size: 16px;
-				text-align: center;
-			}
+      #routeCalcForm #sourceTracker {
+        left: calc(50% - 470px);
+      }
 
-			#routeCalcForm #sourceTracker {
-				position: absolute;
-				top: 50px;
-				left: calc(50% - 470px);
-				width: 240px;
-				display: flex;
-				flex-direction: column;
-				justify-content: space-between;
-			}
+      #routeCalcForm #targetTracker {
+        left: calc(50% + 230px);
+      }
 
-			#routeCalcForm #targetTracker {
-				position: absolute;
-				top: 50px;
-				left: calc(50% + 230px);
-				width: 240px;
-				display: flex;
-				flex-direction: column;
-				justify-content: space-between;
-			}
+      #routeCalcForm #targetTracker #target,
+      #routeCalcForm #sourceTracker #source {
+        margin-top: 0px;
+        padding: 10px 10px 60px 10px;
+        font-size: 24px;
+        font-weight: bold;
+        font-family: inherit;
+        cursor: pointer;
+        z-index: 6000;
+        overflow: hidden;
+        white-space: nowrap;
+      }
 
-            #routeCalcForm #targetTracker #target,
-            #routeCalcForm #sourceTracker #source {
-                margin-top: 0px;
-                padding: 10px 10px 60px 10px;
-                color: var(--light);
-                background: transparent;
-                font-size: 24px;
-                font-weight: bold;
-                font-family: inherit;
-                letter-spacing: 2px;
-                transition: .2s;
-                cursor: pointer;
-                z-index: 6000;
-				overflow: hidden;
-				white-space: nowrap;
-            }
+      #routeCalcForm #sourceTracker button,
+      #routeCalcForm #targetTracker button{
+        margin-top: -50px;
+        border: none;
+        padding: 4px;
+        color: var(--light);
+        background: transparent;
+        font-size: 16px;
+        font-family: inherit;
+        cursor: pointer;
+      }
 
-			#routeCalcForm #sourceTracker button,
-            #routeCalcForm #targetTracker button{
-				margin-top: -50px;
-				border: none;
-				padding: 4px;
-				color: var(--light);
-				background: transparent;
-				font-size: 16px;
-				font-family: inherit;
-				letter-spacing: 2px;
-				transition: .2s;
-				cursor: pointer;
-			}
+      #prevroute, #nextroute {
+        display: none;
+        position: absolute;
+        top: 10px;
+        padding: 8px 8px;
+        height: 22px;
+        width: 40px;
+        font-size: 48px;
+        letter-spacing: 1px;
+        cursor: pointer;
+      }
 
-			#prevroute, #nextroute {
-				display: none;
-				position: absolute;
-				top: 0px;
-				padding: 8px 8px;
-                height: 22px;
-				width: 40px;
-				color: var(--light);
-				background: transparent;
-				font-size: 48px;
-				font-family: inherit;
-				letter-spacing: 1px;
-				cursor: pointer;
-			}
+      #prevroute {
+        left: calc(50% - 520px);
+      }
 
-			#prevroute {
-				left: calc(50% - 520px);
-			}
+      #nextroute {
+        left: calc(50% + 480px);
+      }
+      table {
+        width: 960px;
+        margin: 0 auto;
+        text-align: left;
+        border-collapse: collapse;
+        background-color: rgba(0, 0, 0, 0.2);
+      }
 
-			#nextroute {
-				left: calc(50% + 480px);
-			}
-			table {
-				width: 960px;
-				margin: 0 auto;
-				border-collapse: collapse;
-				background-color: rgba(0, 0, 0, 0.2);
-			}
+      .table-container {
+        margin-bottom: 10px;
+      }
 
-			.table-container {
-				margin-bottom: 10px;
-			}
+      td {
+        padding: 8px;
+        border: none;
+      }
 
-			td {
-				padding: 8px;
-				border: none;
-			}
+      #routeText {
+        padding: 10px;
+        margin-top: 30px;
+        color: var(--light);
+        font-size: 13px;
+        max-height: calc(100vh - 200px);
+        overflow: auto;
+        line-height: 1.6;
+        text-align: center;
+      }
 
-			.left-align {
-				text-align: left;
-			}
+      #routeText::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
 
-			.right-align {
-				text-align: left;
-			}
-			#routeText {
-				padding: 10px;
-				margin-top: 10px;
-				color: var(--light);
-				font-size: 13px;
-				max-height: 400px;
-				overflow: auto;
-				line-height: 1.6;
-				text-align: center;
-			}
+      #routeText::-webkit-scrollbar-track {
+        background: transparent;
+      }
 
-			#routeText::-webkit-scrollbar {
-				width: 0;
-				height: 0;
-			}
+      #routeText::-webkit-scrollbar-thumb {
+        background: transparent;
+      }
 
-			#routeText::-webkit-scrollbar-track {
-				background: transparent;
-			}
+      #gridContainer {
+        display: none;
+        position: absolute;
+        width: 800px;
+        top: 180px;
+        left: 50%;
+        transform: translateX(-50%);
+        max-height: 320px;
+        overflow: hidden;
+        background: #f9f9f9;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        z-index: 10000;
+      }
 
-			#routeText::-webkit-scrollbar-thumb {
-				background: transparent;
-			}
+      #gridContainer::-webkit-scrollbar {
+        display: none;
+      }
 
-			#gridContainer {
-				display: none;
-				position: absolute;
-				width: 800px;
-				top: 180px;
-				left: 50%;
-				transform: translateX(-50%);
-                max-height: 320px;
-                overflow: hidden;
-				background: #f9f9f9;
-				padding: 10px;
-				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-				border-radius: 8px;
-                overflow-y: auto;
-				z-index: 10000;
-			}
+      #gridContainer div {
+        padding: 12px;
+        background: #fff;
+        text-align: center;
+        cursor: pointer;
+        white-space: nowrap;
+        min-width: max-content;
+      }
 
-            #gridContainer::-webkit-scrollbar {
-                display: none;
-            }
-
-            #gridContainer {
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-            }
-
-			#gridContainer div {
-				padding: 12px;
-				background: #fff;
-				text-align: center;
-				cursor: pointer;
-                white-space: nowrap;
-                min-width: max-content;
-			}
-
-            #gridContainer div.border {
-                border: 1px solid #000;
-            }
-    </style>
+      #gridContainer div.border {
+        border: 1px solid #000;
+      }
+  </style>
 </head>
 <body>
-    <form id="routeCalcForm" style="display: block;">
-        <div id="sourceTracker">
-			<button type="button" id="source">From</button>
-            <button type="button" id="sourceAbbr">Any</button>
-            
-        </div>
-        <div id="targetTracker">
-		    <button type="button" id="target">To</button>
-            <button type="button" id="targetAbbr">Any</button>
-        
-        </div>
-        <div id="routeContainer">
-            <div id="routeTitle"></div>
-            <div id="prevroute">&#8249;&#8249;</div>
-            <div id="nextroute">&#8250;&#8250;</div>
-        </div>
-        <div id="routeText"></div>
-        <div id="gridContainer"></div>
-    </form>
+  <form id="routeCalcForm" style="display: block;">
+    <div id="sourceTracker">
+      <button type="button" id="source">From</button>
+      <button type="button" id="sourceAbbr">Any</button>
+      
+    </div>
+    <div id="targetTracker">
+      <button type="button" id="target">To</button>
+      <button type="button" id="targetAbbr">Any</button>
+    
+    </div>
+    <div id="routeContainer">
+      <div id="routeTitle"></div>
+      <div id="prevroute">&#8249;&#8249;</div>
+      <div id="nextroute">&#8250;&#8250;</div>
+    </div>
+    <div id="routeText"></div>
+    <div id="gridContainer"></div>
+  </form>
 
-    <script>
-        const dataUrl = 'data';
-        async function fetchData() {
-            try {
-                const response = await fetch(dataUrl);
-                if (!response.ok) throw new Error('Network response was not ok');
-                return await response.json();
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                return null;
+  <script>
+    const dataUrl = 'https://raw.githubusercontent.com/ti-or/ti-or.github.io/main/data';
+    async function fetchData() {
+      try {
+        const response = await fetch(dataUrl);
+        if (!response.ok) throw new Error('Network response was not ok');
+        return await response.json();
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        return null;
+      }
+    }
+
+    window.addEventListener('load', async function() {
+      const data = await fetchData();
+      if (!data) return;
+
+      const { routeInfo, unlockInviteClass, abbrList } = data;
+
+      const style = document.createElement('style');
+      style.textContent = `
+      `;
+      document.head.appendChild(style);
+
+      const inviteForm = document.getElementById('routeCalcForm');
+
+      document.getElementById('source').addEventListener('click', () => {
+        toggleGrid('source');
+      });
+
+      document.getElementById('target').addEventListener('click', () => {
+        toggleGrid('target');
+      });
+
+      document.getElementById('prevroute').addEventListener('click', () => {
+        showRoute(-1);
+      });
+
+      document.getElementById('nextroute').addEventListener('click', () => {
+        showRoute(1);
+      });
+      
+      let allRoutes = [];
+      let currentRouteIndex = 0;
+
+      function toggleGrid(buttonId) {
+        const gridContainer = document.getElementById('gridContainer');
+        if (gridContainer.style.display === 'none' || gridContainer.style.display === '') {
+          populateGrid(buttonId);
+          gridContainer.style.display = 'block';
+        } else {
+          gridContainer.style.display = 'none';
+        }
+      }
+
+      function populateGrid(buttonId) {
+        const gridContainer = document.getElementById('gridContainer');
+        gridContainer.innerHTML = '';
+        const uniqueKeys = Array.from(new Set(
+          Object.keys(routeInfo)
+          .flatMap(startKey => [startKey, ...Object.keys(routeInfo[startKey])])
+        ))
+        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
+        if (buttonId === 'source') uniqueKeys.unshift('From');
+        if (buttonId === 'target') uniqueKeys.unshift('To');
+
+        const container = document.createElement('div');
+        container.style.display = 'grid';
+        container.style.gridTemplateColumns = 'repeat(auto-fit, minmax(150px, auto))';
+        container.style.gap = '0px';
+
+        uniqueKeys.forEach(key => {
+          const item = document.createElement('div');
+          item.textContent = key;
+          if (key === 'From' || key === 'To') item.classList.add('border');
+          item.addEventListener('click', () => {
+            if (buttonId === 'source') {
+              setTextContent('source', key);
+              setTextContent('sourceAbbr', key === 'From' ? 'Any' : abbrList[key] || key);
+            } else {
+              setTextContent('target', key);
+              setTextContent('targetAbbr', key === 'To' ? 'Any' : abbrList[key] || key);
             }
+            gridContainer.style.display = 'none';
+            calculateRoute();
+          });
+          container.appendChild(item);
+        });
+
+        gridContainer.appendChild(container);
+      }
+
+      function calculateRoute() {
+
+        const routeContainer = document.getElementById('routeContainer');
+        const resultTitle = document.getElementById('routeTitle');
+        const resultDescription = document.getElementById('routeText');
+        const prevRouteButton = document.getElementById('prevroute');
+        const nextRouteButton = document.getElementById('nextroute');
+
+        resultTitle.innerText = '';
+        resultDescription.innerHTML = '';
+        prevRouteButton.style.display = 'none';
+        nextRouteButton.style.display = 'none';
+
+        const start = document.getElementById('source').textContent.trim();
+        const end = document.getElementById('target').textContent.trim();
+
+        if (start === end) {
+          resultTitle.innerText = 'One account per lifetime!';
+          resultDescription.innerText = '';
+          routeContainer.style.display = 'block';
+          return;
         }
 
-        window.addEventListener('load', async function() {
-            const data = await fetchData();
-            if (!data) return;
+        if (start === 'From') {
+          if (end === 'To') {
+            resultTitle.innerText = '';
+            resultDescription.innerText = '';
+            routeContainer.style.display = 'block';
+            return;
+          }
+          allRoutes = Object.keys(routeInfo)
+            .filter(node => routeInfo[node] && routeInfo[node][end])
+            .map(node => [node, end]);
+        } else if (end === 'To') {
+          if (!routeInfo[start]) {
+            resultTitle.innerText = 'No official recruitment';
+            resultDescription.innerText = '';
+            routeContainer.style.display = 'block';
+            return;
+          }
+          allRoutes = Object.keys(routeInfo[start])
+            .map(node => [start, node])
+            .filter(([from, to]) => routeInfo[from] && routeInfo[from][to])
+            .map(([from, to]) => [from, to]);
+        } else {
+          if (!routeInfo[start]) {
+            resultTitle.innerText = 'No official recruitment';
+            resultDescription.innerText = '';
+            routeContainer.style.display = 'block';
+            return;
+          }
+          allRoutes = findAllRoutes(start, end);
+        }
 
-            const { routeInfo, unlockInviteClass, abbrList } = data;
+        if (allRoutes.length === 0) {
+          resultTitle.innerText = 'No results found';
+          resultDescription.innerText = '';
+          routeContainer.style.display = 'block';
+          return;
+        }
 
-            const style = document.createElement('style');
-            style.textContent = `
-            `;
-            document.head.appendChild(style);
-
-            const inviteForm = document.getElementById('routeCalcForm');
-
-            document.getElementById('source').addEventListener('click', () => {
-                toggleGrid('source');
-            });
-
-            document.getElementById('target').addEventListener('click', () => {
-                toggleGrid('target');
-            });
-
-            document.getElementById('prevroute').addEventListener('click', () => {
-                showRoute(-1);
-            });
-
-            document.getElementById('nextroute').addEventListener('click', () => {
-                showRoute(1);
-            });
-			
-            let allRoutes = [];
-            let currentRouteIndex = 0;
-
-            function toggleGrid(buttonId) {
-                const gridContainer = document.getElementById('gridContainer');
-                if (gridContainer.style.display === 'none' || gridContainer.style.display === '') {
-                    populateGrid(buttonId);
-                    gridContainer.style.display = 'block';
-                } else {
-                    gridContainer.style.display = 'none';
-                }
+        allRoutes = allRoutes.sort((a, b) => {
+          const timeA = a.reduce((sum, node, index) => {
+            if (index < a.length - 1 && routeInfo[node] && routeInfo[node][a[index + 1]]) {
+              return sum + getMaxDays(node, a[index + 1]);
             }
+            return sum;
+          }, 0);
 
-            function populateGrid(buttonId) {
-                const gridContainer = document.getElementById('gridContainer');
-                gridContainer.innerHTML = '';
-                const uniqueKeys = Array.from(new Set(
-                    Object.keys(routeInfo)
-                    .flatMap(startKey => [startKey, ...Object.keys(routeInfo[startKey])])
-                ))
-                .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-
-                if (buttonId === 'source') uniqueKeys.unshift('From');
-                if (buttonId === 'target') uniqueKeys.unshift('To');
-
-                const container = document.createElement('div');
-                container.style.display = 'grid';
-                container.style.gridTemplateColumns = 'repeat(auto-fit, minmax(150px, auto))';
-                container.style.gap = '0px';
-
-                uniqueKeys.forEach(key => {
-                    const item = document.createElement('div');
-                    item.textContent = key;
-                    if (key === 'From' || key === 'To') item.classList.add('border');
-                    item.addEventListener('click', () => {
-                        if (buttonId === 'source') {
-                            setTextContent('source', key);
-                            setTextContent('sourceAbbr', key === 'From' ? 'Any' : abbrList[key] || key);
-                        } else {
-                            setTextContent('target', key);
-                            setTextContent('targetAbbr', key === 'To' ? 'Any' : abbrList[key] || key);
-                        }
-                        gridContainer.style.display = 'none';
-                        calculateRoute();
-                    });
-                    container.appendChild(item);
-                });
-
-                gridContainer.appendChild(container);
+          const timeB = b.reduce((sum, node, index) => {
+            if (index < b.length - 1 && routeInfo[node] && routeInfo[node][b[index + 1]]) {
+              return sum + getMaxDays(node, b[index + 1]);
             }
+            return sum;
+          }, 0);
 
-			function calculateRoute() {
-
-				const routeContainer = document.getElementById('routeContainer');
-				const resultTitle = document.getElementById('routeTitle');
-				const resultDescription = document.getElementById('routeText');
-				const prevRouteButton = document.getElementById('prevroute');
-				const nextRouteButton = document.getElementById('nextroute');
-
-				resultTitle.innerText = '';
-				resultDescription.innerHTML = '';
-				prevRouteButton.style.display = 'none';
-				nextRouteButton.style.display = 'none';
-
-				const start = document.getElementById('source').textContent.trim();
-				const end = document.getElementById('target').textContent.trim();
-
-				if (start === end) {
-					resultTitle.innerText = 'One account per lifetime!';
-					resultDescription.innerText = '';
-					routeContainer.style.display = 'block';
-					return;
-				}
-
-				if (start === 'From') {
-					if (end === 'To') {
-						resultTitle.innerText = '';
-						resultDescription.innerText = '';
-						routeContainer.style.display = 'block';
-						return;
-					}
-					allRoutes = Object.keys(routeInfo)
-						.filter(node => routeInfo[node] && routeInfo[node][end])
-						.map(node => [node, end]);
-				} else if (end === 'To') {
-					if (!routeInfo[start]) {
-						resultTitle.innerText = 'No official recruitment';
-						resultDescription.innerText = '';
-						routeContainer.style.display = 'block';
-						return;
-					}
-					allRoutes = Object.keys(routeInfo[start])
-						.map(node => [start, node])
-						.filter(([from, to]) => routeInfo[from] && routeInfo[from][to])
-						.map(([from, to]) => [from, to]);
-				} else {
-					if (!routeInfo[start]) {
-						resultTitle.innerText = 'No official recruitment';
-						resultDescription.innerText = '';
-						routeContainer.style.display = 'block';
-						return;
-					}
-					allRoutes = findAllRoutes(start, end);
-				}
-
-				if (allRoutes.length === 0) {
-					resultTitle.innerText = 'No results found';
-					resultDescription.innerText = '';
-					routeContainer.style.display = 'block';
-					return;
-				}
-
-				allRoutes = allRoutes.sort((a, b) => {
-					const timeA = a.reduce((sum, node, index) => {
-						if (index < a.length - 1 && routeInfo[node] && routeInfo[node][a[index + 1]]) {
-							return sum + getMaxDays(node, a[index + 1]);
-						}
-						return sum;
-					}, 0);
-
-					const timeB = b.reduce((sum, node, index) => {
-						if (index < b.length - 1 && routeInfo[node] && routeInfo[node][b[index + 1]]) {
-							return sum + getMaxDays(node, b[index + 1]);
-						}
-						return sum;
-					}, 0);
-
-					return timeA - timeB;
-				});
-
-				currentRouteIndex = 0;
-				showRoute(0);
-			}
-
-			function findAllRoutes(start, end) {
-				const result = [];
-				const stack = [[start, [start]]];
-				const visited = new Set();
-
-				while (stack.length) {
-					const [node, route] = stack.pop();
-
-					if (node === end) {
-						result.push(route);
-						continue;
-					}
-
-					visited.add(node);
-
-					for (const [next, _] of Object.entries(routeInfo[node] || {})) {
-						if (!route.includes(next) && !visited.has(next)) {
-							stack.push([next, [...route, next]]);
-						}
-					}
-				}
-
-				return result;
-			}
-
-			function showRoute(direction) {
-				if (allRoutes.length === 0) return;
-
-				currentRouteIndex = (currentRouteIndex + direction + allRoutes.length) % allRoutes.length;
-				const route = allRoutes[currentRouteIndex];
-				const routeContainer = document.getElementById('routeContainer');
-				const resultTitle = document.getElementById('routeTitle');
-				const resultDescription = document.getElementById('routeText');
-				const prevRouteButton = document.getElementById('prevroute');
-				const nextRouteButton = document.getElementById('nextroute');
-				const displayRoute = `${route.join(' -> ')}`;
-				const totalRoutes = allRoutes.length;
-				const routeCountText = `Route ${currentRouteIndex + 1} of ${totalRoutes}`;
-
-				resultTitle.innerText = `${displayRoute}\n${routeCountText}\nTotal ${route.reduce((sum, node, index) => {
-				if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
-					return sum + getMaxDays(node, route[index + 1]);
-				}
-				return sum;
-				}, 0)} days`;
-
-				const details = route.map((node, index) => {
-					if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
-						const nextNode = route[index + 1];
-						const maxDays = getMaxDays(node, nextNode);
-						const [time, requirement, lastActivity] = routeInfo[node][nextNode];
-						const formattedDate = formatDate(lastActivity);
-
-						let tableHTML = `
-							<table>
-								<colgroup>
-									<col style="width: 240px;" />
-									<col />
-								</colgroup>
-								<tr>
-									<td class="left-align">${node} -> ${nextNode}</td>
-									<td class="right-align">${maxDays} days</td>
-								</tr>
-								<tr>
-									<td class="left-align">Class for invite forum</td>
-									<td class="right-align">${unlockInviteClass[node] ? unlockInviteClass[node][1] : ''}</td>
-								</tr>
-								<tr>
-									<td class="left-align">Requirements</td>
-									<td class="right-align">${requirement ? requirement : ''}</td>
-								</tr>
-								<tr>
-									<td class="left-align">Last time checked</td>
-									<td class="right-align">${formattedDate}</td>
-								</tr>
-							</table>
-						`;
-						return `<div class="table-container">${tableHTML}</div>`;
-					}
-					return '';
-				}).join('');
-
-				resultDescription.innerHTML = details;
-
-				routeContainer.style.display = 'block';
-				prevRouteButton.style.display = currentRouteIndex === 0 ? 'none' : 'inline';
-				nextRouteButton.style.display = currentRouteIndex === allRoutes.length - 1 ? 'none' : 'inline';
-			}
-
-			function setTextContent(id, text) {
-				document.getElementById(id).textContent = text;
-			}
-
-			function formatDate(dateString) {
-				const year = Math.floor(dateString / 100);
-				const month = dateString % 100;
-
-				const months = [
-					'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-					'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-				];
-
-				const monthName = months[month - 1];
-
-				return `${monthName} ${2000 + year}`;
-			}
-
-			function getMaxDays(start, end) {
-				const days1 = routeInfo[start][end][0];
-				const days2 = unlockInviteClass[start][0];
-
-				return Math.max(days1, days2);
-			}
+          return timeA - timeB;
         });
-    </script>
+
+        currentRouteIndex = 0;
+        showRoute(0);
+      }
+
+      function findAllRoutes(start, end) {
+        const result = [];
+        const stack = [[start, [start]]];
+        const visited = new Set();
+
+        while (stack.length) {
+          const [node, route] = stack.pop();
+
+          if (node === end) {
+            result.push(route);
+            continue;
+          }
+
+          visited.add(node);
+
+          for (const [next, _] of Object.entries(routeInfo[node] || {})) {
+            if (!route.includes(next) && !visited.has(next)) {
+              stack.push([next, [...route, next]]);
+            }
+          }
+        }
+
+        return result;
+      }
+
+      function showRoute(direction) {
+        if (allRoutes.length === 0) return;
+
+        currentRouteIndex = (currentRouteIndex + direction + allRoutes.length) % allRoutes.length;
+        const route = allRoutes[currentRouteIndex];
+        const routeContainer = document.getElementById('routeContainer');
+        const resultTitle = document.getElementById('routeTitle');
+        const resultDescription = document.getElementById('routeText');
+        const prevRouteButton = document.getElementById('prevroute');
+        const nextRouteButton = document.getElementById('nextroute');
+        const displayRoute = `${route.join(' -> ')}`;
+        const routeTitleElement = document.getElementById('routeTitle');
+        routeTitleElement.textContent = displayRoute;
+        routeTitleElement.title = displayRoute;
+        const totalRoutes = allRoutes.length;
+        const routeCountText = `Route ${currentRouteIndex + 1} of ${totalRoutes}`;
+
+        resultTitle.innerText = `${displayRoute}\n${routeCountText} Total ${route.length - 2} transfer(s) ${route.reduce((sum, node, index) => {
+        if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
+          return sum + getMaxDays(node, route[index + 1]);
+        }
+        return sum;
+        }, 0)} day(s)`;
+
+        const details = route.map((node, index) => {
+          if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
+            const nextNode = route[index + 1];
+            const maxDays = getMaxDays(node, nextNode);
+            const [time, requirement, lastActivity] = routeInfo[node][nextNode];
+
+            let tableHTML = `
+              <table>
+                <colgroup>
+                  <col style="width: 260px;" />
+                  <col />
+                </colgroup>
+                <tr>
+                  <td>${node} -> ${nextNode}</td>
+                  <td>${maxDays} days</td>
+                </tr>
+                <tr>
+                  <td>Class for invite forum</td>
+                  <td>${unlockInviteClass[node] ? unlockInviteClass[node][1] : ''}</td>
+                </tr>
+                <tr>
+                  <td>Requirements</td>
+                  <td>${requirement ? requirement : ''}</td>
+                </tr>
+                <tr>
+                  <td>Last time checked</td>
+                  <td>${lastActivity}</td>
+                </tr>
+              </table>
+            `;
+            return `<div class="table-container">${tableHTML}</div>`;
+          }
+          return '';
+        }).join('');
+
+        resultDescription.innerHTML = details;
+
+        routeContainer.style.display = 'block';
+        prevRouteButton.style.display = currentRouteIndex === 0 ? 'none' : 'inline';
+        nextRouteButton.style.display = currentRouteIndex === allRoutes.length - 1 ? 'none' : 'inline';
+      }
+
+      function setTextContent(id, text) {
+        document.getElementById(id).textContent = text;
+      }
+
+      function getMaxDays(start, end) {
+        const days1 = (routeInfo[start] && routeInfo[start][end] && routeInfo[start][end][0]) || 0;
+        const days2 = (unlockInviteClass[start] && unlockInviteClass[start][0]) || 0;
+
+        return Math.max(days1, days2);
+      }
+    });
+  </script>
 </body>
 </html>
