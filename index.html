@@ -41,9 +41,13 @@
         padding-top: 15px;
         font-size: 16px;
         text-align: center;
-        max-width: 450px;
-        white-space: nowrap;
+        max-width: 400px;
+        height: 60px;
+        white-space: normal;
         overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3; /* Limit to 2 lines */
         text-overflow: ellipsis;
         margin: 0 auto;
       }
@@ -59,11 +63,11 @@
       }
 
       #routeCalcForm #sourceTracker {
-        left: calc(50% - 470px);
+        left: calc(50% - 420px);
       }
 
       #routeCalcForm #targetTracker {
-        left: calc(50% + 230px);
+        left: calc(50% + 180px);
       }
 
       #routeCalcForm #targetTracker #target,
@@ -104,11 +108,11 @@
       }
 
       #prevroute {
-        left: calc(50% - 520px);
+        left: calc(50% - 470px);
       }
 
       #nextroute {
-        left: calc(50% + 480px);
+        left: calc(50% + 430px);
       }
       table {
         width: 960px;
@@ -133,6 +137,15 @@
         color: var(--light);
         font-size: 13px;
         max-height: calc(100vh - 200px);
+        overflow: auto;
+        line-height: 1.6;
+        text-align: center;
+      }
+      
+      #routeFooter {
+        padding: 8px;
+        color: var(--light);
+        font-size: 16px;
         overflow: auto;
         line-height: 1.6;
         text-align: center;
@@ -203,8 +216,10 @@
       <div id="routeTitle"></div>
       <div id="prevroute">&#8249;&#8249;</div>
       <div id="nextroute">&#8250;&#8250;</div>
+      <div id="routeText"></div>
+      <div id="routeFooter"></div>
     </div>
-    <div id="routeText"></div>
+
     <div id="gridContainer"></div>
   </form>
 
@@ -421,18 +436,21 @@
         const nextRouteButton = document.getElementById('nextroute');
         const displayRoute = `${route.join(' -> ')}`;
         const routeTitleElement = document.getElementById('routeTitle');
+        const resultFooter = document.getElementById('routeFooter');
         routeTitleElement.textContent = displayRoute;
         routeTitleElement.title = displayRoute;
         const totalRoutes = allRoutes.length;
         const routeCountText = `Route ${currentRouteIndex + 1} of ${totalRoutes}`;
 
-        resultTitle.innerText = `${displayRoute}\n${routeCountText} Total ${route.length - 2} transfer(s) ${route.reduce((sum, node, index) => {
+        resultTitle.innerText = `${displayRoute}`;
+        
+        resultFooter.innerText = `${routeCountText} Total ${route.length - 2} transfer(s) ${route.reduce((sum, node, index) => {
         if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
           return sum + getMaxDays(node, route[index + 1]);
         }
         return sum;
         }, 0)} day(s)`;
-
+        
         const details = route.map((node, index) => {
           if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
             const nextNode = route[index + 1];
