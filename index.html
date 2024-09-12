@@ -10,11 +10,11 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
+        --light: hsl(0, 0%, 100%);
+        --background: linear-gradient(to right bottom, hsl(0, 0%, 0%), hsl(0, 30%, 30%));
       }
 
       #routeContainer {
-        --light: hsl(0, 0%, 100%);
-        --background: linear-gradient(to right bottom, hsl(0, 0%, 0%), hsl(0, 30%, 30%));
         position: relative;
         top: 0;
         left: 0;
@@ -29,25 +29,30 @@
       #calcForm {
         position: relative;
         display: block;
-        margin-top: 10px;
         align-items: center;
         color: var(--light);
         background: transparent;
-        padding: 10px;
+        padding: 5px;
       }
 
       #headerTable {
         margin: 0 auto;
         width: 100vw;
-        height: 100px;
+        height: 80px;
+        max-height: 80px;
         table-layout: fixed;
         text-align: center;
         max-width: calc(min(100%,1080px));
         border-collapse: collapse;
+        overflow: hidden;
       }
 
       #routeChain {
         font-size: calc(max(1vw,13px));
+        overflow: hidden;
+        max-height: 78px;
+        text-overflow: ellipsis;
+        white-space: normal;
       }
 
       #target, #source {
@@ -58,7 +63,6 @@
         overflow: hidden;
         color: var(--light);
         background: transparent;
-        z-index: 7000;
       }
       
       .trackerButton {
@@ -73,6 +77,7 @@
         background: rgba(255, 255, 255, 0);
         z-index: 9000;
         cursor: pointer;
+        word-break:break-all;
       }
 
       #sourceAbbr, #targetAbbr {
@@ -88,15 +93,20 @@
         cursor: pointer;
       }
 
+      #prevroute:hover, #nextroute:hover, .trackerButton:hover {
+        transform: translateY(-4px);
+      }
+
       #detailsTable {
+        margin-top: 8px;
         color: var(--light);
         overflow: auto;
         line-height: 1.6;
-        max-height: calc(100vh - 170px);
+        max-height: calc(100vh - 180px);
       }
 
-      #detailsTable td{ 
-        padding: 8px;
+      #detailsTable td, #chainInfo td{ 
+        padding: 4px 8px;
       }
 
       #routeTable {
@@ -109,13 +119,23 @@
         border-collapse: collapse;
       }
 
+      #chainInfo {
+        margin: 8px auto 0 auto;
+        width: 100vw;
+        max-width: calc(min(100%,1080px));
+        font-size: 13px;
+        font-weight: bold;
+        text-align: left;
+        border-collapse: collapse;
+      }
+
       .table-container {
-        margin-bottom: 10px;
+        margin-top: 8px;
       }
 
       td {
 //        border: 1px solid black;
-//        overflow: hidden;
+        overflow: hidden;
       }
       
       .col1, .col5 {
@@ -125,30 +145,9 @@
         text-align: center;
         position: relative;
           width: 22.5%;
-          
       }
       .col3 {
           width: 40%;
-      }
-
-      #routeFooter {
-        padding: 8px;
-        color: var(--light);
-        font-size: calc(max(0.8vw,13px));
-        overflow: auto;
-        text-align: center;
-      }
-
-      #footerTable {
-        font-size: 13px;
-        text-align: right;
-               margin: 0 auto;
-        background-color: rgba(0, 0, 0, 0.25);
-        width: 100vw;
-        max-width: calc(min(100%,1080px));
-        font-size: 13px;
-        text-align: left;
-        border-collapse: collapse;
       }
 
       #detailsTable::-webkit-scrollbar {
@@ -236,8 +235,8 @@
               <td class="col5"><div id="nextroute">&#8250;&#8250;</div></td>
           </tr>
       </table>
+      <div id="chainInfo"></div>
       <div id="detailsTable"></div>
-      <div id="routeFooter"></div>
     </div>
     <div id="gridContainer"></div>
   </form>
@@ -347,7 +346,7 @@
         const resultDescription = document.getElementById('detailsTable');
         const prevRouteButton = document.getElementById('prevroute');
         const nextRouteButton = document.getElementById('nextroute');
-        const resultFooter = document.getElementById('routeFooter');
+        const resultFooter = document.getElementById('chainInfo');
 
         resultTitle.innerText = '';
         resultDescription.innerHTML = '';
@@ -448,90 +447,92 @@
         return result;
       }
 
-      function showRoute(direction) {
-        if (allRoutes.length === 0) return;
+function showRoute(direction) {
+  if (allRoutes.length === 0) return;
 
-        currentRouteIndex = (currentRouteIndex + direction + allRoutes.length) % allRoutes.length;
-        const route = allRoutes[currentRouteIndex];
-        const calcForm = document.getElementById('calcForm');
-        const resultTitle = document.getElementById('routeChain');
-        const resultDescription = document.getElementById('detailsTable');
-        const prevRouteButton = document.getElementById('prevroute');
-        const nextRouteButton = document.getElementById('nextroute');
-        let displayRoute;
-            if (route.length === 2) {
-                displayRoute = ' -> ';
-            } else if (route.length > 2) {
-                const middleItems = route.slice(1, -1);
-                displayRoute = ` -> ${middleItems.join(' -> ')} -> `;
-            } else {
-                displayRoute = '';
-            }
-        const routeChainElement = document.getElementById('routeChain');
-        const totalRoutes = allRoutes.length;
-        const routeCountText = `Route ${currentRouteIndex + 1} of ${totalRoutes}`;
+  currentRouteIndex = (currentRouteIndex + direction + allRoutes.length) % allRoutes.length;
+  const route = allRoutes[currentRouteIndex];
+  const calcForm = document.getElementById('calcForm');
+  const resultTitle = document.getElementById('routeChain');
+  const resultDescription = document.getElementById('detailsTable');
+  const chainInfo = document.getElementById('chainInfo');
 
-        resultTitle.innerText = `${displayRoute}`;
-        
-        const totalDays = route.reduce((sum, node, index) => {
-            if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
-                return sum + getMaxDays(node, route[index + 1]);
-            }
-            return sum;
-        }, 0);
-        
-        const details = route.map((node, index) => {
-          if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
-            const nextNode = route[index + 1];
-            const maxDays = getMaxDays(node, nextNode);
-            const [time, requirement, lastActivity] = routeInfo[node][nextNode];
+  function getAbbreviation(name) {
+    return abbrList[name] || name;
+  }
 
-            let tableHTML = `
-              <table id="routeTable">
-                <colgroup>
-                  <col style="width: 220px;" />
-                  <col />
-                </colgroup>
-                <tr>
-                  <td>${node} -> ${nextNode}</td>
-                  <td>${maxDays} days</td>
-                </tr>
-                <tr>
-                  <td>Class for invite forum</td>
-                  <td>${unlockInviteClass[node] ? unlockInviteClass[node][1] : ''}</td>
-                </tr>
-                <tr>
-                  <td>Requirements</td>
-                  <td>${requirement ? requirement : ''}</td>
-                </tr>
-                <tr>
-                  <td>Last time checked</td>
-                  <td>${lastActivity}</td>
-                </tr>
-              </table>
-            `;
-            return `<div class="table-container">${tableHTML}</div>`;
-          }
-          return '';
-        }).join('');
-        
-        const footerHTML = `
-          <table id="routeTable">
-            <colgroup>
-              <col style="width: 220px;" />
-              <col />
-            </colgroup>
-            <tr>
-              <td>${routeCountText}</td>
-              <td>Total ${route.length - 2} transfer(s) ${totalDays} day(s)</td>
-            </tr>
-          </table>
-        `;
+  const abbreviatedRoute = route.map(node => getAbbreviation(node));
 
-        resultDescription.innerHTML = `${details}${footerHTML}`;
+  let displayRoute;
+  if (abbreviatedRoute.length === 2) {
+    displayRoute = ' -> ';
+  } else if (abbreviatedRoute.length > 2) {
+    const middleItems = abbreviatedRoute.slice(1, -1);
+    displayRoute = middleItems.length > 0 ? ` -> ${middleItems.join(' -> ')} -> ` : '';
+  } else {
+    displayRoute = abbreviatedRoute[0] || '';
+  }
 
-        calcForm.style.display = 'block';
-      }
+  resultTitle.innerText = displayRoute;
+  
+  const totalDays = route.reduce((sum, node, index) => {
+    if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
+      return sum + getMaxDays(node, route[index + 1]);
+    }
+    return sum;
+  }, 0);
+  
+  const details = route.map((node, index) => {
+    if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
+      const nextNode = route[index + 1];
+      const maxDays = getMaxDays(node, nextNode);
+      const [time, requirement, lastActivity] = routeInfo[node][nextNode];
+
+      let tableHTML = `
+        <table id="routeTable">
+          <colgroup>
+            <col style="width: 200px;" />
+            <col />
+          </colgroup>
+          <tr>
+            <td>${node} -> ${nextNode}</td>
+            <td>${maxDays} days</td>
+          </tr>
+          <tr>
+            <td>Class for invite forum</td>
+            <td>${unlockInviteClass[node] ? unlockInviteClass[node][1] : ''}</td>
+          </tr>
+          <tr>
+            <td>Requirements</td>
+            <td>${requirement ? requirement : ''}</td>
+          </tr>
+          <tr>
+            <td>Last time checked</td>
+            <td>${lastActivity}</td>
+          </tr>
+        </table>
+      `;
+      return `<div class="table-container">${tableHTML}</div>`;
+    }
+    return '';
+  }).join('');
+  
+  const footerHTML = `
+    <table id="routeTable">
+      <colgroup>
+        <col style="width: 200px;" />
+        <col />
+      </colgroup>
+      <tr>
+        <td>Route ${currentRouteIndex + 1} of ${allRoutes.length}</td>
+        <td>Total ${route.length - 2} transfer(s) ${totalDays} day(s)</td>
+      </tr>
+    </table>
+  `;
+  
+  resultDescription.innerHTML = details;
+  chainInfo.innerHTML = footerHTML;
+}
 
       function setTextContent(id, text) {
         document.getElementById(id).textContent = text;
