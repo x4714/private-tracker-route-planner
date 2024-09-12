@@ -28,46 +28,56 @@
 
       #calcForm {
         position: relative;
-        display: flex;
-        margin-top: 25px;
+        display: block;
+        margin-top: 10px;
         align-items: center;
         color: var(--light);
         background: transparent;
-        justify-content: space-between;
         padding: 10px;
       }
 
-      #routeTitle {
-        font-size: calc(max(.8vw,13px));
+      #headerTable {
+        margin: 0 auto;
+        width: 100vw;
+        height: 100px;
+        table-layout: fixed;
+        text-align: center;
+        max-width: calc(min(100%,1080px));
+        border-collapse: collapse;
       }
 
-      #routeContainer #sourceTracker,
-      #routeContainer #targetTracker {
-        position: relative;
-        z-index: 6000;
+      #routeChain {
+        font-size: calc(max(1vw,13px));
       }
 
-      #routeContainer #targetTracker #target,
-      #routeContainer #sourceTracker #source {
+      #target, #source {
         font-size: calc(max(1.25vw,14px));
         font-weight: bold;
         font-family: inherit;
         cursor: pointer;
         overflow: hidden;
-        white-space: nowrap;
         color: var(--light);
         background: transparent;
         z-index: 7000;
       }
-
-      #routeContainer #sourceTracker button,
-      #routeContainer #targetTracker button{
-        border: none;
-        font-family: inherit;
+      
+      .trackerButton {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 80%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0);
+        z-index: 9000;
         cursor: pointer;
       }
 
       #sourceAbbr, #targetAbbr {
+        position: absolute;
+        width: 100%;
         font-size: calc(max(1vw,13px));
       }
 
@@ -78,61 +88,47 @@
         cursor: pointer;
       }
 
-      table {
-        width: 95vw;
-        max-width: 1080px;
-        margin: 0 auto;
-        text-align: left;
-        border-collapse: collapse;
-      }
-
-      #routeTable {
-        background-color: rgba(0, 0, 0, 0.2);
-      }
-
-      .table-container {
-        margin-bottom: 10px;
-      }
-
-      #headerTable {
-      table-layout: fixed;
-      height: 100px;
-      text-align: center;
-      }
-
-      .table-container {
-        margin-bottom: 10px;
-        
-      }
-
-      td {
-//        border: 1px solid black;
-        overflow: hidden;
-      }
-      
-      .col1, .col5 {
-          width: 5%;
-      }
-      .col2, .col4 {
-          width: 20%;
-      }
-      .col3 {
-          width: 50%;
-      }
-
       #detailsTable {
-        padding: 10px;
-        margin-top: 30px;
         color: var(--light);
-        font-size: 13px;
-        max-height: calc(100vh - 250px);
         overflow: auto;
         line-height: 1.6;
-        text-align: center;
+        max-height: calc(100vh - 170px);
       }
 
       #detailsTable td{ 
         padding: 8px;
+      }
+
+      #routeTable {
+        margin: 0 auto;
+        background-color: rgba(0, 0, 0, 0.25);
+        width: 100vw;
+        max-width: calc(min(100%,1080px));
+        font-size: 13px;
+        text-align: left;
+        border-collapse: collapse;
+      }
+
+      .table-container {
+        margin-bottom: 10px;
+      }
+
+      td {
+//        border: 1px solid black;
+//        overflow: hidden;
+      }
+      
+      .col1, .col5 {
+          width: 7.5%;
+      }
+      .col2, .col4 {
+        text-align: center;
+        position: relative;
+          width: 22.5%;
+          
+      }
+      .col3 {
+          width: 40%;
       }
 
       #routeFooter {
@@ -140,8 +136,19 @@
         color: var(--light);
         font-size: calc(max(0.8vw,13px));
         overflow: auto;
-        line-height: 1.6;
         text-align: center;
+      }
+
+      #footerTable {
+        font-size: 13px;
+        text-align: right;
+               margin: 0 auto;
+        background-color: rgba(0, 0, 0, 0.25);
+        width: 100vw;
+        max-width: calc(min(100%,1080px));
+        font-size: 13px;
+        text-align: left;
+        border-collapse: collapse;
       }
 
       #detailsTable::-webkit-scrollbar {
@@ -162,10 +169,11 @@
         position: absolute;
         width: 90vw;
         max-width: 960px;
-        top: 180px;
+        top: 150px;
+        bottom: 50px;
         left: 50%;
         transform: translateX(-50%);
-        max-height: 320px;
+        max-height: 480px;
         overflow: hidden;
         font-size: 16px;
         background: #f9f9f9;
@@ -189,11 +197,13 @@
         white-space: nowrap;
         min-width: max-content;
       }
+
       .grid-container {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, auto));
         gap: 0px;
       }
+
       #gridContainer div.border {
         border: 1px solid #000;
       }
@@ -211,26 +221,21 @@
   <form id="routeContainer" style="display: block;">
 
     <div id="calcForm">
-
-    <table id="headerTable">
-        <tr>
-            <td class="col1"><div id="prevroute">&#8249;&#8249;</div></td>
-            <td class="col2">
-              <div id="sourceTracker">
-                <button type="button" id="source">From</button><br>
-                <div id="sourceAbbr">Any</div>
-              </div>
-            </td>
-            <td class="col3"><div id="routeTitle"></div></td>
-            <td class="col4">
-              <div id="targetTracker">
-                <button type="button" id="target">To</button><br>
-                <div id="targetAbbr">Any</div>
-              </div>
-            </td>
-            <td class="col5"><div id="nextroute">&#8250;&#8250;</div></td>
-        </tr>
-    </table>
+      <table id="headerTable">
+          <tr>
+              <td class="col1"><div id="prevroute">&#8249;&#8249;</div></td>
+              <td class="col2">
+                  <div class="trackerButton" id="source">From</div><br>
+                  <div id="sourceAbbr">Any</div>
+              </td>
+              <td class="col3"><div id="routeChain"></div></td>
+              <td class="col4">
+                  <div class="trackerButton" id="target">To</div><br>
+                  <div id="targetAbbr">Any</div>
+              </td>
+              <td class="col5"><div id="nextroute">&#8250;&#8250;</div></td>
+          </tr>
+      </table>
       <div id="detailsTable"></div>
       <div id="routeFooter"></div>
     </div>
@@ -338,7 +343,7 @@
       function calculateRoute() {
 
         const calcForm = document.getElementById('calcForm');
-        const resultTitle = document.getElementById('routeTitle');
+        const resultTitle = document.getElementById('routeChain');
         const resultDescription = document.getElementById('detailsTable');
         const prevRouteButton = document.getElementById('prevroute');
         const nextRouteButton = document.getElementById('nextroute');
@@ -449,26 +454,31 @@
         currentRouteIndex = (currentRouteIndex + direction + allRoutes.length) % allRoutes.length;
         const route = allRoutes[currentRouteIndex];
         const calcForm = document.getElementById('calcForm');
-        const resultTitle = document.getElementById('routeTitle');
+        const resultTitle = document.getElementById('routeChain');
         const resultDescription = document.getElementById('detailsTable');
         const prevRouteButton = document.getElementById('prevroute');
         const nextRouteButton = document.getElementById('nextroute');
-        const displayRoute = `${route.join(' -> ')}`;
-        const routeTitleElement = document.getElementById('routeTitle');
-        const resultFooter = document.getElementById('routeFooter');
-        routeTitleElement.textContent = displayRoute;
-        routeTitleElement.title = displayRoute;
+        let displayRoute;
+            if (route.length === 2) {
+                displayRoute = ' -> ';
+            } else if (route.length > 2) {
+                const middleItems = route.slice(1, -1);
+                displayRoute = ` -> ${middleItems.join(' -> ')} -> `;
+            } else {
+                displayRoute = '';
+            }
+        const routeChainElement = document.getElementById('routeChain');
         const totalRoutes = allRoutes.length;
         const routeCountText = `Route ${currentRouteIndex + 1} of ${totalRoutes}`;
 
         resultTitle.innerText = `${displayRoute}`;
         
-        resultFooter.innerText = `${routeCountText} Total ${route.length - 2} transfer(s) ${route.reduce((sum, node, index) => {
-        if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
-          return sum + getMaxDays(node, route[index + 1]);
-        }
-        return sum;
-        }, 0)} day(s)`;
+        const totalDays = route.reduce((sum, node, index) => {
+            if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
+                return sum + getMaxDays(node, route[index + 1]);
+            }
+            return sum;
+        }, 0);
         
         const details = route.map((node, index) => {
           if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
@@ -504,8 +514,21 @@
           }
           return '';
         }).join('');
+        
+        const footerHTML = `
+          <table id="routeTable">
+            <colgroup>
+              <col style="width: 220px;" />
+              <col />
+            </colgroup>
+            <tr>
+              <td>${routeCountText}</td>
+              <td>Total ${route.length - 2} transfer(s) ${totalDays} day(s)</td>
+            </tr>
+          </table>
+        `;
 
-        resultDescription.innerHTML = details;
+        resultDescription.innerHTML = `${details}${footerHTML}`;
 
         calcForm.style.display = 'block';
       }
