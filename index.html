@@ -12,7 +12,7 @@
         overflow: hidden;
       }
 
-      #routeCalcForm {
+      #routeContainer {
         --light: hsl(0, 0%, 100%);
         --background: linear-gradient(to right bottom, hsl(0, 0%, 0%), hsl(0, 30%, 30%));
         position: relative;
@@ -26,7 +26,8 @@
         user-select: none;
       }
 
-      #routeContainer {
+      #calcForm {
+        position: relative;
         display: flex;
         margin-top: 25px;
         align-items: center;
@@ -34,91 +35,47 @@
         background: transparent;
         justify-content: space-between;
         padding: 10px;
-        position: relative;
       }
 
       #routeTitle {
-        padding-top: 15px;
-        font-size: 16px;
-        text-align: center;
-        max-width: 30vw;
-        height: 60px;
-        white-space: normal;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-        text-overflow: ellipsis;
-        margin: 0 auto;
+        font-size: calc(max(.8vw,13px));
       }
 
-      #routeCalcForm #sourceTracker,
-      #routeCalcForm #targetTracker {
-        position: absolute;
-        top: 50px;
-        width: 12vw;
-        min-width: 100px;
-        display: flex;
-        flex-direction: column;
+      #routeContainer #sourceTracker,
+      #routeContainer #targetTracker {
+        position: relative;
         z-index: 6000;
-        justify-content: space-between;
       }
 
-      #routeCalcForm #sourceTracker {
-        left: calc(max(110px, 50% - 375px));
-        transform: translateX(-50%);
-      }
-
-      #routeCalcForm #targetTracker {
-        right: calc(max(110px, 50% - 375px));
-        transform: translateX(+50%);
-      }
-
-      #routeCalcForm #targetTracker #target,
-      #routeCalcForm #sourceTracker #source {
-        margin-top: 0px;
-        padding: 10px 10px 60px 10px;
-        font-size: 24px;
+      #routeContainer #targetTracker #target,
+      #routeContainer #sourceTracker #source {
+        font-size: calc(max(1.25vw,14px));
         font-weight: bold;
         font-family: inherit;
         cursor: pointer;
         overflow: hidden;
         white-space: nowrap;
+        color: var(--light);
+        background: transparent;
         z-index: 7000;
       }
 
-      #routeCalcForm #sourceTracker button,
-      #routeCalcForm #targetTracker button{
-        margin-top: -50px;
+      #routeContainer #sourceTracker button,
+      #routeContainer #targetTracker button{
         border: none;
-        padding: 4px;
-        color: var(--light);
-        background: transparent;
-        font-size: 16px;
         font-family: inherit;
         cursor: pointer;
       }
 
+      #sourceAbbr, #targetAbbr {
+        font-size: calc(max(1vw,13px));
+      }
+
       #prevroute, #nextroute {
-        display: none;
-        position: absolute;
-        top: 10px;
-        padding: 8px 8px;
-        height: 22px;
-        width: 40px;
-        font-size: 48px;
+        position: relative;
+        font-size: calc(max(2.5vw,32px));
         letter-spacing: 1px;
         cursor: pointer;
-      }
-
-      #prevroute {
-        left: calc(max(25px, 50% - 520px));
-        transform: translateX(-50%);
-      }
-
-      #nextroute {
-        right: calc(max(25px, 50% - 520px));
-        transform: translateX(+50%);
       }
 
       table {
@@ -127,6 +84,9 @@
         margin: 0 auto;
         text-align: left;
         border-collapse: collapse;
+      }
+
+      #routeTable {
         background-color: rgba(0, 0, 0, 0.2);
       }
 
@@ -134,12 +94,33 @@
         margin-bottom: 10px;
       }
 
-      td {
-        padding: 8px;
-        border: none;
+      #headerTable {
+      table-layout: fixed;
+      height: 100px;
+      text-align: center;
       }
 
-      #routeText {
+      .table-container {
+        margin-bottom: 10px;
+        
+      }
+
+      td {
+//        border: 1px solid black;
+        overflow: hidden;
+      }
+      
+      .col1, .col5 {
+          width: 5%;
+      }
+      .col2, .col4 {
+          width: 20%;
+      }
+      .col3 {
+          width: 50%;
+      }
+
+      #detailsTable {
         padding: 10px;
         margin-top: 30px;
         color: var(--light);
@@ -149,26 +130,30 @@
         line-height: 1.6;
         text-align: center;
       }
-      
+
+      #detailsTable td{ 
+        padding: 8px;
+      }
+
       #routeFooter {
         padding: 8px;
         color: var(--light);
-        font-size: 16px;
+        font-size: calc(max(0.8vw,13px));
         overflow: auto;
         line-height: 1.6;
         text-align: center;
       }
 
-      #routeText::-webkit-scrollbar {
+      #detailsTable::-webkit-scrollbar {
         width: 0;
         height: 0;
       }
 
-      #routeText::-webkit-scrollbar-track {
+      #detailsTable::-webkit-scrollbar-track {
         background: transparent;
       }
 
-      #routeText::-webkit-scrollbar-thumb {
+      #detailsTable::-webkit-scrollbar-thumb {
         background: transparent;
       }
 
@@ -212,34 +197,8 @@
       #gridContainer div.border {
         border: 1px solid #000;
       }
-      @media (max-width: 1080px) {
-        #routeCalcForm #targetTracker #target,
-        #routeCalcForm #sourceTracker #source {
-          font-size: 16px;
-        }
-        #routeTitle {
-          font-size: 13px;
-        }
-        #routeFooter {
-          font-size: 13px;
-        }
-        #prevroute, #nextroute {
-          font-size: 36px;
-        }
-        #routeCalcForm #sourceTracker button,
-        #routeCalcForm #targetTracker button{
-          font-size: 13px;
-        }
-        #gridContainer {
-          font-size: 13px;
-        }
-      }
 
       @media (max-width: 720px) {
-        #routeCalcForm #targetTracker #target,
-        #routeCalcForm #sourceTracker #source {
-          font-size: 14px;
-        }
         .grid-container {
           grid-template-columns: repeat(auto-fit, minmax(120px, auto));
         }
@@ -248,25 +207,33 @@
   </style>
 </head>
 <body>
-  <form id="routeCalcForm" style="display: block;">
-    <div id="sourceTracker">
-      <button type="button" id="source">From</button>
-      <button type="button" id="sourceAbbr">Any</button>
-      
-    </div>
-    <div id="targetTracker">
-      <button type="button" id="target">To</button>
-      <button type="button" id="targetAbbr">Any</button>
-    
-    </div>
-    <div id="routeContainer">
-      <div id="routeTitle"></div>
-      <div id="prevroute">&#8249;&#8249;</div>
-      <div id="nextroute">&#8250;&#8250;</div>
-      <div id="routeText"></div>
+
+  <form id="routeContainer" style="display: block;">
+
+    <div id="calcForm">
+
+    <table id="headerTable">
+        <tr>
+            <td class="col1"><div id="prevroute">&#8249;&#8249;</div></td>
+            <td class="col2">
+              <div id="sourceTracker">
+                <button type="button" id="source">From</button><br>
+                <div id="sourceAbbr">Any</div>
+              </div>
+            </td>
+            <td class="col3"><div id="routeTitle"></div></td>
+            <td class="col4">
+              <div id="targetTracker">
+                <button type="button" id="target">To</button><br>
+                <div id="targetAbbr">Any</div>
+              </div>
+            </td>
+            <td class="col5"><div id="nextroute">&#8250;&#8250;</div></td>
+        </tr>
+    </table>
+      <div id="detailsTable"></div>
       <div id="routeFooter"></div>
     </div>
-
     <div id="gridContainer"></div>
   </form>
 
@@ -294,7 +261,7 @@
       `;
       document.head.appendChild(style);
 
-      const inviteForm = document.getElementById('routeCalcForm');
+      const inviteForm = document.getElementById('routeContainer');
 
       document.getElementById('source').addEventListener('click', () => {
         toggleGrid('source');
@@ -370,9 +337,9 @@
 
       function calculateRoute() {
 
-        const routeContainer = document.getElementById('routeContainer');
+        const calcForm = document.getElementById('calcForm');
         const resultTitle = document.getElementById('routeTitle');
-        const resultDescription = document.getElementById('routeText');
+        const resultDescription = document.getElementById('detailsTable');
         const prevRouteButton = document.getElementById('prevroute');
         const nextRouteButton = document.getElementById('nextroute');
         const resultFooter = document.getElementById('routeFooter');
@@ -380,8 +347,6 @@
         resultTitle.innerText = '';
         resultDescription.innerHTML = '';
         resultFooter.innerText = '';
-        prevRouteButton.style.display = 'none';
-        nextRouteButton.style.display = 'none';
 
         const start = document.getElementById('source').textContent.trim();
         const end = document.getElementById('target').textContent.trim();
@@ -389,7 +354,7 @@
         if (start === end) {
           resultTitle.innerText = 'One account per lifetime!';
           resultDescription.innerText = '';
-          routeContainer.style.display = 'block';
+          calcForm.style.display = 'block';
           return;
         }
 
@@ -397,7 +362,7 @@
           if (end === 'To') {
             resultTitle.innerText = '';
             resultDescription.innerText = '';
-            routeContainer.style.display = 'block';
+            calcForm.style.display = 'block';
             return;
           }
           allRoutes = Object.keys(routeInfo)
@@ -407,7 +372,7 @@
           if (!routeInfo[start]) {
             resultTitle.innerText = 'No official recruitment';
             resultDescription.innerText = '';
-            routeContainer.style.display = 'block';
+            calcForm.style.display = 'block';
             return;
           }
           allRoutes = Object.keys(routeInfo[start])
@@ -418,7 +383,7 @@
           if (!routeInfo[start]) {
             resultTitle.innerText = 'No official recruitment';
             resultDescription.innerText = '';
-            routeContainer.style.display = 'block';
+            calcForm.style.display = 'block';
             return;
           }
           allRoutes = findAllRoutes(start, end);
@@ -427,7 +392,7 @@
         if (allRoutes.length === 0) {
           resultTitle.innerText = 'No results found';
           resultDescription.innerText = '';
-          routeContainer.style.display = 'block';
+          calcForm.style.display = 'block';
           return;
         }
 
@@ -483,9 +448,9 @@
 
         currentRouteIndex = (currentRouteIndex + direction + allRoutes.length) % allRoutes.length;
         const route = allRoutes[currentRouteIndex];
-        const routeContainer = document.getElementById('routeContainer');
+        const calcForm = document.getElementById('calcForm');
         const resultTitle = document.getElementById('routeTitle');
-        const resultDescription = document.getElementById('routeText');
+        const resultDescription = document.getElementById('detailsTable');
         const prevRouteButton = document.getElementById('prevroute');
         const nextRouteButton = document.getElementById('nextroute');
         const displayRoute = `${route.join(' -> ')}`;
@@ -512,9 +477,9 @@
             const [time, requirement, lastActivity] = routeInfo[node][nextNode];
 
             let tableHTML = `
-              <table>
+              <table id="routeTable">
                 <colgroup>
-                  <col style="width: 240px;" />
+                  <col style="width: 220px;" />
                   <col />
                 </colgroup>
                 <tr>
@@ -542,9 +507,7 @@
 
         resultDescription.innerHTML = details;
 
-        routeContainer.style.display = 'block';
-        prevRouteButton.style.display = currentRouteIndex === 0 ? 'none' : 'inline';
-        nextRouteButton.style.display = currentRouteIndex === allRoutes.length - 1 ? 'none' : 'inline';
+        calcForm.style.display = 'block';
       }
 
       function setTextContent(id, text) {
