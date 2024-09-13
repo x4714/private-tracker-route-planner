@@ -13,6 +13,11 @@
         --light: hsl(0, 0%, 100%);
         --background: linear-gradient(to right bottom, hsl(0, 0%, 0%), hsl(0, 30%, 30%));
       }
+ 
+      a {
+        color: white;
+        text-decoration: none;
+      }
 
       #routeContainer {
         position: relative;
@@ -238,11 +243,14 @@
       <div id="chainInfo"></div>
       <div id="detailsTable"></div>
     </div>
-    <div id="gridContainer"></div>
   </form>
-
+    <div id="gridContainer"></div>
+      <div style="position: absolute; bottom: 0.5em; right: 0.5em; text-align: right; color: white; text-decoration: none;">
+      <a href="https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/">TrackersInfo</a>
+      <a href="https://github.com/ti-or/ti-or.github.io">GitHub repository</a>
+    </div>
   <script>
-    const dataUrl = 'data';
+    const dataUrl = 'https://raw.githubusercontent.com/ti-or/ti-or.github.io/main/data';
     async function fetchData() {
       try {
         const response = await fetch(dataUrl);
@@ -546,5 +554,7 @@ function showRoute(direction) {
       }
     });
   </script>
+  <script data-goatcounter="https://98et5e.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
