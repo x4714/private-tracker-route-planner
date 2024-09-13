@@ -207,7 +207,7 @@
         padding: 8px;
         margin-bottom: 10px;
         box-sizing: border-box;
-        grid-column: 1 / -1; /* Makes the input span the full width of the grid */
+        grid-column: 1 / -1;
       }
 
       .grid-item {
@@ -350,7 +350,9 @@
           const filteredKeys = uniqueKeys.filter(key => {
             const keyLower = key.toLowerCase();
             return keyLower.includes(filterTextLower) || 
-                   Object.values(abbrList).some(abbr => abbr.toLowerCase() === filterTextLower && abbrToNameMap[filterTextLower] === keyLower);
+                   Object.keys(abbrToNameMap).some(abbr => 
+                     abbr.includes(filterTextLower) && abbrToNameMap[abbr].includes(keyLower)
+                   );
           });
 
           container.querySelectorAll('.grid-item').forEach(item => item.remove());
