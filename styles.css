@@ -1,0 +1,252 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  --light: hsl(0, 0%, 100%);
+  --background: linear-gradient(to right bottom, hsl(0, 0%, 0%), hsl(0, 30%, 30%));
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+#routeContainer {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: var(--background);
+  user-select: none;
+}
+
+#settingsMenu {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    display: block;
+    font-size: 13px;
+    color: white;
+    background: #0000005e;
+    padding: 8px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+#calcForm {
+  position: relative;
+  display: block;
+  align-items: center;
+  color: var(--light);
+  background: transparent;
+  padding: 5px;
+}
+
+#headerTable {
+  margin: 0 auto;
+  width: 100vw;
+  height: 80px;
+  max-height: 80px;
+  table-layout: fixed;
+  text-align: center;
+  max-width: calc(min(100%,1080px));
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+.col1, .col5 {
+    width: 7.5%;
+}
+.col2, .col4 {
+  text-align: center;
+  position: relative;
+    width: 22.5%;
+}
+.col3 {
+    width: 40%;
+}
+
+#routeChain {
+  font-size: calc(max(1vw,13px));
+  overflow: hidden;
+  max-height: 78px;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+#target, #source {
+  font-size: calc(max(1.25vw,14px));
+  font-weight: bold;
+  font-family: inherit;
+  cursor: pointer;
+  overflow: hidden;
+  color: var(--light);
+  background: transparent;
+}
+
+.trackerButton {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0);
+  z-index: 9000;
+  cursor: pointer;
+  word-break:break-all;
+}
+
+#sourceAbbr, #targetAbbr {
+  position: absolute;
+  width: 100%;
+  font-size: calc(max(1vw,13px));
+}
+
+#prevroute, #nextroute {
+  position: relative;
+  font-size: calc(max(2.5vw,32px));
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+#prevroute:hover, #nextroute:hover, .trackerButton:hover {
+  transform: translateY(-4px);
+}
+
+#detailsTable {
+  margin-top: 8px;
+  color: var(--light);
+  overflow: auto;
+  line-height: 1.6;
+  max-height: calc(100vh - 180px);
+}
+
+#detailsTable td, #chainInfo td{ 
+  padding: 4px 8px;
+}
+
+#routeTable {
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.25);
+  width: 100vw;
+  max-width: calc(min(100%,1080px));
+  font-size: 13px;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+#chainInfo {
+  margin: 8px auto 0 auto;
+  width: 100vw;
+  max-width: calc(min(100%,1080px));
+  font-size: 13px;
+  font-weight: bold;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.table-container {
+  margin-top: 8px;
+}
+
+td {
+//        border: 1px solid black;
+  overflow: hidden;
+}
+
+#detailsTable::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+#detailsTable::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#detailsTable::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+#gridContainer {
+  display: none;
+  position: absolute;
+  width: 90vw;
+  max-width: 960px;
+  top: 150px;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-height: 480px;
+  overflow: hidden;
+  font-size: 16px;
+  background: #f9f9f9;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  z-index: 10000;
+}
+
+#gridContainer::-webkit-scrollbar {
+  display: none;
+}
+
+#gridContainer div {
+  padding: 12px;
+  background: #fff;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  min-width: max-content;
+}
+
+.filter-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  grid-column: 1 / -1;
+}
+
+.grid-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, auto));
+  gap: 0px;
+}
+
+@media (max-width: 720px) {
+  .grid-container {
+    grid-template-columns: repeat(auto-fit, minmax(120px, auto));
+  }
+  #gridContainer {
+  font-size: 13px;
+  }
+  #detailsTable {
+  max-height: calc(100vh - 200px);
+  }
+}
+@media (max-width: 1600px) {
+  #settingsMenu {
+    position: fixed;
+    padding: 0px;
+    border-radius: 0;
+    background: transparent;
+    box-sizing: border-box;
+  }
+  #calcForm {
+    margin-top: 25px;
+  }
+}

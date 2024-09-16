@@ -1,252 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="data"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrackersInfo official_recruitments</title>
-  <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        --light: hsl(0, 0%, 100%);
-        --background: linear-gradient(to right bottom, hsl(0, 0%, 0%), hsl(0, 30%, 30%));
-      }
- 
-      a {
-        color: white;
-        text-decoration: none;
-      }
-
-      #routeContainer {
-        position: relative;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        box-sizing: border-box;
-        overflow: hidden;
-        background: var(--background);
-        user-select: none;
-      }
-
-      #calcForm {
-        position: relative;
-        display: block;
-        align-items: center;
-        color: var(--light);
-        background: transparent;
-        padding: 5px;
-      }
-
-      #headerTable {
-        margin: 0 auto;
-        width: 100vw;
-        height: 80px;
-        max-height: 80px;
-        table-layout: fixed;
-        text-align: center;
-        max-width: calc(min(100%,1080px));
-        border-collapse: collapse;
-        overflow: hidden;
-      }
-
-      .col1, .col5 {
-          width: 7.5%;
-      }
-      .col2, .col4 {
-        text-align: center;
-        position: relative;
-          width: 22.5%;
-      }
-      .col3 {
-          width: 40%;
-      }
-
-      #routeChain {
-        font-size: calc(max(1vw,13px));
-        overflow: hidden;
-        max-height: 78px;
-        text-overflow: ellipsis;
-        white-space: normal;
-      }
-
-      #target, #source {
-        font-size: calc(max(1.25vw,14px));
-        font-weight: bold;
-        font-family: inherit;
-        cursor: pointer;
-        overflow: hidden;
-        color: var(--light);
-        background: transparent;
-      }
-      
-      .trackerButton {
-        position: absolute;
-        top: 0%;
-        left: 0%;
-        width: 100%;
-        height: 80%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0);
-        z-index: 9000;
-        cursor: pointer;
-        word-break:break-all;
-      }
-
-      #sourceAbbr, #targetAbbr {
-        position: absolute;
-        width: 100%;
-        font-size: calc(max(1vw,13px));
-      }
-
-      #prevroute, #nextroute {
-        position: relative;
-        font-size: calc(max(2.5vw,32px));
-        letter-spacing: 1px;
-        cursor: pointer;
-      }
-
-      #prevroute:hover, #nextroute:hover, .trackerButton:hover {
-        transform: translateY(-4px);
-      }
-
-      #detailsTable {
-        margin-top: 8px;
-        color: var(--light);
-        overflow: auto;
-        line-height: 1.6;
-        max-height: calc(100vh - 180px);
-      }
-
-      #detailsTable td, #chainInfo td{ 
-        padding: 4px 8px;
-      }
-
-      #routeTable {
-        margin: 0 auto;
-        background-color: rgba(0, 0, 0, 0.25);
-        width: 100vw;
-        max-width: calc(min(100%,1080px));
-        font-size: 13px;
-        text-align: left;
-        border-collapse: collapse;
-      }
-
-      #chainInfo {
-        margin: 8px auto 0 auto;
-        width: 100vw;
-        max-width: calc(min(100%,1080px));
-        font-size: 13px;
-        font-weight: bold;
-        text-align: left;
-        border-collapse: collapse;
-      }
-
-      .table-container {
-        margin-top: 8px;
-      }
-
-      td {
-//        border: 1px solid black;
-        overflow: hidden;
-      }
-
-      #detailsTable::-webkit-scrollbar {
-        width: 0;
-        height: 0;
-      }
-
-      #detailsTable::-webkit-scrollbar-track {
-        background: transparent;
-      }
-
-      #detailsTable::-webkit-scrollbar-thumb {
-        background: transparent;
-      }
-
-      #gridContainer {
-        display: none;
-        position: absolute;
-        width: 90vw;
-        max-width: 960px;
-        top: 150px;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-        max-height: 480px;
-        overflow: hidden;
-        font-size: 16px;
-        background: #f9f9f9;
-        padding: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        overflow-y: auto;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-        z-index: 10000;
-      }
-
-      #gridContainer::-webkit-scrollbar {
-        display: none;
-      }
-
-      #gridContainer div {
-        padding: 12px;
-        background: #fff;
-        text-align: center;
-        cursor: pointer;
-        white-space: nowrap;
-        min-width: max-content;
-      }
-
-      .filter-input {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 10px;
-        box-sizing: border-box;
-        grid-column: 1 / -1;
-      }
-
-      .grid-item {
-        padding: 8px;
-        cursor: pointer;
-      }
-
-      .grid-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, auto));
-        gap: 0px;
-      }
-
-      @media (max-width: 720px) {
-        .grid-container {
-          grid-template-columns: repeat(auto-fit, minmax(120px, auto));
-        }
-      }
-}
-  </style>
+  <title>TrackersInfo Official Recruitments</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
   <form id="routeContainer" style="display: block;">
+      <div id="settingsMenu">
+      <label for="maxRouteLength">Max Length</label>
+      <input type="number" id="maxRouteLength" value="5" min="1" style="width: 50px;">
+      <label for="maxDays">Max Days</label>
+      <input type="number" id="maxDays" value="1080" min="1" style="width: 50px;">
+    </div>
     <div id="calcForm">
       <table id="headerTable">
-          <tr>
-              <td class="col1"><div id="prevroute">&#8249;&#8249;</div></td>
-              <td class="col2">
-                  <div class="trackerButton" id="source">From</div><br>
-                  <div id="sourceAbbr">Any</div>
-              </td>
-              <td class="col3"><div id="routeChain"></div></td>
-              <td class="col4">
-                  <div class="trackerButton" id="target">To</div><br>
-                  <div id="targetAbbr">Any</div>
-              </td>
-              <td class="col5"><div id="nextroute">&#8250;&#8250;</div></td>
-          </tr>
+        <tr>
+          <td class="col1"><div id="prevroute">&#8249;&#8249;</div></td>
+          <td class="col2">
+            <div class="trackerButton" id="source">From</div><br>
+            <div id="sourceAbbr">Any</div>
+          </td>
+          <td class="col3"><div id="routeChain"></div></td>
+          <td class="col4">
+            <div class="trackerButton" id="target">To</div><br>
+            <div id="targetAbbr">Any</div>
+          </td>
+          <td class="col5"><div id="nextroute">&#8250;&#8250;</div></td>
+        </tr>
       </table>
       <div id="chainInfo"></div>
       <div id="detailsTable"></div>
@@ -258,341 +42,342 @@
       <a href="https://github.com/ti-or/ti-or.github.io">GitHub repository</a>
     </div>
   <script>
-    const dataUrl = 'data';
-    async function fetchData() {
-      try {
-        const response = await fetch(dataUrl);
-        if (!response.ok) throw new Error('Network response was not ok');
-        return await response.json();
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        return null;
+
+  window.addEventListener('load', function() {
+    
+    const settingsMenu = document.getElementById('settingsMenu');
+    const maxRouteLengthInput = document.getElementById('maxRouteLength');
+    const maxDaysInput = document.getElementById('maxDays');
+      let maxRouteLength = parseInt(maxRouteLengthInput.value, 10);
+      let maxDays = parseInt(maxDaysInput.value, 10);
+
+    maxRouteLengthInput.addEventListener('change', (event) => {
+      maxRouteLength = parseInt(event.target.value, 10);
+      calculateRoute(); // Recalculate routes with new max depth
+    });
+
+    maxDaysInput.addEventListener('change', (event) => {
+      maxDays = parseInt(event.target.value, 10);
+      calculateRoute(); // Recalculate routes with new max days
+    });
+
+    const { routeInfo, unlockInviteClass, abbrList } = data;
+
+    const style = document.createElement('style');
+    style.textContent = `
+    `;
+    document.head.appendChild(style);
+
+    const inviteForm = document.getElementById('routeContainer');
+
+    document.getElementById('source').addEventListener('click', () => {
+      toggleGrid('source');
+    });
+
+    document.getElementById('target').addEventListener('click', () => {
+      toggleGrid('target');
+    });
+
+    document.getElementById('prevroute').addEventListener('click', () => {
+      showRoute(-1);
+    });
+
+    document.getElementById('nextroute').addEventListener('click', () => {
+      showRoute(1);
+    });
+    
+    document.addEventListener('click', (event) => {
+      const gridContainer = document.getElementById('gridContainer');
+      if (gridContainer.style.display === 'block' && !gridContainer.contains(event.target) && !['source', 'target'].includes(event.target.id)) {
+        gridContainer.style.display = 'none';
+      }
+    });
+    
+    let allRoutes = [];
+    let currentRouteIndex = 0;
+
+    function toggleGrid(buttonId) {
+      const gridContainer = document.getElementById('gridContainer');
+      if (gridContainer.style.display === 'none' || gridContainer.style.display === '') {
+        populateGrid(buttonId);
+        gridContainer.style.display = 'block';
+      } else {
+        gridContainer.style.display = 'none';
       }
     }
 
-    window.addEventListener('load', async function() {
-      const data = await fetchData();
-      if (!data) return;
+    function populateGrid(buttonId) {
+      const gridContainer = document.getElementById('gridContainer');
+      gridContainer.innerHTML = '';
 
-      const { routeInfo, unlockInviteClass, abbrList } = data;
+      const uniqueKeys = Array.from(new Set(
+        Object.keys(routeInfo)
+        .flatMap(startKey => [startKey, ...Object.keys(routeInfo[startKey])])
+      ))
+      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
-      const style = document.createElement('style');
-      style.textContent = `
-      `;
-      document.head.appendChild(style);
+      if (buttonId === 'source') uniqueKeys.unshift('From');
+      if (buttonId === 'target') uniqueKeys.unshift('To');
 
-      const inviteForm = document.getElementById('routeContainer');
+      const abbrToNameMap = Object.keys(abbrList).reduce((map, name) => {
+        map[abbrList[name].toLowerCase()] = name.toLowerCase();
+        return map;
+      }, {});
 
-      document.getElementById('source').addEventListener('click', () => {
-        toggleGrid('source');
-      });
+      const container = document.createElement('div');
+      container.className = 'grid-container';
 
-      document.getElementById('target').addEventListener('click', () => {
-        toggleGrid('target');
-      });
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'filter-input';
+      container.appendChild(input);
 
-      document.getElementById('prevroute').addEventListener('click', () => {
-        showRoute(-1);
-      });
-
-      document.getElementById('nextroute').addEventListener('click', () => {
-        showRoute(1);
-      });
-      
-      document.addEventListener('click', (event) => {
-        const gridContainer = document.getElementById('gridContainer');
-        if (gridContainer.style.display === 'block' && !gridContainer.contains(event.target) && !['source', 'target'].includes(event.target.id)) {
-          gridContainer.style.display = 'none';
-        }
-      });
-      
-      let allRoutes = [];
-      let currentRouteIndex = 0;
-
-      function toggleGrid(buttonId) {
-        const gridContainer = document.getElementById('gridContainer');
-        if (gridContainer.style.display === 'none' || gridContainer.style.display === '') {
-          populateGrid(buttonId);
-          gridContainer.style.display = 'block';
-        } else {
-          gridContainer.style.display = 'none';
-        }
-      }
-
-      function populateGrid(buttonId) {
-        const gridContainer = document.getElementById('gridContainer');
-        gridContainer.innerHTML = '';
-
-        const uniqueKeys = Array.from(new Set(
-          Object.keys(routeInfo)
-          .flatMap(startKey => [startKey, ...Object.keys(routeInfo[startKey])])
-        ))
-        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-
-        if (buttonId === 'source') uniqueKeys.unshift('From');
-        if (buttonId === 'target') uniqueKeys.unshift('To');
-
-        const abbrToNameMap = Object.keys(abbrList).reduce((map, name) => {
-          map[abbrList[name].toLowerCase()] = name.toLowerCase();
-          return map;
-        }, {});
-
-        const container = document.createElement('div');
-        container.className = 'grid-container';
-
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.className = 'filter-input';
-        container.appendChild(input);
-
-        function updateItems(filterText = '') {
-          const filterTextLower = filterText.toLowerCase();
-          const filteredKeys = uniqueKeys.filter(key => {
-            const keyLower = key.toLowerCase();
-            return keyLower.includes(filterTextLower) || 
-                   Object.keys(abbrToNameMap).some(abbr => 
-                     abbr.includes(filterTextLower) && abbrToNameMap[abbr].includes(keyLower)
-                   );
-          });
-
-          container.querySelectorAll('.grid-item').forEach(item => item.remove());
-
-          filteredKeys.forEach(key => {
-            const item = document.createElement('div');
-            item.textContent = key;
-            item.className = 'grid-item';
-            item.addEventListener('click', () => {
-              if (buttonId === 'source') {
-                setTextContent('source', key);
-                setTextContent('sourceAbbr', key === 'From' ? 'Any' : abbrList[key] || key);
-              } else {
-                setTextContent('target', key);
-                setTextContent('targetAbbr', key === 'To' ? 'Any' : abbrList[key] || key);
-              }
-              gridContainer.style.display = 'none';
-              calculateRoute();
-            });
-            container.appendChild(item);
-          });
-        }
-
-        updateItems();
-
-        input.addEventListener('input', (event) => {
-          updateItems(event.target.value);
+      function updateItems(filterText = '') {
+        const filterTextLower = filterText.toLowerCase();
+        const filteredKeys = uniqueKeys.filter(key => {
+          const keyLower = key.toLowerCase();
+          return keyLower.includes(filterTextLower) || 
+                 Object.keys(abbrToNameMap).some(abbr => 
+                   abbr.includes(filterTextLower) && abbrToNameMap[abbr].includes(keyLower)
+                 );
         });
 
-        gridContainer.appendChild(container);
+        container.querySelectorAll('.grid-item').forEach(item => item.remove());
+
+        filteredKeys.forEach(key => {
+          const item = document.createElement('div');
+          item.textContent = key;
+          item.className = 'grid-item';
+          item.addEventListener('click', () => {
+            if (buttonId === 'source') {
+              setTextContent('source', key);
+              setTextContent('sourceAbbr', key === 'From' ? 'Any' : abbrList[key] || key);
+            } else {
+              setTextContent('target', key);
+              setTextContent('targetAbbr', key === 'To' ? 'Any' : abbrList[key] || key);
+            }
+            gridContainer.style.display = 'none';
+            calculateRoute();
+          });
+          container.appendChild(item);
+        });
       }
 
-      function calculateRoute() {
+      updateItems();
 
-        const calcForm = document.getElementById('calcForm');
-        const resultTitle = document.getElementById('routeChain');
-        const resultDescription = document.getElementById('detailsTable');
-        const prevRouteButton = document.getElementById('prevroute');
-        const nextRouteButton = document.getElementById('nextroute');
-        const resultFooter = document.getElementById('chainInfo');
+      input.addEventListener('input', (event) => {
+        updateItems(event.target.value);
+      });
 
-        resultTitle.innerText = '';
-        resultDescription.innerHTML = '';
-        resultFooter.innerText = '';
+      gridContainer.appendChild(container);
+    }
 
-        const start = document.getElementById('source').textContent.trim();
-        const end = document.getElementById('target').textContent.trim();
+    function calculateRoute() {
 
-        if (start === end) {
-          resultTitle.innerText = 'One account per lifetime!';
+      const calcForm = document.getElementById('calcForm');
+      const resultTitle = document.getElementById('routeChain');
+      const resultDescription = document.getElementById('detailsTable');
+      const prevRouteButton = document.getElementById('prevroute');
+      const nextRouteButton = document.getElementById('nextroute');
+      const resultFooter = document.getElementById('chainInfo');
+
+      resultTitle.innerText = '';
+      resultDescription.innerHTML = '';
+      resultFooter.innerText = '';
+
+      const start = document.getElementById('source').textContent.trim();
+      const end = document.getElementById('target').textContent.trim();
+
+      if (start === end) {
+        resultTitle.innerText = 'One account per lifetime!';
+        resultDescription.innerText = '';
+        calcForm.style.display = 'block';
+        return;
+      }
+
+      if (start === 'From') {
+        if (end === 'To') {
+          resultTitle.innerText = '';
           resultDescription.innerText = '';
           calcForm.style.display = 'block';
           return;
         }
-
-        if (start === 'From') {
-          if (end === 'To') {
-            resultTitle.innerText = '';
-            resultDescription.innerText = '';
-            calcForm.style.display = 'block';
-            return;
-          }
-          allRoutes = Object.keys(routeInfo)
-            .filter(node => routeInfo[node] && routeInfo[node][end])
-            .map(node => [node, end]);
-        } else if (end === 'To') {
-          if (!routeInfo[start]) {
-            resultTitle.innerText = 'No official recruitment';
-            resultDescription.innerText = '';
-            calcForm.style.display = 'block';
-            return;
-          }
-          allRoutes = Object.keys(routeInfo[start])
-            .map(node => [start, node])
-            .filter(([from, to]) => routeInfo[from] && routeInfo[from][to])
-            .map(([from, to]) => [from, to]);
-        } else {
-          if (!routeInfo[start]) {
-            resultTitle.innerText = 'No official recruitment';
-            resultDescription.innerText = '';
-            calcForm.style.display = 'block';
-            return;
-          }
-          allRoutes = findAllRoutes(start, end);
-        }
-
-        if (allRoutes.length === 0) {
-          resultTitle.innerText = 'No results found';
+        allRoutes = Object.keys(routeInfo)
+          .filter(node => routeInfo[node] && routeInfo[node][end])
+          .map(node => [node, end]);
+      } else if (end === 'To') {
+        if (!routeInfo[start]) {
+          resultTitle.innerText = 'No official recruitment';
           resultDescription.innerText = '';
           calcForm.style.display = 'block';
           return;
         }
-
-        allRoutes = allRoutes.sort((a, b) => {
-          const timeA = a.reduce((sum, node, index) => {
-            if (index < a.length - 1 && routeInfo[node] && routeInfo[node][a[index + 1]]) {
-              return sum + getMaxDays(node, a[index + 1]);
-            }
-            return sum;
-          }, 0);
-
-          const timeB = b.reduce((sum, node, index) => {
-            if (index < b.length - 1 && routeInfo[node] && routeInfo[node][b[index + 1]]) {
-              return sum + getMaxDays(node, b[index + 1]);
-            }
-            return sum;
-          }, 0);
-
-          return timeA - timeB;
-        });
-
-        currentRouteIndex = 0;
-        showRoute(0);
+        allRoutes = Object.keys(routeInfo[start])
+          .map(node => [start, node])
+          .filter(([from, to]) => routeInfo[from] && routeInfo[from][to])
+          .map(([from, to]) => [from, to]);
+      } else {
+        if (!routeInfo[start]) {
+          resultTitle.innerText = 'No official recruitment';
+          resultDescription.innerText = '';
+          calcForm.style.display = 'block';
+          return;
+        }
+        allRoutes = findAllRoutes(start, end, maxRouteLength, maxDays);
       }
 
-      function findAllRoutes(start, end) {
-        const result = [];
-        const stack = [[start, [start]]];
-        const visited = new Set();
-
-        while (stack.length) {
-          const [node, route] = stack.pop();
-
-          if (node === end) {
-            result.push(route);
-            continue;
-          }
-
-          visited.add(node);
-
-          for (const [next, _] of Object.entries(routeInfo[node] || {})) {
-            if (!route.includes(next) && !visited.has(next)) {
-              stack.push([next, [...route, next]]);
-            }
-          }
-        }
-
-        return result;
+      if (allRoutes.length === 0) {
+        resultTitle.innerText = 'No results found';
+        resultDescription.innerText = '';
+        calcForm.style.display = 'block';
+        return;
       }
 
-      function showRoute(direction) {
-        if (allRoutes.length === 0) return;
-
-        currentRouteIndex = (currentRouteIndex + direction + allRoutes.length) % allRoutes.length;
-        const route = allRoutes[currentRouteIndex];
-        const calcForm = document.getElementById('calcForm');
-        const resultTitle = document.getElementById('routeChain');
-        const resultDescription = document.getElementById('detailsTable');
-        const chainInfo = document.getElementById('chainInfo');
-
-        function getAbbreviation(name) {
-          return abbrList[name] || name;
-        }
-
-        const abbreviatedRoute = route.map(node => getAbbreviation(node));
-
-        let displayRoute;
-        if (abbreviatedRoute.length === 2) {
-          displayRoute = ' -> ';
-        } else if (abbreviatedRoute.length > 2) {
-          const middleItems = abbreviatedRoute.slice(1, -1);
-          displayRoute = middleItems.length > 0 ? ` -> ${middleItems.join(' -> ')} -> ` : '';
-        } else {
-          displayRoute = abbreviatedRoute[0] || '';
-        }
-
-        resultTitle.innerText = displayRoute;
-        
-        const totalDays = route.reduce((sum, node, index) => {
-          if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
-            return sum + getMaxDays(node, route[index + 1]);
+      allRoutes = allRoutes.sort((a, b) => {
+        const timeA = a.reduce((sum, node, index) => {
+          if (index < a.length - 1 && routeInfo[node] && routeInfo[node][a[index + 1]]) {
+            return sum + getMaxDays(node, a[index + 1]);
           }
           return sum;
         }, 0);
-        
-        const details = route.map((node, index) => {
-          if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
-            const nextNode = route[index + 1];
-            const maxDays = getMaxDays(node, nextNode);
-            const [time, requirement, lastActivity] = routeInfo[node][nextNode];
 
-            let tableHTML = `
-              <table id="routeTable">
-                <colgroup>
-                  <col style="width: 200px;" />
-                  <col />
-                </colgroup>
-                <tr>
-                  <td>${node} -> ${nextNode}</td>
-                  <td>${maxDays} days</td>
-                </tr>
-                <tr>
-                  <td>Class for invite forum</td>
-                  <td>${unlockInviteClass[node] ? unlockInviteClass[node][1] : ''}</td>
-                </tr>
-                <tr>
-                  <td>Requirements</td>
-                  <td>${requirement ? requirement : ''}</td>
-                </tr>
-                <tr>
-                  <td>Last time checked</td>
-                  <td>${lastActivity}</td>
-                </tr>
-              </table>
-            `;
-            return `<div class="table-container">${tableHTML}</div>`;
+        const timeB = b.reduce((sum, node, index) => {
+          if (index < b.length - 1 && routeInfo[node] && routeInfo[node][b[index + 1]]) {
+            return sum + getMaxDays(node, b[index + 1]);
           }
-          return '';
-        }).join('');
-        
-        const footerHTML = `
-          <table id="routeTable">
-            <colgroup>
-              <col style="width: 200px;" />
-              <col />
-            </colgroup>
-            <tr>
-              <td>Route ${currentRouteIndex + 1} of ${allRoutes.length}</td>
-              <td>Total ${route.length - 2} transfer(s) ${totalDays} day(s)</td>
-            </tr>
-          </table>
-        `;
-        
-        resultDescription.innerHTML = details;
-        chainInfo.innerHTML = footerHTML;
+          return sum;
+        }, 0);
+
+        return timeA - timeB;
+      });
+
+      currentRouteIndex = 0;
+      showRoute(0);
+    }
+
+    function findAllRoutes(start, end, maxDepth = 5, maxDays = 1080) {
+      const result = [];
+      const queue = [[start, [start], 0]]; // Include accumulated days in the state
+
+      while (queue.length) {
+        const [node, route, days] = queue.shift();
+
+        if (route.length > maxDepth + 1 || days > maxDays) continue;
+
+        if (node === end) {
+          result.push(route);
+          continue;
+        }
+
+      for (const [next, _] of Object.entries(routeInfo[node] || {})) {
+          const maxDaysToNext = getMaxDays(node, next);
+          if (!route.includes(next) && (days + maxDaysToNext) <= maxDays) {
+            queue.push([next, [...route, next], days + maxDaysToNext]);
+          }
+        }
       }
 
-      function setTextContent(id, text) {
-        document.getElementById(id).textContent = text;
+      return result;
+    }
+
+    function showRoute(direction) {
+      if (allRoutes.length === 0) return;
+
+      currentRouteIndex = (currentRouteIndex + direction + allRoutes.length) % allRoutes.length;
+      const route = allRoutes[currentRouteIndex];
+      const calcForm = document.getElementById('calcForm');
+      const resultTitle = document.getElementById('routeChain');
+      const resultDescription = document.getElementById('detailsTable');
+      const chainInfo = document.getElementById('chainInfo');
+
+      function getAbbreviation(name) {
+        return abbrList[name] || name;
       }
 
-      function getMaxDays(start, end) {
-        const days1 = (routeInfo[start] && routeInfo[start][end] && routeInfo[start][end][0]) || 0;
-        const days2 = (unlockInviteClass[start] && unlockInviteClass[start][0]) || 0;
+      const abbreviatedRoute = route.map(node => getAbbreviation(node));
 
-        return Math.max(days1, days2);
+      let displayRoute;
+      if (abbreviatedRoute.length === 2) {
+        displayRoute = ' -> ';
+      } else if (abbreviatedRoute.length > 2) {
+        const middleItems = abbreviatedRoute.slice(1, -1);
+        displayRoute = middleItems.length > 0 ? ` -> ${middleItems.join(' -> ')} -> ` : '';
+      } else {
+        displayRoute = abbreviatedRoute[0] || '';
       }
-    });
+
+      resultTitle.innerText = displayRoute;
+      
+      const totalDays = route.reduce((sum, node, index) => {
+        if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
+          return sum + getMaxDays(node, route[index + 1]);
+        }
+        return sum;
+      }, 0);
+      
+      const details = route.map((node, index) => {
+        if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
+          const nextNode = route[index + 1];
+          const maxDays = getMaxDays(node, nextNode);
+          const [time, requirement, lastActivity] = routeInfo[node][nextNode];
+
+          let tableHTML = `
+            <table id="routeTable">
+              <colgroup>
+                <col style="width: 200px;" />
+                <col />
+              </colgroup>
+              <tr>
+                <td>${node} -> ${nextNode}</td>
+                <td>${maxDays} days</td>
+              </tr>
+              <tr>
+                <td>Class for invite forum</td>
+                <td>${unlockInviteClass[node] ? unlockInviteClass[node][1] : ''}</td>
+              </tr>
+              <tr>
+                <td>Requirements</td>
+                <td>${requirement ? requirement : ''}</td>
+              </tr>
+              <tr>
+                <td>Last time checked</td>
+                <td>${lastActivity}</td>
+              </tr>
+            </table>
+          `;
+          return `<div class="table-container">${tableHTML}</div>`;
+        }
+        return '';
+      }).join('');
+      
+      const footerHTML = `
+        <table id="routeTable">
+          <colgroup>
+            <col style="width: 200px;" />
+            <col />
+          </colgroup>
+          <tr>
+            <td>Route ${currentRouteIndex + 1} of ${allRoutes.length}</td>
+            <td>Total ${route.length - 2} transfer(s) ${totalDays} day(s)</td>
+          </tr>
+        </table>
+      `;
+      
+      resultDescription.innerHTML = details;
+      chainInfo.innerHTML = footerHTML;
+    }
+
+    function setTextContent(id, text) {
+      document.getElementById(id).textContent = text;
+    }
+
+    function getMaxDays(start, end) {
+      const days1 = (routeInfo[start] && routeInfo[start][end] && routeInfo[start][end][0]) || 0;
+      const days2 = (unlockInviteClass[start] && unlockInviteClass[start][0]) || 0;
+
+      return Math.max(days1, days2);
+    }
+  });
   </script>
-  <script data-goatcounter="https://98et5e.goatcounter.com/count"
-      async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
