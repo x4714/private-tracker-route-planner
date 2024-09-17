@@ -257,11 +257,11 @@
 
     function findAllRoutes(start, end, maxDepth = 5, maxDays = 1080) {
       const result = [];
-      const queue = [[start, [start], 0]]; // Include accumulated days in the state
+      const stack = [[start, [start], 0]];
 
-      while (queue.length) {
-        const [node, route, days] = queue.shift();
-
+      while (stack.length) {
+        const [node, route, days] = stack.pop();
+        
         if (route.length > maxDepth + 1 || days > maxDays) continue;
 
         if (node === end) {
@@ -269,10 +269,10 @@
           continue;
         }
 
-      for (const [next, _] of Object.entries(routeInfo[node] || {})) {
+        for (const [next, _] of Object.entries(routeInfo[node] || {})) {
           const maxDaysToNext = getMaxDays(node, next);
           if (!route.includes(next) && (days + maxDaysToNext) <= maxDays) {
-            queue.push([next, [...route, next], days + maxDaysToNext]);
+            stack.push([next, [...route, next], days + maxDaysToNext]);
           }
         }
       }
@@ -379,5 +379,7 @@
     }
   });
   </script>
+  <script data-goatcounter="https://98et5e.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
