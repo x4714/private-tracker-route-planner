@@ -38,6 +38,7 @@
   </form>
     <div id="gridContainer"></div>
       <div style="position: absolute; bottom: 0.5em; right: 0.5em; font-size: 13px; text-align: right; color: white; text-decoration: none;">
+      <p id="update-time" style="display: inline;">Last updated Loading...</p>
       <a href="https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/">TrackersInfo</a>
       <a href="https://github.com/ti-or/ti-or.github.io">GitHub repository</a>
     </div>
@@ -92,7 +93,21 @@
         gridContainer.style.display = 'none';
       }
     });
-    
+
+    const apiUrl = `https://api.github.com/repos/ti-or/ti-or.github.io/commits?path=data`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const commitDate = data[0].commit.committer.date;
+            const updateDate = new Date(commitDate).toLocaleDateString();
+            document.getElementById('update-time').innerText = `Last updated ${updateDate}`;
+        })
+        .catch(error => {
+            console.error('Error fetching commit data:', error);
+            document.getElementById('update-time').innerText = 'Unable to fetch data update time';
+        });
+
     let allRoutes = [];
     let currentRouteIndex = 0;
 
@@ -379,7 +394,6 @@
     }
   });
   </script>
-  <script data-goatcounter="https://98et5e.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+
 </body>
 </html>
