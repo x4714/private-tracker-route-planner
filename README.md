@@ -1,1 +1,1 @@
-This project was created with significant assistance from ChatGPT
+An AI-powered route planner for private trackers, utilizing data sourced from r/TrackersInfo
