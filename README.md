@@ -1,1 +1,1 @@
-An AI-powered route planner for private trackers, utilizing data sourced from r/TrackersInfo
+A route planner for private trackers, AI-generated and based on data from r/TrackersInfo.
