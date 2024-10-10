@@ -28,6 +28,18 @@
           <option value="fewestJumps">Least Jumps</option>
         </select>
       </div>
+      <div class="setting">
+        <label for="themeOption">Theme</label>
+        <select id="themeOption">
+          <option value="red">Red</option>
+          <option value="orange">Orange</option>
+          <option value="yellow">Yellow</option>
+          <option value="green">Green</option>
+          <option value="cyan">Cyan</option>
+          <option value="blue">Blue</option>
+          <option value="violet">Violet</option>
+        </select>
+      </div>
     </div>
     <div id="calcForm">
       <table id="headerTable">
@@ -51,7 +63,7 @@
   </form>
     <div id="gridContainer"></div>
       <div style="position: absolute; bottom: 0.5em; right: 0.5em; font-size: 13px; text-align: right; color: white; text-decoration: none;">
-      <p id="update-time" style="display: inline;">Last updated Loading...</p>
+      <p id="update-time" style="display: inline;">Data updated Loading...</p>
       <a href="https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/">TrackersInfo</a>
       <a href="https://github.com/ti-or/ti-or.github.io">GitHub repository</a>
     </div>
@@ -63,9 +75,42 @@
     const maxRouteLengthInput = document.getElementById('maxRouteLength');
     const maxDaysInput = document.getElementById('maxDays');
     const sortOption = document.getElementById('sortOption');
+    const themeOption = document.getElementById('themeOption');
     const settingsToggle = document.getElementById('settingsToggle');
-      let maxRouteLength = parseInt(maxRouteLengthInput.value, 10);
-      let maxDays = parseInt(maxDaysInput.value, 10);
+    let maxRouteLength = localStorage.getItem('maxRouteLength') || 5;
+    let maxDays = localStorage.getItem('maxDays') || 1080;
+    let sortOptionValue = localStorage.getItem('sortOption') || 'fastest';
+    let themeOptionValue = localStorage.getItem('themeOption') || 'red';
+
+    maxRouteLengthInput.value = maxRouteLength;
+    maxDaysInput.value = maxDays;
+    sortOption.value = sortOptionValue;
+    themeOption.value = themeOptionValue;
+
+    changeTheme(themeOptionValue);
+    
+    maxRouteLengthInput.addEventListener('change', (event) => {
+        maxRouteLength = parseInt(event.target.value, 10);
+        localStorage.setItem('maxRouteLength', maxRouteLength);
+        calculateRoute();
+    });
+
+    maxDaysInput.addEventListener('change', (event) => {
+        maxDays = parseInt(event.target.value, 10);
+        localStorage.setItem('maxDays', maxDays);
+        calculateRoute();
+    });
+
+    sortOption.addEventListener('change', () => {
+        localStorage.setItem('sortOption', sortOption.value);
+        calculateRoute();
+    });
+
+    themeOption.addEventListener('change', function() {
+        const theme = this.value;
+        localStorage.setItem('themeOption', theme);
+        changeTheme(theme);
+    });
 
     maxRouteLengthInput.addEventListener('change', (event) => {
       maxRouteLength = parseInt(event.target.value, 10);
@@ -134,7 +179,7 @@
         .then(data => {
             const commitDate = data[0].commit.committer.date;
             const updateDate = new Date(commitDate).toLocaleDateString();
-            document.getElementById('update-time').innerText = `Last updated ${updateDate}`;
+            document.getElementById('update-time').innerText = `Data updated ${updateDate}`;
         })
         .catch(error => {
             console.error('Error fetching commit data:', error);
@@ -143,6 +188,38 @@
 
     let allRoutes = [];
     let currentRouteIndex = 0;
+
+    function changeTheme(theme) {
+      let color;
+      
+      switch(theme) {
+        case 'red':
+          color = 'hsl(0, 40%, 40%)';
+          break;
+        case 'orange':
+          color = 'hsl(30, 80%, 40%)';
+          break;
+        case 'yellow':
+          color = 'hsl(60, 40%, 40%)';
+          break;
+        case 'green':
+          color = 'hsl(120, 40%, 40%)';
+          break;
+        case 'cyan':
+          color = 'hsl(180, 40%, 40%)';
+          break;
+        case 'blue':
+          color = 'hsl(240, 40%, 40%)';
+          break;
+        case 'violet':
+          color = 'hsl(300, 40%, 40%)';
+          break;
+        default:
+          color = 'hsl(0, 40%, 40%)';
+      }
+      
+      document.body.style.setProperty('--background', `linear-gradient(to right bottom, hsl(0, 0%, 0%), ${color})`);
+    }
 
     function toggleGrid(buttonId) {
       const gridContainer = document.getElementById('gridContainer');
@@ -456,6 +533,6 @@
   });
   </script>
   <script data-goatcounter="https://98et5e.goatcounter.com/count"
-      async src="//gc.zgo.at/count.js"></script>
+    async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
