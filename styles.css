@@ -11,6 +11,57 @@ a {
   color: white;
   text-decoration: none;
 }
+#settingsMenu {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 50px;
+  background: #0000005e;
+  font-size: 13px;
+  color: white;
+  padding: 10px 10px 0px 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+#settingsMenu .setting {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+#settingsMenu.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+#settingsMenu .setting label {
+  width: 80px;
+}
+#settingsMenu .setting input,#settingsMenu .setting select {
+  flex: 1;
+  padding: 4px;
+  width: 120px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+#settingsToggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
+  z-index: 1001;
+}
+
+#settingsToggle:hover {
+  color: #ddd;
+}
 
 #routeContainer {
   position: relative;
@@ -22,19 +73,6 @@ a {
   overflow: hidden;
   background: var(--background);
   user-select: none;
-}
-
-#settingsMenu {
-    position: absolute;
-    top: 0.5em;
-    right: 0.5em;
-    display: block;
-    font-size: 13px;
-    color: white;
-    background: #0000005e;
-    padding: 8px;
-    border-radius: 5px;
-    z-index: 1000;
 }
 
 #calcForm {
@@ -98,7 +136,7 @@ a {
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0);
-  z-index: 9000;
+  z-index: 900;
   cursor: pointer;
   word-break:break-all;
 }
@@ -240,10 +278,6 @@ td {
 }
 @media (max-width: 1600px) {
   #settingsMenu {
-    position: fixed;
-    padding: 0px;
-    border-radius: 0;
-    background: transparent;
     box-sizing: border-box;
   }
   #calcForm {

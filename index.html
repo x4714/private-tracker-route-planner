@@ -8,13 +8,26 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
+  <button id="settingsToggle" aria-label="Settings" title="Settings">⚙</button>
   <form id="routeContainer" style="display: block;">
-      <div id="settingsMenu">
-      <label for="maxRouteLength">Max Length</label>
-      <input type="number" id="maxRouteLength" value="5" min="1" style="width: 50px;">
-      <label for="maxDays">Max Days</label>
-      <input type="number" id="maxDays" value="1080" min="1" style="width: 50px;">
+    <div id="settingsMenu">
+      <div class="setting">
+        <label for="maxRouteLength">Max Jumps</label>
+        <input type="number" id="maxRouteLength" value="5" min="1">
+      </div>
+      
+      <div class="setting">
+        <label for="maxDays">Max Days</label>
+        <input type="number" id="maxDays" value="1080" min="1">
+      </div>
+      
+      <div class="setting">
+        <label for="sortOption">Sort By</label>
+        <select id="sortOption">
+          <option value="fastest">Fastest Route</option>
+          <option value="fewestJumps">Least Jumps</option>
+        </select>
+      </div>
     </div>
     <div id="calcForm">
       <table id="headerTable">
@@ -49,19 +62,39 @@
     const settingsMenu = document.getElementById('settingsMenu');
     const maxRouteLengthInput = document.getElementById('maxRouteLength');
     const maxDaysInput = document.getElementById('maxDays');
+    const sortOption = document.getElementById('sortOption');
+    const settingsToggle = document.getElementById('settingsToggle');
       let maxRouteLength = parseInt(maxRouteLengthInput.value, 10);
       let maxDays = parseInt(maxDaysInput.value, 10);
 
     maxRouteLengthInput.addEventListener('change', (event) => {
       maxRouteLength = parseInt(event.target.value, 10);
-      calculateRoute(); // Recalculate routes with new max depth
+      calculateRoute();
     });
 
     maxDaysInput.addEventListener('change', (event) => {
       maxDays = parseInt(event.target.value, 10);
-      calculateRoute(); // Recalculate routes with new max days
+      calculateRoute();
     });
 
+    sortOption.addEventListener('change', () => {
+      calculateRoute();
+    });
+    
+  settingsToggle.addEventListener('click', (event) => {
+    event.stopPropagation();
+    if (settingsMenu.style.display === 'none' || settingsMenu.style.display === '') {
+      settingsMenu.style.display = 'block';
+    } else {
+      settingsMenu.style.display = 'none';
+    }
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!settingsMenu.contains(event.target) && event.target !== settingsToggle) {
+      settingsMenu.style.display = 'none';
+    }
+  });
     const { routeInfo, unlockInviteClass, abbrList } = data;
 
     const style = document.createElement('style');
@@ -188,12 +221,9 @@
     }
 
     function calculateRoute() {
-
       const calcForm = document.getElementById('calcForm');
       const resultTitle = document.getElementById('routeChain');
       const resultDescription = document.getElementById('detailsTable');
-      const prevRouteButton = document.getElementById('prevroute');
-      const nextRouteButton = document.getElementById('nextroute');
       const resultFooter = document.getElementById('chainInfo');
 
       resultTitle.innerText = '';
@@ -248,23 +278,54 @@
         return;
       }
 
-      allRoutes = allRoutes.sort((a, b) => {
-        const timeA = a.reduce((sum, node, index) => {
-          if (index < a.length - 1 && routeInfo[node] && routeInfo[node][a[index + 1]]) {
-            return sum + getMaxDays(node, a[index + 1]);
-          }
-          return sum;
-        }, 0);
+      if (sortOption.value === 'fastest') {
+        allRoutes = allRoutes.sort((a, b) => {
+          const timeA = a.reduce((sum, node, index) => {
+            if (index < a.length - 1 && routeInfo[node] && routeInfo[node][a[index + 1]]) {
+              return sum + getMaxDays(node, a[index + 1]);
+            }
+            return sum;
+          }, 0);
 
-        const timeB = b.reduce((sum, node, index) => {
-          if (index < b.length - 1 && routeInfo[node] && routeInfo[node][b[index + 1]]) {
-            return sum + getMaxDays(node, b[index + 1]);
-          }
-          return sum;
-        }, 0);
+          const timeB = b.reduce((sum, node, index) => {
+            if (index < b.length - 1 && routeInfo[node] && routeInfo[node][b[index + 1]]) {
+              return sum + getMaxDays(node, b[index + 1]);
+            }
+            return sum;
+          }, 0);
 
-        return timeA - timeB;
-      });
+          if (timeA !== timeB) {
+            return timeA - timeB;
+          } else {
+            return a.length - b.length;
+          }
+        });
+      } else if (sortOption.value === 'fewestJumps') {
+        allRoutes = allRoutes.sort((a, b) => {
+          const lengthA = a.length;
+          const lengthB = b.length;
+
+          if (lengthA !== lengthB) {
+            return lengthA - lengthB;
+          } else {
+            const timeA = a.reduce((sum, node, index) => {
+              if (index < a.length - 1 && routeInfo[node] && routeInfo[node][a[index + 1]]) {
+                return sum + getMaxDays(node, a[index + 1]);
+              }
+              return sum;
+            }, 0);
+
+            const timeB = b.reduce((sum, node, index) => {
+              if (index < b.length - 1 && routeInfo[node] && routeInfo[node][b[index + 1]]) {
+                return sum + getMaxDays(node, b[index + 1]);
+              }
+              return sum;
+            }, 0);
+
+            return timeA - timeB;
+          }
+        });
+      }
 
       currentRouteIndex = 0;
       showRoute(0);
@@ -373,7 +434,7 @@
           </colgroup>
           <tr>
             <td>Route ${currentRouteIndex + 1} of ${allRoutes.length}</td>
-            <td>Total ${route.length - 2} transfer(s) ${totalDays} day(s)</td>
+            <td>Total ${route.length - 1} Jump(s) ${totalDays} Day(s)</td>
           </tr>
         </table>
       `;
@@ -394,6 +455,7 @@
     }
   });
   </script>
-
+  <script data-goatcounter="https://98et5e.goatcounter.com/count"
+      async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
