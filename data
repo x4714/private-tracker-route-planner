@@ -12,14 +12,14 @@ const data = {
 		"AlphaRatio": {
 			"Aither": [0, "Sphinx+, 1.0 > ratio", "Aug 2024"],
 			"Cathode-Ray.Tube": [0, "Sphinx+, 1.0 > ratio", "Aug 2024"],
-			"GazelleGames": [420, "Satyr/Adonis+ (12 TB, 2,400,000 bp, 60 weeks)", "Jul 2024"],
+			"GazelleGames": [420, "Satyr/Adonis+ (12 TB, 2,400,000 bp, 60 weeks)", "Sep 2024"],
 			"iAnon": [365, "Sphinx+, 1+ Year Membership, 1.5 > ratio", "Jul 2024"],
 			"LzTr": [0, "Sphinx+", "Jul 2024"],
 			"MoreThanTV": [0, "Sphinx+, ratio>1.5", "Sept 2024"],
-			"Orpheus": [0, "Sphinx+", "Aug 2024"],
+			"Orpheus": [0, "Sphinx+", "Oct 2024"],
 			"PixelHD": [180, "Sphinx+, 6 months, 2 extra proof from another trackers", "Jul 2024"],
 			"SceneHD": [365, "Sphinx+, 12 months, 1 scene torrent, 1 proof from another tracker", "Jul 2024"],
-			"TorrentSeeds": [0, "Sphinx+, 12 months or 1 proof from another tracker 12 months old", "Jul 2024"],
+			"TorrentSeeds": [0, "Sphinx+, 12 months or 1 proof from another tracker 12 months old", "Oct 2024"],
 			"UHDBits": [420, "Satyr/Adonis+ (12 TB, 2,400,000 bp, 60 weeks)", "Jul 2024"]
 		},
 		"AnimeBytes": {
@@ -39,7 +39,6 @@ const data = {
 			"PixelHD": [0, "PU+", "Aug 2024"],
 			"Redacted": [90, "PU+", "Jul 2024"],
 			"SugoiMusic": [90, "PU+", "Jul 2024"],
-			"TeamHD": [90, "PU+", "Jul 2024"],
 			"TheEmpire": [90, "PU+", "Jul 2024"],
 			"TheGeeks": [0, "Power User+, 3 tracker profiles (AnimeBytes (AB) included) that are 6 months old and have >=1.05 real ratio and 60GB real upload", "Aug 2024"],
 			"U2": [0, "PU+, 2 ways: a) can contribute original content (photo proofs) b) screenshot your anime collection and write about your favorite seasonal anime", "Jul 2024"],
@@ -78,8 +77,7 @@ const data = {
 			"PixelCove": [0, "Pro+", "Apr 2024"],
 			"PixelHD": [0, "Pro+, 3 profile links", "Apr 2024"],
 			"Redacted": [0, "Pro+", "Apr 2024"],
-			"SugoiMusic": [0, "Pro+", "Apr 2024"],
-			"TeamHD": [0, "Pro+", "Apr 2024"]
+			"SugoiMusic": [0, "Pro+", "Apr 2024"]
 		},
 		"Bibliotik": {
 			"AnimeBytes": [360, "12 months", "Feb 2023"],
@@ -202,7 +200,6 @@ const data = {
 			"LzTr": [180, "Pro Gamer+, 6 months", "Apr 2024"],
 			"MoreThanTV": [180, "Elite gamer+, ratio>1.5, 6 months", "Jan 2024"],
 			"MyAnonamouse": [0, "No requirement", "Jan 2024"],
-			"Nebulance": [0, "No requirement", "Jan 2024"],
 			"OpenCD": [180, "Elite gamer+, 6 months", "Jan 2024"],
 			"Orpheus": [0, "No requirement", "Jan 2024"],
 			"PassThePopcorn": [720, "Master Gamer+, 250+ uploads, 24 months", "Aug 2024"],
@@ -253,7 +250,6 @@ const data = {
 			"PixelCove": [0, "No requirement", "Jul 2024"],
 			"PornBay": [180, "6 months", "Jul 2024"],
 			"Portugas": [90, "3 months", "Jul 2024"],
-			"TeamHD": [0, "No requirement", "Jul 2024"],
 			"UHDBits": [0, "No requirement", "Jul 2024"]
 		},
 		"MyAnonamouse": {
@@ -298,7 +294,6 @@ const data = {
 			"iAnon": [365, "Ratio>1.05, 1 year", "Sep 2024"],
 			"LzTr": [180, "6 months", "Sep 2024"],
 			"MoreThanTV": [180, "Ratio>1.5, 6 months", "Sep 2024"],
-			"Nebulance": [0, "No requirements", "Sep 2024"],
 			"OpenCD": [0, "No requirements", "Sep 2024"],
 			"PassThePopcorn": [730, "TM+, 2 years", "Sep 2024"],
 			"Redacted": [90, "3 months", "Sep 2024"],
@@ -390,7 +385,6 @@ const data = {
 			"TBDev": [0, "Unstated", "Unknown"]
 		},
 		"TeamHD": {
-			"BroadCity": [60, "1080p, 2 months", "Feb 2023"],
 			"Cinemageddon": [360, "720p, 12 months", "Unknown"],
 			"Hares": [0, "PU+", "Feb 2023"],
 			"HD Dolby": [0, "1080i+", "Feb 2023"],
@@ -424,11 +418,9 @@ const data = {
 		},
 		"UHDBits": {
 			"Aither": [120, "Ratio>1.0, 4 months", "Jul 2024"],
-			"Anthelion": [0, "No requirement", "Jul 2024"],
 			"Dajiao PT": [0, "No requirement", "Jul 2024"],
 			"FileList": [180, "6 months", "Jul 2024"],
 			"iAnon": [365, "Ratio>1.4, 1 year", "Jul 2024"],
-			"Nebulance": [0, "No requirement", "Jul 2024"],
 			"Orpheus": [0, "No requirement", "Jul 2024"],
 			"ReelFlix": [0, "100+ GB seed size", "Jul 2024"]
 		}
