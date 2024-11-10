@@ -433,7 +433,7 @@ const data = {
 		"Bemaniso": [14, "PU: 2 weeks, 25GB upload, ratio>1.05"],
 		"Beyond-HD": [180, "Pro+: ratio 0.70, upload 1.25TB, average seedtime 1 month, total seedtime 4 years 11 months, completed seeds 60, special seedsize 500GB,6 months"],
 		"Bibliotik": [14, "PU+: 2 weeks, ratio>1.05, (10GB upload, 10 torrents) or (1GB upload, 100 torrents)"],
-		"Blutopia": [90, "BluExtremist+: 3 months, 20TB upload, or BluSeeder+: 1 month, 5TB seedsize, average seedtime 30+ days"],
+		"Blutopia": [30, "BluExtremist+: 3 months, 20TB upload, or BluSeeder+: 1 month, 5TB seedsize, average seedtime 30+ days"],
 		"BroadcasTheNet": [28, "PU+: 4 weeks, 250GB upload/download, 250 snatches (upload/download), 250,000 bonus points"],
 		"CartoonChaos": [28, "PU+: 50GB upload, 10GB download, 4 weeks"],
 		"Cathode-Ray Tube": [112, "Analog Ace: 16 weeks, 5 TiB upload, 5 uploads, 20 forum posts, ratio 1.5"],
