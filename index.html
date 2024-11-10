@@ -12,8 +12,8 @@
   <form id="routeContainer" style="display: block;">
     <div id="settingsMenu">
       <div class="setting">
-        <label for="maxRouteLength">Max Jumps</label>
-        <input type="number" id="maxRouteLength" value="5" min="1">
+        <label for="maxJumps">Max Jumps</label>
+        <input type="number" id="maxJumps" value="5" min="1">
       </div>
       
       <div class="setting">
@@ -63,35 +63,36 @@
   </form>
     <div id="gridContainer"></div>
       <div style="position: absolute; bottom: 0.5em; right: 0.5em; font-size: 13px; text-align: right; color: white; text-decoration: none;">
-      <p id="update-time" style="display: inline;">Data updated Loading...</p>
+      <p id="update-time" style="display: inline;">last updated Loading...</p>
       <a href="https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/">TrackersInfo</a>
-      <a href="https://github.com/ti-or/ti-or.github.io">GitHub repository</a>
+      <a href="https://github.com/ti-or/ti-or.github.io">GitHub</a>
     </div>
   <script>
 
   window.addEventListener('load', function() {
     
     const settingsMenu = document.getElementById('settingsMenu');
-    const maxRouteLengthInput = document.getElementById('maxRouteLength');
+    const maxJumpsInput = document.getElementById('maxJumps');
     const maxDaysInput = document.getElementById('maxDays');
     const sortOption = document.getElementById('sortOption');
     const themeOption = document.getElementById('themeOption');
     const settingsToggle = document.getElementById('settingsToggle');
-    let maxRouteLength = localStorage.getItem('maxRouteLength') || 5;
-    let maxDays = localStorage.getItem('maxDays') || 1080;
+    let maxJumps = parseInt(localStorage.getItem('maxJumps'), 10) || 5;
+    let maxDays = parseInt(localStorage.getItem('maxDays'), 10) || 1080;
     let sortOptionValue = localStorage.getItem('sortOption') || 'fastest';
     let themeOptionValue = localStorage.getItem('themeOption') || 'red';
 
-    maxRouteLengthInput.value = maxRouteLength;
+    maxJumpsInput.value = maxJumps;
     maxDaysInput.value = maxDays;
     sortOption.value = sortOptionValue;
     themeOption.value = themeOptionValue;
 
     changeTheme(themeOptionValue);
+    calculateRoute();
     
-    maxRouteLengthInput.addEventListener('change', (event) => {
-        maxRouteLength = parseInt(event.target.value, 10);
-        localStorage.setItem('maxRouteLength', maxRouteLength);
+    maxJumpsInput.addEventListener('change', (event) => {
+        maxJumps = parseInt(event.target.value, 10);
+        localStorage.setItem('maxJumps', maxJumps);
         calculateRoute();
     });
 
@@ -111,35 +112,22 @@
         localStorage.setItem('themeOption', theme);
         changeTheme(theme);
     });
-
-    maxRouteLengthInput.addEventListener('change', (event) => {
-      maxRouteLength = parseInt(event.target.value, 10);
-      calculateRoute();
-    });
-
-    maxDaysInput.addEventListener('change', (event) => {
-      maxDays = parseInt(event.target.value, 10);
-      calculateRoute();
-    });
-
-    sortOption.addEventListener('change', () => {
-      calculateRoute();
-    });
     
-  settingsToggle.addEventListener('click', (event) => {
-    event.stopPropagation();
-    if (settingsMenu.style.display === 'none' || settingsMenu.style.display === '') {
-      settingsMenu.style.display = 'block';
-    } else {
-      settingsMenu.style.display = 'none';
-    }
-  });
+    settingsToggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      if (settingsMenu.style.display === 'none' || settingsMenu.style.display === '') {
+        settingsMenu.style.display = 'block';
+      } else {
+        settingsMenu.style.display = 'none';
+      }
+    });
 
-  document.addEventListener('click', (event) => {
-    if (!settingsMenu.contains(event.target) && event.target !== settingsToggle) {
-      settingsMenu.style.display = 'none';
-    }
-  });
+    document.addEventListener('click', (event) => {
+      if (!settingsMenu.contains(event.target) && event.target !== settingsToggle) {
+        settingsMenu.style.display = 'none';
+      }
+    });
+
     const { routeInfo, unlockInviteClass, abbrList } = data;
 
     const style = document.createElement('style');
@@ -179,7 +167,7 @@
         .then(data => {
             const commitDate = data[0].commit.committer.date;
             const updateDate = new Date(commitDate).toLocaleDateString();
-            document.getElementById('update-time').innerText = `Data updated ${updateDate}`;
+            document.getElementById('update-time').innerText = `last updated ${updateDate}`;
         })
         .catch(error => {
             console.error('Error fetching commit data:', error);
@@ -345,7 +333,7 @@
           calcForm.style.display = 'block';
           return;
         }
-        allRoutes = findAllRoutes(start, end, maxRouteLength, maxDays);
+        allRoutes = findAllRoutes(start, end, maxJumps, maxDays);
       }
 
       if (allRoutes.length === 0) {
@@ -408,14 +396,14 @@
       showRoute(0);
     }
 
-    function findAllRoutes(start, end, maxDepth = 5, maxDays = 1080) {
+    function findAllRoutes(start, end, maxJumps = 5, maxDays = 1080) {
       const result = [];
       const stack = [[start, [start], 0]];
 
       while (stack.length) {
         const [node, route, days] = stack.pop();
         
-        if (route.length > maxDepth + 1 || days > maxDays) continue;
+        if (route.length > maxJumps + 1 || days > maxDays) continue;
 
         if (node === end) {
           result.push(route);
@@ -533,6 +521,6 @@
   });
   </script>
   <script data-goatcounter="https://98et5e.goatcounter.com/count"
-    async src="//gc.zgo.at/count.js"></script>
+  async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
