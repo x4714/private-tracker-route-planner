@@ -1,7 +1,6 @@
 const data = {
 	"routeInfo": {
 		"Aither": {
-			"Blutopia": [0, "Prometheus+", "Aug 2024"],
 			"Cathode-Ray.Tube": [0, "Prometheus+, ratio >= 1", "Aug 2024"],
 			"Hawke-uno": [0, "Prometheus+", "Aug 2024"],
 			"ImmortalSeed": [0, "Prometheus+", "Aug 2024"],
@@ -47,7 +46,6 @@ const data = {
 		"Anthelion": {
 			"Aither": [120, "4 months", "Jan 2024"],
 			"BakaBT": [0, "ratio>1.0, ANT activity proof", "Jan 2024"],
-			"Blutopia": [120, "4 months", "Jan 2024"],
 			"Cathode-Ray.Tube": [90, "3 months, ratio>1.0", "Jan 2024"],
 			"CinemaZ": [180, "Fanatic+, 50 uploads or 75 adoptions + 5 uploads, 1TB uploaded, 6 months, ratio>1.1", "Jan 2024"],
 			"Nebulance": [180, "Fanatic+, 6 months", "Jan 2024"],
@@ -91,13 +89,6 @@ const data = {
 			"ThePlace": [0, "No requirement", "Feb 2023"],
 			"TheShow": [0, "No requirement", "Feb 2023"],
 			"TheVault": [1080, "Pro+, 36 months", "Feb 2023"]
-		},
-		"Blutopia": {
-			"Aither": [0, "", "Jul 2024"],
-			"Desitorrents": [0, "0.25 Ratio or higher", "Jul 2024"],
-			"Immortal-s": [0, "", "Jul 2024"],
-			"Orpheus": [0, "", "Jul 2024"],
-			"OnlyEncodes+": [0, "", "Jul 2024"]
 		},
 		"BroadcasTheNet": {
 			"Aither": [0, "", "Aug 2024"],
@@ -191,7 +182,6 @@ const data = {
 			"Anthelion": [0, "No requirement", "Jan 2024"],
 			"BakaBT": [180, "Pro Gamer+, 6 months", "Apr 2024"],
 			"Beyond-HD": [720, "Master Gamer+, 24 months", "Jul 2024"],
-			"Blutopia": [90, "3 months", "Sep 2024"],
 			"Cathode-Ray.Tube": [0, "ratio>1.0", "Jan 2024"],
 			"CGPeers": [180, "2TB upload, real ratio>1.0, 6 months or Elite gamer+, 2TB upload, real ratio>1.0, 3 months", "Jan 2024"],
 			"Dolphin Is Coming": [0, "10 music torrent uploads or 15 other torrent uploads", "Jan 2024"],
@@ -212,7 +202,6 @@ const data = {
 			"Aither": [0, "", "Dec 2023"],
 			"AnimeBytes": [365, "1 year", "Dec 2023"],
 			"Beyond-HD": [0, "", "Dec 2023"],
-			"Blutopia": [90, "3 months", "Dec 2023"],
 			"D3Si": [365, "1080p, 1 year", "Dec 2023"],
 			"GazelleGames": [90, "1080i, 3 months", "Dec 2023"],
 			"HD-Only": [365, "1080p, 1 year", "Sept 2024"],
@@ -278,7 +267,6 @@ const data = {
 			"Aither": [0, "No requirement", "May 2024"],
 			"Anthelion": [0, "No requirement", "May 2024"],
 			"BakaBT": [0, "No requirement", "May 2024"],
-			"Blutopia": [90, "3 months", "May 2024"],
 			"Cathode-Ray.Tube": [180, "6 months", "May 2024"],
 			"GreatPosterWall": [56, "Flattop+, 8 weeks, 250 GB, 250 snatches, 250k bp", "May 2024"],
 			"Orpheus": [90, "3 months", "May 2024"],
@@ -309,7 +297,6 @@ const data = {
 			"BakaBT": [180, "PU+, 6 months+", "Jul 2024"],
 			"Beyond-HD": [112, "TM+", "Jul 2024"],
 			"Bit-HDTV": [0, "PU+", "Jul 2024"],
-			"Blutopia": [0, "PU+", "Apr 2024"],
 			"BroadcasTheNet": [360, "TM+, 12 months+", "Jul 2024"],
 			"BroadCity": [60, "PU+, 2 months+", "Apr 2024"],
 			"Canal Street": [180, "PU+, 6 months+", "Jul 2024"],
@@ -349,7 +336,6 @@ const data = {
 			"Anthelion": [0, "PU+", "May 2024"],
 			"BakaBT": [180, "PU+, 6 months", "May 2024"],
 			"Beyond-HD": [540, "Torrent Master+, 18 months", "Aug 2024"],
-			"Blutopia": [0, "PU+", "Aug 2024"],
 			"BroadcasTheNet": [360, "Torrent Master+, 12 months", "May 2024"],
 			"CGPeers": [180, "PU+, 6 months, Ratio>2.0, 200GB+ Upload or Elite+, 3 months, Ratio>1.0, 200GB+ Upload", "May 2024"],
 			"Concertos": [0, "PU+", "May 2024"],
