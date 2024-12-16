@@ -233,11 +233,6 @@ const data = {
 		"iAnon": {
 			"Cathode-Ray.Tube": [0, "PU, Ratio >= 1.0", "May 2024"]
 		},
-		"JPopsuki": {
-			"Orpheus": [180, "PU+, 6 months", "Mar 2023"],
-			"SugoiMusic": [0, "No requirement", "Mar 2023"],
-			"U2": [0, "2 unlimited invite posts, one suspended, another active (requiring 3 months, ACG collection proofs)", "Mar 2023"]
-		},
 		"JPTV.club": {
 			"AsianCinema": [180, "Power User, 6 months-old account", "Jul 2024"]
 		},
