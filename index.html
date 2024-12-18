@@ -290,11 +290,13 @@
       const resultTitle = document.getElementById('routeChain');
       const resultDescription = document.getElementById('detailsTable');
       const resultFooter = document.getElementById('chainInfo');
-
+      const prevRoute = document.getElementById('prevroute');
+      const nextRoute = document.getElementById('nextroute');
       resultTitle.innerText = '';
       resultDescription.innerHTML = '';
       resultFooter.innerText = '';
-
+      prevRoute.style.display = 'none';
+      nextRoute.style.display = 'none';
       const start = document.getElementById('source').textContent.trim();
       const end = document.getElementById('target').textContent.trim();
 
@@ -315,6 +317,7 @@
         allRoutes = Object.keys(routeInfo)
           .filter(node => routeInfo[node] && routeInfo[node][end])
           .map(node => [node, end]);
+        showAllRoutes();
       } else if (end === 'To') {
         if (!routeInfo[start]) {
           resultTitle.innerText = 'No official recruitment';
@@ -326,6 +329,7 @@
           .map(node => [start, node])
           .filter(([from, to]) => routeInfo[from] && routeInfo[from][to])
           .map(([from, to]) => [from, to]);
+        showAllRoutes();
       } else {
         if (!routeInfo[start]) {
           resultTitle.innerText = 'No official recruitment';
@@ -334,6 +338,7 @@
           return;
         }
         allRoutes = findAllRoutes(start, end, maxJumps, maxDays);
+        showRoute(0);
       }
 
       if (allRoutes.length === 0) {
@@ -393,7 +398,7 @@
       }
 
       currentRouteIndex = 0;
-      showRoute(0);
+
     }
 
     function findAllRoutes(start, end, maxJumps = 5, maxDays = 1080) {
@@ -420,6 +425,102 @@
 
       return result;
     }
+    
+    function showAllRoutes() {
+        const calcForm = document.getElementById('calcForm');
+        const resultTitle = document.getElementById('routeChain');
+        const resultDescription = document.getElementById('detailsTable');
+        const resultFooter = document.getElementById('chainInfo');
+        if (allRoutes.length === 0) {
+            resultTitle.innerText = 'No results found';
+            resultDescription.innerText = '';
+            calcForm.style.display = 'block';
+            return;
+        }
+
+        resultTitle.innerHTML = '';
+        resultDescription.innerHTML = '';
+
+        allRoutes.forEach((route, index) => {
+            const routeHTML = generateRouteDetails(route, index);
+            resultTitle.innerHTML += routeHTML.title;
+            resultDescription.innerHTML += routeHTML.details;
+        });
+
+        resultFooter.innerHTML = `Total Routes: ${allRoutes.length}`;
+        calcForm.style.display = 'block';
+    }
+
+    function generateRouteDetails(route, index) {
+        const resultTitle = document.getElementById('routeChain');
+        const resultDescription = document.getElementById('detailsTable');
+        const chainInfo = document.getElementById('chainInfo');
+
+        function getAbbreviation(name) {
+            return abbrList[name] || name;
+        }
+
+        const abbreviatedRoute = route.map(node => getAbbreviation(node));
+
+        let displayRoute = abbreviatedRoute.join(' -> ');
+
+        const totalDays = route.reduce((sum, node, index) => {
+            if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
+                return sum + getMaxDays(node, route[index + 1]);
+            }
+            return sum;
+        }, 0);
+
+        const details = route.map((node, index) => {
+            if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
+                const nextNode = route[index + 1];
+                const maxDays = getMaxDays(node, nextNode);
+                const [time, requirement, lastActivity] = routeInfo[node][nextNode];
+
+                let tableHTML = `
+                    <table id="routeTable">
+                        <colgroup>
+                            <col style="width: 200px;" />
+                            <col />
+                        </colgroup>
+                        <tr>
+                            <td>${node} -> ${nextNode}</td>
+                            <td>${maxDays} days</td>
+                        </tr>
+                        <tr>
+                            <td>Class for invite forum</td>
+                            <td>${unlockInviteClass[node] ? unlockInviteClass[node][1] : ''}</td>
+                        </tr>
+                        <tr>
+                            <td>Requirements</td>
+                            <td>${requirement ? requirement : ''}</td>
+                        </tr>
+                        <tr>
+                            <td>Last time checked</td>
+                            <td>${lastActivity}</td>
+                        </tr>
+                    </table>
+                `;
+                return `<div class="table-container">${tableHTML}</div>`;
+            }
+            return '';
+        }).join('');
+
+        const footerHTML = `
+            <table id="routeTable">
+                <colgroup>
+                    <col style="width: 200px;" />
+                    <col />
+                </colgroup>
+                <tr>
+                    <td>Route ${index + 1} of ${allRoutes.length}</td>
+                    <td>Total ${route.length - 1} Jump(s) ${totalDays} Day(s)</td>
+                </tr>
+            </table>
+        `;
+
+        return { title: ``, details: details };
+    }
 
     function showRoute(direction) {
       if (allRoutes.length === 0) return;
@@ -430,7 +531,8 @@
       const resultTitle = document.getElementById('routeChain');
       const resultDescription = document.getElementById('detailsTable');
       const chainInfo = document.getElementById('chainInfo');
-
+      const prevRoute = document.getElementById('prevroute');
+      const nextRoute = document.getElementById('nextroute');
       function getAbbreviation(name) {
         return abbrList[name] || name;
       }
@@ -506,6 +608,8 @@
       
       resultDescription.innerHTML = details;
       chainInfo.innerHTML = footerHTML;
+      prevRoute.style.display = 'inline';
+      nextRoute.style.display = 'inline';
     }
 
     function setTextContent(id, text) {
