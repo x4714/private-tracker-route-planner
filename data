@@ -1,12 +1,13 @@
 const data = {
 	"routeInfo": {
 		"Aither": {
-			"Cathode-Ray.Tube": [0, "Prometheus+, ratio >= 1", "Nov 2024"],
-			"Hawke-uno": [0, "Prometheus+", "Nov 2024"],
-			"ImmortalSeed": [0, "Prometheus+", "Nov 2024"],
-			"LST": [0, "Prometheus+", "Nov 2024"],
-			"OnlyEncodes+": [0, "Prometheus+", "Nov 2024"],
-			"ReelFlix": [0, "Prometheus+", "Nov 2024"]
+			"Unwalled Podcasts": [0, "Harmonia+,5 uploads", "Jan 2025"],		
+			"Cathode-Ray.Tube": [0, "Prometheus+, ratio >= 1", "Jan 2025"],
+			"Hawke-uno": [0, "Prometheus+", "Jan 2025"],
+			"ImmortalSeed": [0, "Prometheus+", "Jan 2025"],
+			"LST": [0, "Prometheus+", "Jan 2025"],
+			"OnlyEncodes+": [0, "Prometheus+", "Jan 2025"],
+			"ReelFlix": [0, "Prometheus+", "Jan 2025"]
 		},
 		"AlphaRatio": {
 			"Aither": [0, "Sphinx+, 1.0 > ratio", "Aug 2024"],
@@ -15,6 +16,7 @@ const data = {
 			"iAnon": [365, "Sphinx+, 1+ Year Membership, 1.5 > ratio", "Jul 2024"],
 			"LzTr": [0, "Sphinx+", "Jul 2024"],
 			"MoreThanTV": [0, "Sphinx+, ratio>1.5", "Sept 2024"],
+			"Obscure": [0, "Sphinx+", "Jan 2025"],			
 			"Orpheus": [0, "Sphinx+", "Oct 2024"],
 			"PixelHD": [180, "Sphinx+, 6 months, 2 extra proof from another trackers", "Jul 2024"],
 			"SceneHD": [365, "Sphinx+, 12 months, 1 scene torrent, 1 proof from another tracker", "Jul 2024"],
@@ -44,15 +46,16 @@ const data = {
 			"UHDBits": [0, "No requirement", "Nov 2024"]
 		},
 		"Anthelion": {
-			"Aither": [120, "4 months", "Nov 2024"],
-			"BakaBT": [0, "ratio>1.0, ANT activity proof", "Nov 2024"],
-			"Blutopia": [120, "4 months", "Nov 2024"],
-			"Cathode-Ray.Tube": [90, "3 months, ratio>1.0", "Nov 2024"],
-			"CinemaZ": [180, "Fanatic+, 50 uploads or 75 adoptions + 5 uploads, 1TB uploaded, 6 months, ratio>1.1", "Nov 2024"],
-			"Nebulance": [180, "Fanatic+, 6 months", "Nov 2024"],
-			"Orpheus": [0, "Fanatic+, ANT activity proof", "Nov 2024"],
-			"ReelFliX": [0, "Seedsize>100GB", "Nov 2024"],
-			"RetroFlix": [0, "PU+", "Nov 2024"]
+			"Aither": [120, "PU+", "Dec 2024"],
+			"BakaBT": [0, "3 months, ratio>1.0", "Dec 2024"],
+			"Cathode-Ray.Tube": [90, "3 months, ratio>1.0", "Dec 2024"],
+			"CinemaZ": [180, "Fanatic+, 50 uploads or 75 adoptions + 5 uploads, 1TB uploaded, 6 months, ratio>1.1, ANT activity proof", "Dec 2024"],
+			"Nebulance": [180, "Fanatic+, 6 months", "Dec 2024"],
+			"OldToonsWorld": [0, "3 months", "Dec 2024"],			
+			"Orpheus": [0, "Fanatic+, ANT activity proof", "Dec 2024"],
+			"ReelFliX": [0, "Seedsize>100GB", "Dec 2024"],
+			"RetroFlix": [0, "PU+", "Dec 2024"],
+			"Unwalled Podcasts": [0, "3 months", "Dec 2024"]			
 		},
 		"AvistaZ": {
 			"CinemaZ": [120, "10k bp, Member Rank, 4 months, seeding 5 torrents, ratio>2.0, 300 GB", "Apr 2024"],
@@ -92,11 +95,14 @@ const data = {
 			"TheVault": [180, "6 months", "Nov 2024"]
 		},
 		"Blutopia": {
-			"Aither": [0, "No requirement", "Jul 2024"],
-			"Desitorrents": [0, "0.25 Ratio or higher", "Jul 2024"],
-			"Immortal-s": [0, "No requirement", "Jul 2024"],
-			"Orpheus": [0, "No requirement", "Jul 2024"],
-			"OnlyEncodes+": [0, "No requirement", "Jul 2024"]
+			"ReelFlix": [0, "No requirement", "Jan 2025"],		
+			"Desitorrents": [0, "90 day + old account", "Jan 2025"],
+			"Immortal-s": [0, "3 other proofs", "Jan 2025"],
+			"OnlyEncodes+": [0, "No requirement", "Jan 2025"],
+			"Concertos": [0, "BluCollector+,10 uploads", "Jan 2025"],
+			"PrivateSilverScreen": [0, "1TB real upload, 5 days seedtime,90 day + old account", "Jan 2025"],
+			"OldToonsWorld": [0, "No requirement", "Jan 2025"],
+			"Unwalled Podcasts": [0, "5+ uploads", "Jan 2025"]		
 		},
 		"BroadcasTheNet": {
 			"Aither": [0, "No requirement", "Nov 2024"],
@@ -127,9 +133,9 @@ const data = {
 			"TeamHD": [0, "No requirement", "Jan 2024"]
 		},
 		"Cathode-Ray.Tube": {
-			"Aither": [0, "", "23-Dec"],
-			"Hawke-uno": [0, "", "23-Dec"],
-			"iAnon": [0, "", "23-Dec"]
+			"Aither": [0, "", "Dec 2024"],
+			"Hawke-uno": [0, "", "Dec 2024"],
+			"iAnon": [0, "", "Dec 2024"]
 		},
 		"Cinemageddon": {
 			"Aither": [0, "No requirement", "Jul 2024"],
@@ -168,14 +174,12 @@ const data = {
 			"PrivateHD": [120, "10k bp, Member Rank, 4 months, seeding 5 torrents, ratio>2.0, 300 GB", "Apr 2024"]
 		},
 		"FileList": {
-			"Aither": [365, "Elite or VIP, 1 year", "Jan 2024"],
-			"Cathode-Ray.Tube": [360, "VIP or Elite, 12 months, ratio>=1.0", "Jan 2024"],
-			"Cinemageddon": [1825, "VIP or Elite, Some ratio proofs, 5 years", "Jan 2024"],
-			"iAnon": [365, "VIP or Elite, ratio>=1.4, 1 year", "Jan 2024"],
-			"Milkie": [0, "VIP or Elite", "Jan 2024"],
-			"MusicTorrents": [0, "VIP or Elite+", "Jan 2024"],
-			"Nebulance": [364, "VIP or Elite+, 52 weeks", "Jan 2024"],
-			"Portugas": [0, "VIP or Elite+, Ratio proofs from 2 trackers (FL included)", "Jan 2024"]
+			"Aither": [365, "Elite+, 1 year", "Jan 2025"],
+			"Cathode-Ray.Tube": [360, "12 months, ratio>=1.0", "Jan 2025"],
+			"iAnon": [365, "Elite or higher, ratio=>1.4, 1 year", "Jan 2025"],
+			"Milkie": [0, "no requirements", "Jan 2025"],
+			"MusicTorrents": [0, "VIP or Elite+", "Jan 2025"],
+			"Portugas": [0, "Ratio proofs from 2 trackers (FL included)", "Jan 2025"]
 		},
 		"GazelleGames": {
 			"Aither": [0, "No requirement", "Nov 2024"],
