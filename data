@@ -2,7 +2,7 @@ const data = {
 	"routeInfo": {
 		"Aither": {
 			"Anthelion": [0, "Prometheus+", "Mar 2025"],
-			"BeyondHD": [365, "Gigantes+", "Mar 2025"],
+			"Beyond-HD": [365, "Gigantes+", "Mar 2025"],
 			"Unwalled Podcasts": [0, "Harmonia+,5 uploads", "Mar 2025"],		
 			"Cathode-Ray.Tube": [365, "Prometheus+, 1 year, ratio >= 1", "Mar 2025"],
 			"Hawke-uno": [0, "Prometheus+", "Mar 20255"],
@@ -517,6 +517,7 @@ const data = {
 		"Dolphin Is Coming": "DIC",
 		"Empornium": "EMP",
 		"ExoticaZ": "EZ",
+		"FearNoPeer": "FNP",
 		"FileList": "FL",
 		"FunFile": "FF",
 		"GazelleGames": "GGn",
