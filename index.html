@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="data"></script>
+  <script src="data.json"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrackersInfo Official Recruitments</title>
@@ -166,74 +166,70 @@
     }
 
     .route-header {
-      padding: 8px 12px; /* Slightly adjust padding if needed */
-      background-color: #f0f0f0; /* Default background */
+      padding: 8px 12px; 
+      background-color: #d2efff; 
       border-bottom: 1px solid #ddd;
       transition: background-color 0.2s ease;
-      display: flex; /* Use flexbox for alignment */
-      align-items: center; /* Center items vertically */
-      gap: 10px; /* Adjust gap between Route# and Time/Changes */
-      font-size: 13px; /* Set base font size */
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+      font-size: 13px; 
     }
 
     .route-header:hover {
       background-color: #e0e0e0;
     }
 
-    /* Styles for the ACTIVE route header */
     .route-header.active {
-      background-color: #f8f9fa; /* Use a very light grey or white for active */
-      /* border-left: 5px solid var(--primary-color); */ /* Remove or keep blue indicator? */
-      /* padding-left: 10px; */
+      background-color: #d2efff;  
     }
-
-    /* Style for the "Route X" label */
+    
     .route-number-label {
-      background-color: #f5a623; /* Orange background */
+      background-color: #f5a623; 
       color: white;
-      padding: 4px 8px; /* Adjust padding */
-      /* border-radius: 4px; */ /* Remove rounded corners */
-      border-radius: 0; /* Use square corners */
-      font-weight: 500; /* Keep font weight */
+      padding: 4px 8px; 
+       
+      border-radius: 0; 
+      font-weight: 500; 
       white-space: nowrap;
       flex-shrink: 0;
-      font-size: 13px; /* Explicitly set font size */
+      font-size: 13px; 
     }
 
-    /* General style for info displays (Time, Changes) */
+    
     .route-time-display,
     .route-changes-display {
       display: inline-flex; 
       align-items: center;
       gap: 5px;
-      font-size: 13px; /* Set font size for the value text */
+      font-size: 13px; 
       color: #333;
     }
 
-    /* Push Time display to the right */
+    
     .route-time-display {
-      margin-left: 40%; /* This pushes Time and subsequent elements (Changes) to the right */
+      margin-left: 40%; 
     }
 
-    /* General style for the colored labels */
+    
     .route-label {
       color: white;
-      padding: 3px 6px; /* Adjust padding */
-      font-size: 13px; /* Set font size */
+      padding: 3px 6px; 
+      font-size: 13px; 
     }
 
-    /* Specific label colors */
+    
     .time-label {
-      background-color: #d9534f; /* Red background */
+      background-color: #d9534f; 
       color: white; 
     }
 
     .changes-label {
-      background-color: #5f4b8b; /* Purple background */
+      background-color: #5f4b8b; 
       color: white;
     }
 
-    /* 添加展开/收缩指示器 */
+    
     .route_header::after {
       display: none;
     }
@@ -264,7 +260,7 @@
     }
 
     #routeTable .route-header {
-      background: #f8f9fa;
+      background: #d2efff;
       font-weight: 500;
       color: var(--text-color);
     }
@@ -318,7 +314,7 @@
       color: #5f6368;
     }
 
-    /* Route chain styles */
+    
     #routeChain {
       display: flex;
       align-items: center;
@@ -345,7 +341,7 @@
       color: #5f6368;
     }
 
-    /* Footer styles */
+    
     #update-time {
       position: fixed;
       bottom: 0.5em;
@@ -366,7 +362,7 @@
       color: var(--secondary-color);
     }
 
-    /* Media queries */
+    
     @media (max-width: 720px) {
       #headerTable {
         height: auto;
@@ -521,7 +517,7 @@
       margin: 8px 0;
     }
 
-    /* Remove station buttons */
+    
     .station-buttons {
       display: none;
     }
@@ -529,18 +525,18 @@
 
 
 
-    /* Remove the previous hover effects */
+    
     .block.route:hover::before,
     .block.route:hover::after {
       display: none;
     }
 
-    /* Remove the route header arrow */
+    
     .route_header::after {
       display: none;
     }
 
-    /* Remove the scroll indicator */
+    
     #detailsTable::-webkit-scrollbar-button {
       display: none;
     }
@@ -732,113 +728,113 @@
       50% { opacity: 1; }
     }
 
-    /* 确保路线内容正确显示 */
+    
     .row.sta, .row.line {
       width: 100%;
       box-sizing: border-box;
     }
 
-    /* --- Add Inline Settings Styles --- */
+    
     .inline-settings-container {
-      /* display: flex; */ /* REMOVED */
-      flex-wrap: wrap; /* Allow sections to wrap */
-      gap: 15px; /* Gap between sections */
-      background-color: #f8f9fa; /* Light background for the whole area */
+       
+      flex-wrap: wrap; 
+      gap: 15px; 
+      background-color: #f8f9fa; 
       border: 1px solid #e9ecef;
-      /* Removed border-radius */
-      margin-top: 20px; /* Space above settings */
-      margin-bottom: 20px; /* Space below settings */
-      max-width: 800px; /* Match details table width */
+      
+      margin-top: 20px; 
+      margin-bottom: 20px; 
+      max-width: 800px; 
       margin-left: auto;
       margin-right: auto;
     }
 
     .settings-section {
-      flex: 1; /* Allow sections to grow */
-      min-width: 250px; /* Minimum width before wrapping */
+      flex: 1; 
+      min-width: 250px; 
       display: flex;
       flex-direction: column;
-      width: 100%; /* Added */
-      margin-bottom: 15px; /* Added */
-      box-sizing: border-box; /* Added */
+      width: 100%; 
+      margin-bottom: 15px; 
+      box-sizing: border-box; 
     }
-    .settings-section:last-child { /* Added rule */
+    .settings-section:last-child { 
       margin-bottom: 0;
     }
 
     .settings-header {
-      background-color: #ff9500; /* Orange header */
+      background-color: #ff9500; 
       color: white;
       padding: 6px 10px;
       font-size: 14px;
       font-weight: 500;
-      /* Removed border-radius */
+      
     }
 
     .settings-options {
       background-color: white;
       padding: 10px;
-      /* border: 1px solid #dee2e6; */ /* Removed border */
-      /* border-top: none; */
-      /* Removed border-radius */
+       
+      
+      
       flex-grow: 1;
-      display: flex; /* ADDED Flex display */
-      flex-wrap: wrap; /* ADDED Allow wrapping */
-      gap: 15px 25px; /* ADDED Adjust row and column gap */
-      align-items: flex-start; /* ADDED Align items to top */
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 15px 25px; 
+      align-items: flex-start; 
     }
 
     .settings-option-item {
-      /* display: flex; */ /* REMOVED */
-      /* justify-content: space-between; */ /* REMOVED */
-      /* align-items: center; */ /* REMOVED */
-      margin-bottom: 0; /* Changed */
-      gap: 10px; /* Gap between label and control */
-      flex: 1 1 auto; /* ADDED Allow grow, shrink, auto basis */
-      min-width: 140px; /* ADDED Adjust min-width */
-      display: flex; /* ADDED */
-      flex-direction: column; /* ADDED */
+       
+       
+       
+      margin-bottom: 0; 
+      gap: 10px; 
+      flex: 1 1 auto; 
+      min-width: 140px; 
+      display: flex; 
+      flex-direction: column; 
     }
 
     .settings-option-item:last-child {
       margin-bottom: 0;
     }
 
-    .settings-option-item label:first-child { /* ADDED Rule */
+    .settings-option-item label:first-child { 
       font-weight: 500;
       display: block;
     }
 
     .radio-options {
       display: flex;
-      flex-wrap: wrap; /* Allow options to wrap */
-      gap: 5px 15px; /* Adjust Row gap, Column gap */
+      flex-wrap: wrap; 
+      gap: 5px 15px; 
     }
 
     .radio-option {
       display: flex;
       align-items: center;
-      gap: 4px; /* Gap between radio and its text */
+      gap: 4px; 
       font-size: 13px;
       cursor: pointer;
-      /* margin-right: 10px; */ /* REMOVED */
+       
     }
     .radio-option input[type="radio"] {
       margin: 0;
       cursor: pointer;
     }
 
-    /* Remove old input/select styles if they existed */
+    
     .settings-option-item input[type="number"],
     .settings-option-item select {
-      display: none; /* Hide old controls */
+      display: none; 
     }
 
-    /* --- Update Existing Styles --- */
+    
     .station-selector-container,
     .input-group,
     .station-label,
-    /* .station-input, */ /* Exclude this maybe? */
+     
     .input-icon-btn,
     .swap-btn,
     .inline-settings-container,
@@ -855,12 +851,12 @@
     .timeline-marker,
     .pagination,
     .page-btn,
-    #gridContainer, /* If it has rounded corners */
+    #gridContainer, 
 
-    .grid-item, /* If it has rounded corners */
-    .filter-input /* If it has rounded corners */
+    .grid-item, 
+    .filter-input 
      {
-      border-radius: 0 !important; /* Force square corners */
+      border-radius: 0 !important; 
     }
 
     .pagination {
@@ -893,80 +889,80 @@
 
 
 
-    /* --- Styles for New Current Selection Display --- */
+    
     .current-selection-display {
-      display: none; /* Hide this for now */
+      display: none; 
     }
 
-    /* --- Styles for Station Selector --- */
+    
     .station-selector-container {
-      display: none; /* Hide this for now */
+      display: none; 
     }
 
-    /* Wrapper for input and abbreviation */
+    
     .input-station-wrapper {
       display: flex;
-      flex-direction: column; /* Stack input and abbreviation */
+      flex-direction: column; 
     }
 
-    /* Style the input field */
+    
     input.station-input {
       padding: 8px 10px;
       border: 1px solid #ccc;
-      /* border-radius: 4px; */ /* REMOVED */
+       
       font-size: 14px;
-      /* width: 100%; */ /* Make it take available width in the table cell */
+       
       box-sizing: border-box;
     }
 
-    /* Style the abbreviation display */
+    
     .station-abbr {
       font-size: 12px;
       color: #666;
-      text-align: left; /* Or center/right as needed */
+      text-align: left; 
       margin-top: 3px;
-      min-height: 1em; /* Prevent layout shift when switching to 'Any' */
+      min-height: 1em; 
     }
 
-    /* Adjust table cell padding if needed */
+    
     #headerTable td.col2,
     #headerTable td.col4 {
-      padding: 5px; /* Adjust padding */
-      vertical-align: top; /* Align content to top */
+      padding: 5px; 
+      vertical-align: top; 
     }
 
-    /* Hide the default datalist dropdown arrow if desired (browser-specific) */
+    
     input.station-input::-webkit-calendar-picker-indicator {
       display: none;
     }
 
-    /* Specific label colors and text color */
+    
     .time-label {
-      background-color: #d9534f; /* Red background */
-      color: white; /* White text */
+      background-color: #d9534f; 
+      color: white; 
     }
 
     .changes-label {
-      background-color: #5f4b8b; /* Purple background */
-      color: white; /* White text */
+      background-color: #5f4b8b; 
+      color: white; 
     }
 
-    /* Ensure the general route-label style doesn't override the text color */
+    
     .route-label {
-      /* background-color: (set by specific class); */
-      color: white; /* Default to white text */
+      
+      color: white; 
       padding: 2px 8px;
       font-size: 11px;
     }
 
-    /* Route Detail Container */
+    
     .dtl {
       border: 1px solid #ccc;
-      background-color: #f8f9fa; /* Light grey background */
+      background-color: #f8f9fa; 
       padding: 0;
     }
 
-    /* General Row Styles */
+    
     .dtl .row {
       position: relative;
     }
@@ -974,69 +970,69 @@
     .dtl .tbl {
       display: table;
       width: 100%;
-      table-layout: fixed; /* Helps with column widths */
+      table-layout: fixed; 
     }
 
     .dtl .col {
       display: flex;
-      vertical-align: top; /* Align content to top */
+      vertical-align: top; 
       padding: 5px;
     }
 
-    /* Border Column (Vertical Line & Markers) */
+    
     .dtl .col.border {
-      width: 10px; /* Fixed width for the line/markers */
-      position: relative; /* For positioning markers */
+      width: 10px; 
+      position: relative; 
       padding: 0;
-      vertical-align: middle; /* Center markers vertically */
+      vertical-align: middle; 
     }
 
     .dtl .border_top {
-      height: 10px; /* Space above the marker in 'to' rows */
-      width: 3px; /* Width of the vertical line */
-      margin: 0 auto; /* Center the line */
-      background: transparent; /* Default */
+      height: 10px; 
+      width: 3px; 
+      margin: 0 auto; 
+      background: transparent; 
     }
 
     .dtl .mark {
-      position: relative; /* Relative to the .col.border */
+      position: relative; 
       width: 30px;
       height: 30px;
-      margin: 5px auto; /* Center horizontally, add vertical space */
+      margin: 5px auto; 
       border-radius: 50%;
       background-color: white;
-      border: 3px solid #F62E36; /* Red border for station markers */
+      border: 3px solid #F62E36; 
       display: flex;
       align-items: center;
       justify-content: center;
       box-sizing: border-box;
-      z-index: 2; /* Above the line */
+      z-index: 2; 
     }
     .dtl .mark.line-mark {
-       background-color: #007bff; /* Blue background for transfer marker */
-       border: 3px solid #007bff; /* Blue border */
+       background-color: #007bff; 
+       border: 3px solid #007bff; 
        color: white;
-       width: 24px; /* Smaller marker */
+       width: 24px; 
        height: 24px;
-       margin: 15px auto; /* More vertical margin for line marker */
+       margin: 15px auto; 
     }
 
     .dtl .mark .inner {
       text-align: center;
     }
-    .dtl .mark .inner .icn_sta_alt { /* Style for tracker abbreviation */
+    .dtl .mark .inner .icn_sta_alt { 
       font-size: 11px;
       font-weight: bold;
-      color: #F62E36; /* Red text */
+      color: #F62E36; 
     }
-    .dtl .mark.line-mark .inner .btn { /* Style for step number */
+    .dtl .mark.line-mark .inner .btn { 
         font-size: 12px;
         font-weight: bold;
         color: white;
     }
 
 
-    /* Simulate the vertical line (behind markers) */
+    
     .dtl .col.border::before {
       content: '';
       position: absolute;
@@ -1044,24 +1040,24 @@
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 3px; /* Line width */
-      background-color: inherit; /* Inherit background from .col.border */
-      z-index: 1; /* Behind markers */
+      width: 3px; 
+      background-color: inherit; 
+      z-index: 1; 
     }
-    .dtl .row.sta.from .col.border::before { top: 50%; } /* Line starts halfway down for first station */
-    .dtl .row.sta.to .col.border::before { bottom: 50%; } /* Line ends halfway up for last station */
+    .dtl .row.sta.from .col.border::before { top: 50%; } 
+    .dtl .row.sta.to .col.border::before { bottom: 50%; } 
 
 
-    /* Wrapper Column */
+    
     .dtl .col.wrapper {
-      width: auto; /* Take remaining space */
+      width: auto; 
       padding-left: 10px;
     }
 
-    /* Content within Wrapper */
+    
     .dtl .col.header .time {
       font-size: 16px;
-      color: #007bff; /* Blue time text */
+      color: #007bff; 
       margin-bottom: 0;
     }
 
@@ -1076,43 +1072,43 @@
     }
     .dtl .col.content .lang_sub {
       font-size: 12px;
-      color: #5f6368; /* Grey sub-text */
+      color: #5f6368; 
     }
 
     .dtl .col.aside {
-      width: 80px; /* Fixed width for aside content */
+      width: 80px; 
       text-align: right;
       vertical-align: middle;
       font-size: 13px;
       color: #5f6368;
     }
-    .dtl .row.line .col.aside { /* Duration in line row */
+    .dtl .row.line .col.aside { 
        font-weight: bold;
     }
 
 
     .dtl .col.link {
-      width: 60px; /* Fixed width for links/buttons */
+      width: 60px; 
       text-align: right;
       vertical-align: middle;
     }
 
 
-    /* Fare/Requirements Row Styles */
+    
     .dtl .row.line .fare {
-      border: 1px solid #5f4b8b; /* Purple border */
-      border-radius: 15px; /* Rounded pill shape */
+      border: 1px solid #5f4b8b; 
+      border-radius: 15px; 
       padding: 5px 15px;
       margin: 10px 0;
       font-size: 12px;
       color: #5f6368;
-      display: inline-block; /* Fit content */
+      display: inline-block; 
     }
     .dtl .row.line .fare p {
       margin: 2px 0;
     }
 
-    /* Transfer Info Styles */
+    
     .dtl .row.line .tra {
       font-size: 12px;
       color: #5f6368;
@@ -1124,7 +1120,7 @@
     .dtl .row.line .icn_tra_alt {
        font-size: 16px;
        font-weight: bold;
-       color: #007bff; /* Blue arrow */
+       color: #007bff; 
     }
 
     .dtl .row.line .pos {
@@ -1149,13 +1145,19 @@
           <td class="col2" colspan="3" style="vertical-align: top; padding: 5px;"> 
             <div style="margin-bottom: 10px;">
               <label for="source" style="display: block; margin-bottom: 3px; font-size: 13px; color: #5f6368;">Source Tracker:</label>
-              <input type="text" id="source" placeholder="Type or select source" autocomplete="off" list="source-list" style="width: 90%; padding: 8px 10px; border: 1px solid #ccc; font-size: 14px;">
-              <datalist id="source-list"></datalist> 
+              <div style="position: relative;">
+                <input type="text" id="source" placeholder="Type or select source" autocomplete="off" list="source-list" style="width: 90%; padding: 8px 10px; border: 1px solid #ccc; font-size: 14px;">
+                <button type="button" id="clear-source" style="position: absolute; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 16px; color: #888;">×</button>
+              </div>
+              <datalist id="source-list"></datalist>
             </div>
             <div>
                <label for="target" style="display: block; margin-bottom: 3px; font-size: 13px; color: #5f6368;">Target Tracker:</label>
-               <input type="text" id="target" placeholder="Type or select target" autocomplete="off" list="target-list" style="width: 90%; padding: 8px 10px; border: 1px solid #ccc; font-size: 14px;">
-               <datalist id="target-list"></datalist> 
+               <div style="position: relative;">
+                 <input type="text" id="target" placeholder="Type or select target" autocomplete="off" list="target-list" style="width: 90%; padding: 8px 10px; border: 1px solid #ccc; font-size: 14px;">
+                 <button type="button" id="clear-target" style="position: absolute; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 16px; color: #888;">×</button>
+               </div>
+               <datalist id="target-list"></datalist>
             </div>
           </td>
         </tr>
@@ -1203,10 +1205,10 @@
               <label>Sort By</label>
                <div class="radio-options">
                 <label class="radio-option">
-                  <input type="radio" name="sortOption" value="fastest" checked> Fastest
+                  <input type="radio" name="sortOption" value="fastest" checked> Days
                 </label>
                 <label class="radio-option">
-                  <input type="radio" name="sortOption" value="fewestJumps"> Least jumps
+                  <input type="radio" name="sortOption" value="fewestJumps"> Jumps
                 </label>
               </div>
             </div>
@@ -1219,7 +1221,7 @@
     </div>
   </form>
       <div style="position: absolute; bottom: 0.5em; right: 0.5em; font-size: 13px; text-align: right; color: rgb(0, 0, 0); text-decoration: none;">
-      <p id="update-time" style="display: inline;">last updated Loading...</p>
+      <p id="update-time" style="display: inline;">Last updated Loading...</p>
       <a href="https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/">TrackersInfo</a>
       <a href="https://github.com/ti-or/ti-or.github.io">GitHub</a>
     </div>
@@ -1239,22 +1241,13 @@
     const defaultSortOption = 'fastest';
 
     let activeRouteIndex = 0; 
-    let maxJumps = parseInt(localStorage.getItem('maxJumps'), 10);
-    if (!validMaxJumpsValues.includes(maxJumps)) {
-        maxJumps = defaultMaxJumps;
-    }
-    console.log(`Attempting to select maxJumps radio with value: "${maxJumps}"`); 
+    let maxJumps = defaultMaxJumps;
+    console.log(`Attempting to select maxJumps radio with value: "${maxJumps}"`);
 
-    let maxDays = parseInt(localStorage.getItem('maxDays'), 10);
-    if (!validMaxDaysValues.includes(maxDays)) {
-        maxDays = defaultMaxDays;
-    }
+    let maxDays = defaultMaxDays;
     console.log(`Attempting to select maxDays radio with value: "${maxDays}"`);
 
-    let sortOptionValue = localStorage.getItem('sortOption');
-    if (!validSortOptionValues.includes(sortOptionValue)) {
-        sortOptionValue = defaultSortOption;
-    }
+    let sortOptionValue = defaultSortOption;
      console.log(`Attempting to select sortOption radio with value: "${sortOptionValue}"`);
 
 
@@ -1262,6 +1255,30 @@
     const targetInput = document.getElementById('target');
     const { routeInfo, unlockInviteClass, abbrList } = data;
     let allRoutes = [];
+
+    function getLastUpdatedMonth() {
+        let lastUpdated = "Loading...";
+        let latestDate = new Date(0); // Initialize with a very old date
+        for (const tracker in routeInfo) {
+            for (const dest in routeInfo[tracker]) {
+                const dateString = routeInfo[tracker][dest][2];
+                if (dateString) {
+                    const parts = dateString.split(' ');
+                    const month = parts[0];
+                    const year = parseInt(parts[1]);
+                    const date = new Date(`${month} 01, ${year}`); // Create a Date object
+
+                    if (!isNaN(date.getTime()) && date > latestDate) {
+                        latestDate = date;
+                        lastUpdated = `${month} ${year}`;
+                    }
+                }
+            }
+        }
+        return lastUpdated;
+    }
+   const updateTimeElement = document.getElementById('update-time');
+   updateTimeElement.textContent = `Last updated ${getLastUpdatedMonth()}`;
 
     function populateDatalists() {
         const sourceList = document.getElementById('source-list');
@@ -1401,9 +1418,20 @@
 
         const paginationHTML = `
           <div class="pagination block" style="padding: 10px; text-align: center;">
-            ${currentPage > 1 ? `<button class="page-btn" style="margin: 5px;" data-page="${currentPage - 1}">Previous</button>` : ''}
-            ${Array.from({length: totalPages}, (_, i) => i + 1).map(page => `<button class="page-btn" style="margin: 5px;" data-page="${page}">${page}</button>`).join('')}
-            ${currentPage < totalPages ? `<button class="page-btn" style="margin: 5px;" data-page="${currentPage + 1}">Next</button>` : ''}
+            ${currentPage > 1 ? `<button class="page-btn" style="margin: 5px;" data-page="1">&lt;&lt;</button>` : ''}
+            ${currentPage > 1 ? `<button class="page-btn" style="margin: 5px;" data-page="${currentPage - 1}">&lt;</button>` : ''}
+            ${
+              Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                let startPage = Math.max(1, currentPage - 2);
+                if (startPage + 4 > totalPages) {
+                  startPage = Math.max(1, totalPages - 4);
+                }
+                const page = startPage + i;
+                return `<button class="page-btn" style="margin: 5px;" data-page="${page}">${page}</button>`;
+              }).join('')
+            }
+            ${currentPage < totalPages ? `<button class="page-btn" style="margin: 5px;" data-page="${currentPage + 1}">&gt;</button>` : ''}
+            ${currentPage < totalPages ? `<button class="page-btn" style="margin: 5px;" data-page="${totalPages}">&gt;&gt;</button>` : ''}
           </div>
         `;
         resultDescription.innerHTML = routesHTML + paginationHTML;
@@ -1517,44 +1545,45 @@
     
     populateDatalists();
 
-    const savedSource = localStorage.getItem('sourceTrackerName');
-    const savedTarget = localStorage.getItem('targetTrackerName');
-    if (savedSource) {
-        sourceInput.value = savedSource;
-    }
-    if (savedTarget) {
-        targetInput.value = savedTarget;
-    }
+    const savedSource = null;
+    const savedTarget = null;
 
     document.querySelectorAll('input[name="maxJumps"]').forEach(radio => { 
         radio.addEventListener('change', (e) => {
             maxJumps = parseInt(e.target.value, 10); 
-            localStorage.setItem('maxJumps', maxJumps); 
-            calculateRoute(); 
+            calculateRoute();
         }); 
     });
     document.querySelectorAll('input[name="maxDays"]').forEach(radio => { 
         radio.addEventListener('change', (e) => {
             maxDays = parseInt(e.target.value, 10); 
-            localStorage.setItem('maxDays', maxDays); 
-            calculateRoute(); 
+            calculateRoute();
         }); 
     });
     document.querySelectorAll('input[name="sortOption"]').forEach(radio => { 
         radio.addEventListener('change', (e) => {
             sortOptionValue = e.target.value; 
-            localStorage.setItem('sortOption', sortOptionValue); 
-            calculateRoute(); 
+            calculateRoute();
         }); 
     });
     
     [sourceInput, targetInput].forEach(input => {
         const inputId = input.id;
-        
+
         input.addEventListener('change', () => {
             console.log(`Change detected on ${inputId}. New value: "${input.value}"`);
             calculateRoute();
         });
+    });
+
+    document.getElementById('clear-source').addEventListener('click', () => {
+        sourceInput.value = '';
+        calculateRoute();
+    });
+
+    document.getElementById('clear-target').addEventListener('click', () => {
+        targetInput.value = '';
+        calculateRoute();
     });
 
     calculateRoute(); 
