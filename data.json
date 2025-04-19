@@ -305,8 +305,8 @@ const data = {
 			"Secret Cinema": [180, "VIP+, 50 GB upload, 6 months", "Mar 2025"],
 			"Shazbat": [180, "VIP+, 6 months", "Mar 2025"],
 			"TheEmpire": [0, "No requirement", "Mar 2025"],
-			"TheGeeks": [0, "2-3 profile links", "May 2025"],
-			"Unwalled": [0, "PU+, 25 seeded uploads", "May 2025"],
+			"TheGeeks": [0, "2-3 profile links", "Mar 2025"],
+			"Unwalled": [0, "PU+, 25 seeded uploads", "Mar 2025"],
 			"XSpeeds": [180, "VIP+, ratio > 1, 6 months", "Mar 2025"]
 		},
 		"Nebulance": {
