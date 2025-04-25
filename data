@@ -1,15 +1,17 @@
 const data = {
 	"routeInfo": {
 		"Aither": {
-			"Anthelion": [0, "Prometheus+", "Mar 2025"],
-			"Beyond-HD": [365, "Gigantes+", "Mar 2025"],
-			"Unwalled Podcasts": [0, "Harmonia+,5 uploads", "Mar 2025"],		
-			"Cathode-Ray.Tube": [365, "Prometheus+, 1 year, ratio >= 1", "Mar 2025"],
-			"Hawke-uno": [0, "Prometheus+", "Mar 20255"],
-			"ImmortalSeed": [0, "Prometheus+", "Mar 2025"],
-			"LST": [0, "Prometheus+", "Mar 2025"],
-			"OnlyEncodes+": [0, "Prometheus+", "Mar 2025"],
-			"ReelFlix": [0, "Prometheus+", "Mar 2025"]
+			"Anthelion": [0, "Prometheus+", "Apr 2025"],
+			"Beyond-HD": [365, "Prometheus+, 20TiB upload, 8TiB seedsize, avg seedtime>=2 months, 1 year", "Apr 2025"],
+			"Cathode-Ray.Tube": [365, "Prometheus+, 1 year, ratio >= 1", "Apr 2025"],
+			"Hawke-uno": [0, "Prometheus+", "Apr 2025"],
+			"ImmortalSeed": [90, "3 months", "Apr 2025"],
+			"LST": [90, "Prometheus+, 3 months", "Apr 2025"],
+			"OldToonsWorld": [180, "Prometheus+, 6 months", "Apr 2025"],			
+			"OnlyEncodes+": [0, "Prometheus+", "Apr 2025"],
+			"PrivateSilverScreen": [90, "1TB upload, avg seedtime>=5 days, 90 days", "Apr 2025"],			
+			"ReelFlix": [0, "Prometheus+", "Apr 2025"],
+			"Unwalled": [0, "Harmonia+,5 uploads", "Apr 2025"]
 		},
 		"AlphaRatio": {
 			"Aither": [0, "Sphinx+, 1.0 > ratio", "Feb 2025"],
@@ -30,7 +32,7 @@ const data = {
 			"Aither": [90, "No requirement", "Nov 2024"],
 			"AsianCinema": [180, "6 months, 4TB upload", "Nov 2024"],
 			"BakaBT": [180, "6 months, ratio>1, seeding at least half of your snatched torrents", "Nov 2024"],
-			"BroadcasTheNet": [365, "TM, 1 year", "Nov 2024"],
+			"BroadcasTheNet": [365, "TM, 1 year", "Nov 2024"],   
 			"Concertos": [0, "No requirement", "Nov 2024"],
 			"D3Si": [360, "TM, ratio>1.5, 50 perfect FLACs, 12 months", "Nov 2024"],
 			"Dolphin Is Coming": [0, "10 music torrents or 15 other torrents", "Nov 2024"],
@@ -58,7 +60,7 @@ const data = {
 			"Orpheus": [0, "Fanatic+, ANT activity proof", "Dec 2024"],
 			"ReelFliX": [0, "Seedsize>100GB", "Dec 2024"],
 			"RetroFlix": [0, "PU+", "Dec 2024"],
-			"Unwalled Podcasts": [0, "3 months", "Dec 2024"]			
+			"Unwalled": [0, "3 months", "Dec 2024"]			
 		},
 		"AvistaZ": {
 			"CinemaZ": [120, "10k bp, Member Rank, 4 months, seeding 5 torrents, ratio>2.0, 300 GB", "Apr 2024"],
@@ -82,7 +84,7 @@ const data = {
 			"Redacted": [0, "Pro+", "Apr 2024"],
 			"ReelFlix": [0, "Pro+", "Feb 2025"],
 			"SugoiMusic": [0, "Pro+", "Apr 2024"],
-			"Unwalled Podcasts": [0, "Pro+", "Feb 2025"]
+			"Unwalled": [0, "Pro+", "Feb 2025"]
 		},
 		"Bibliotik": {
 			"FileList": [0, "No requirement", "Nov 2024 (inactive)"],
@@ -97,14 +99,14 @@ const data = {
 			"TheVault": [180, "6 months", "Nov 2024"]
 		},
 		"Blutopia": {
-			"ReelFlix": [0, "No requirement", "Jan 2025"],		
-			"Desitorrents": [0, "90 day + old account", "Jan 2025"],
-			"Immortal-s": [0, "3 other proofs", "Jan 2025"],
-			"OnlyEncodes+": [0, "No requirement", "Jan 2025"],
-			"Concertos": [0, "BluCollector+,10 uploads", "Jan 2025"],
-			"PrivateSilverScreen": [0, "1TB real upload, 5 days seedtime,90 day + old account", "Jan 2025"],
-			"OldToonsWorld": [0, "No requirement", "Jan 2025"],
-			"Unwalled Podcasts": [0, "5+ uploads", "Jan 2025"]		
+			"Concertos": [0, "BluCollector+,10 uploads", "Apr 2025"],
+			"Desitorrents": [30, "3 months", "Apr 2025"],
+			"Immortal-s": [0, "3 other proofs", "Apr 2025"],
+			"LST": [30, "BluExtremist or BluSeeder+", "Apr 2025"],
+			"OldToonsWorld": [30, "BluExtremist or BluSeeder+", "Apr 2025"],
+			"PrivateSilverScreen": [90, "1TB real upload, 5 days seedtime,90 day + old account", "Apr 2025"],
+			"ReelFliX": [30, "BluExtremist or BluSeeder+", "Apr 2025"],
+			"Unwalled": [0, "5+ uploads", "Apr 2025"]		
 		},
 		"BroadcasTheNet": {
 			"Aither": [0, "No requirement", "Nov 2024"],
@@ -303,8 +305,8 @@ const data = {
 			"Secret Cinema": [180, "VIP+, 50 GB upload, 6 months", "Mar 2025"],
 			"Shazbat": [180, "VIP+, 6 months", "Mar 2025"],
 			"TheEmpire": [0, "No requirement", "Mar 2025"],
-			"TheGeeks": [0, "2-3 profile links", "May 2025"],
-			"Unwalled": [0, "PU+, 25 seeded uploads", "May 2025"],
+			"TheGeeks": [0, "2-3 profile links", "Mar 2025"],
+			"Unwalled": [0, "PU+, 25 seeded uploads", "Mar 2025"],
 			"XSpeeds": [180, "VIP+, ratio > 1, 6 months", "Mar 2025"]
 		},
 		"Nebulance": {
