@@ -108,6 +108,7 @@ a:hover {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
+	position: relative;
 }
 
 .input-label {
@@ -239,6 +240,9 @@ a:hover {
 
 .autocomplete-dropdown {
 	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%
 	background: #1a1a1a;
 	border: 1px solid #444;
 	border-radius: 8px;
@@ -307,3 +311,4 @@ a:hover {
 		grid-template-columns: 1fr;
 	}
 }
+
