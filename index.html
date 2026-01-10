@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Private Tracker Route Planner",
-  "url": "https://x4714.github.io/private-tracker-route-planner/",
-  "description": "Find the fastest and shortest routes between private trackers using TrackersInfo recruitment data.",
-  "applicationCategory": "Utility",
-  "operatingSystem": "All"
-}
-</script>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,48 +21,19 @@
   <meta name="twitter:title" content="Private Tracker Route Planner" />
   <meta name="twitter:description" content="Fastest and fewest-jumps tracker route calculator." />
 
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="styles.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+  <header>
+    <h1>Private Tracker Route Planner</h1>
+    <p>Official TrackersInfo recruitment route calculator</p>
+  </header>
+
   <div id="routeContainer">
-    <div id="settingsMenu">
-      <div class="setting">
-        <label>Max Jumps</label>
-        <div class="radio-group" id="maxJumpsRadios">
-          <label><input type="radio" name="maxJumps" value="1">1</label>
-          <label><input type="radio" name="maxJumps" value="2">2</label>
-          <label><input type="radio" name="maxJumps" value="3">3</label>
-          <label><input type="radio" name="maxJumps" value="4">4</label>
-          <label><input type="radio" name="maxJumps" value="5">5</label>
-        </div>
-        <input type="number" id="maxJumpsInput" value="5" min="1">
-      </div>
-    
-      <div class="setting">
-        <label>Max Days</label>
-        <div class="radio-group" id="maxDaysRadios">
-          <label><input type="radio" name="maxDays" value="180">6m</label>
-          <label><input type="radio" name="maxDays" value="360">1y</label>
-          <label><input type="radio" name="maxDays" value="720">2y</label>
-          <label><input type="radio" name="maxDays" value="1800">5y</label>
-          <label><input type="radio" name="maxDays" value="3600">10y</label>
-        </div>
-        <input type="number" id="maxDaysInput" value="1080" min="1">
-      </div>
-    
-      <div class="setting">
-        <label>Sort By</label>
-        <div class="radio-group" id="sortRadios">
-          <label><input type="radio" name="sortOption" value="fastest">Fastest</label>
-          <label><input type="radio" name="sortOption" value="fewestJumps">Fewest Jumps</label>
-        </div>
-      </div>
-    </div>
-    
     <div id="calcForm">
       <div id="headerSection">
         <div class="input-group">
@@ -80,55 +41,133 @@
           <input type="text" class="tracker-input" id="sourceInput" placeholder="Any tracker">
           <div id="sourceDropdown" class="autocomplete-dropdown" style="display: none;"></div>
         </div>
-        
+
         <div class="arrow-separator">→</div>
-        
+
         <div class="input-group">
           <label class="input-label">To</label>
           <input type="text" class="tracker-input" id="targetInput" placeholder="Any tracker">
           <div id="targetDropdown" class="autocomplete-dropdown" style="display: none;"></div>
         </div>
       </div>
-      
+
       <div id="resultsInfo"></div>
       <div id="routesGrid"></div>
     </div>
   </div>
-  
+
+  <div id="settingsMenu">
+    <div class="setting">
+      <label>Max Jumps</label>
+      <div class="radio-group" id="maxJumpsRadios">
+        <label><input type="radio" name="maxJumps" value="1">1</label>
+        <label><input type="radio" name="maxJumps" value="2">2</label>
+        <label><input type="radio" name="maxJumps" value="3">3</label>
+        <label><input type="radio" name="maxJumps" value="4">4</label>
+        <label><input type="radio" name="maxJumps" value="5">5</label>
+      </div>
+      <input type="number" id="maxJumpsInput" value="5" min="1">
+    </div>
+
+    <div class="setting">
+      <label>Max Days</label>
+      <div class="radio-group" id="maxDaysRadios">
+        <label><input type="radio" name="maxDays" value="180">6m</label>
+        <label><input type="radio" name="maxDays" value="360">1y</label>
+        <label><input type="radio" name="maxDays" value="720">2y</label>
+        <label><input type="radio" name="maxDays" value="1800">5y</label>
+        <label><input type="radio" name="maxDays" value="3600">10y</label>
+      </div>
+      <input type="number" id="maxDaysInput" value="1080" min="1">
+    </div>
+
+    <div class="setting">
+      <label>Sort By</label>
+      <div class="radio-group" id="sortRadios">
+        <label><input type="radio" name="sortOption" value="fastest">Fastest</label>
+        <label><input type="radio" name="sortOption" value="fewestJumps">Fewest Jumps</label>
+      </div>
+    </div>
+  </div>
+
   <div class="footer-info">
     <span id="update-time">Loading...</span>
-    <a href="https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/">TrackersInfo</a>
-    <a href="https://github.com/x4714/private-tracker-route-planner">GitHub</a>
+    <a href="https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/" target="_blank">TrackersInfo</a>
+    <a href="https://github.com/x4714/private-tracker-route-planner" target="_blank">GitHub</a>
   </div>
 
   <script>
-    window.addEventListener('load', async function() {
+    // --- Mock Data (For immediate testing if fetch fails) ---
+    const MOCK_DATA = {
+      "unlockInviteClass": {
+        "BTN": [365, "Elite"],
+        "PTP": [365, "Master"],
+        "RED": [0, "User"],
+        "GGN": [0, "User"],
+        "MTV": [365, "Power User"],
+        "OPS": [365, "Elite"],
+        "AHD": [0, "User"]
+      },
+      "abbrList": {
+        "BroadcasTheNet": "BTN",
+        "PassThePopcorn": "PTP",
+        "Redacted": "RED",
+        "GazelleGames": "GGN",
+        "MoreThanTV": "MTV",
+        "Orpheus": "OPS",
+        "Anthelion": "AHD"
+      },
+      "routeInfo": {
+        "RED": {
+          "OPS": { "reqs": "None", "days": 90, "active": "Yes", "updated": "2023-10-15" },
+          "MTV": { "reqs": "None", "days": 60, "active": "Yes", "updated": "2023-09-20" },
+          "GGN": { "reqs": "None", "days": 30, "active": "No", "updated": "2023-08-05" }
+        },
+        "OPS": {
+          "BTN": { "reqs": "Elite + 6mo", "days": 180, "active": "Yes", "updated": "2023-10-01" },
+          "PTP": { "reqs": "Master + 12mo", "days": 365, "active": "Yes", "updated": "2023-10-10" }
+        },
+        "MTV": {
+          "PTP": { "reqs": "Power User+ + 24mo", "days": 365, "active": "No", "updated": "2023-07-15" },
+          "AHD": { "reqs": "None", "days": 90, "active": "Yes", "updated": "2023-09-01" }
+        },
+        "GGN": {
+          "BTN": { "reqs": "None", "days": 120, "active": "Yes", "updated": "2023-10-05" }
+        },
+        "AHD": {
+          "PTP": { "reqs": "Elite", "days": 180, "active": "Unknown", "updated": "2023-01-01" }
+        }
+      }
+    };
+
+    window.addEventListener('load', async function () {
       let data;
       try {
         const response = await fetch('trackers.json');
+        if (!response.ok) throw new Error("File not found");
         data = await response.json();
       } catch (error) {
-        console.error('Error loading trackers.json:', error);
-        return;
+        console.warn('Using mock data as trackers.json is missing:', error);
+        data = MOCK_DATA;
       }
 
-      const settingsMenu = document.getElementById('settingsMenu');
-      const settingsToggle = document.getElementById('settingsToggle');
       const sourceInput = document.getElementById('sourceInput');
       const targetInput = document.getElementById('targetInput');
       const sourceDropdown = document.getElementById('sourceDropdown');
-      const targetDropdown = document.getElementById('targetDropdown');      
+      const targetDropdown = document.getElementById('targetDropdown');
       const maxJumpsInput = document.getElementById('maxJumpsInput');
       const maxJumpsRadios = document.querySelectorAll('#maxJumpsRadios input');
       const maxDaysInput = document.getElementById('maxDaysInput');
       const maxDaysRadios = document.querySelectorAll('#maxDaysRadios input');
-      const sortRadios = document.querySelectorAll('#sortRadios input'); 
-      
+      const sortRadios = document.querySelectorAll('#sortRadios input');
+      const resultsInfo = document.getElementById('resultsInfo');
+      const body = document.body;
+
       let sourceDebounceTimer;
       let targetDebounceTimer;
-      
+
       const { routeInfo, unlockInviteClass, abbrList } = data;
-      
+
       let maxJumps = parseInt(localStorage.getItem('maxJumps'), 10);
       let maxDays = parseInt(localStorage.getItem('maxDays'), 10);
       let sortOptionValue = localStorage.getItem('sortOption');
@@ -139,94 +178,95 @@
       const jumpsParam = parseInt(urlParams.get('jumps'), 10);
       const daysParam = parseInt(urlParams.get('days'), 10);
       const sortParam = urlParams.get('sort');
-    
+
       if (fromParam) sourceInput.value = fromParam;
       if (toParam) targetInput.value = toParam;
       if (!isNaN(jumpsParam)) maxJumps = jumpsParam;
       if (!isNaN(daysParam)) maxDays = daysParam;
       if (sortParam) sortOptionValue = sortParam;
-          
+
       if (isNaN(maxJumps)) maxJumps = 4;
       if (isNaN(maxDays)) maxDays = 720;
       if (!sortOptionValue) sortOptionValue = 'fastest';
-      
+
       const allTrackers = Array.from(new Set(
         Object.keys(routeInfo)
-        .flatMap(startKey => [startKey, ...Object.keys(routeInfo[startKey])])
+          .flatMap(startKey => [startKey, ...Object.keys(routeInfo[startKey])])
       )).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
       const allTrackersLower = allTrackers.map(t => t.toLowerCase());
 
-      maxJumpsInput.addEventListener('change', (event) => {
-        maxJumps = parseInt(event.target.value, 10);
-        localStorage.setItem('maxJumps', maxJumps);
-        calculateRoute();
-      });
+      // --- Event Listeners ---
 
-      maxDaysInput.addEventListener('change', (event) => {
-        maxDays = parseInt(event.target.value, 10);
-        localStorage.setItem('maxDays', maxDays);
-        calculateRoute();
-      });
-      
       document.addEventListener('mousedown', (event) => {
-        if (
-          !sourceDropdown.contains(event.target) &&
-          !sourceInput.contains(event.target)
-        ) {
+        if (!sourceDropdown.contains(event.target) && !sourceInput.contains(event.target)) {
           sourceDropdown.style.display = 'none';
         }
-      
-        if (
-          !targetDropdown.contains(event.target) &&
-          !targetInput.contains(event.target)
-        ) {
+        if (!targetDropdown.contains(event.target) && !targetInput.contains(event.target)) {
           targetDropdown.style.display = 'none';
         }
       });
 
       [sourceDropdown, targetDropdown].forEach(dropdown => {
-        dropdown.addEventListener('mousedown', (e) => {
-          e.stopPropagation();
-        });
-      });
-      
-      [sourceInput, targetInput].forEach(input => {
-        input.addEventListener('mousedown', (e) => {
-          e.stopPropagation();
-        });
+        dropdown.addEventListener('mousedown', (e) => e.stopPropagation());
       });
 
-      sourceInput.addEventListener('focus', (e) => {
-        showAutocomplete(sourceInput, sourceDropdown, e.target.value);
-      });
+      const handleInputActivity = () => {
+        const hasValue = sourceInput.value.trim().length > 0 || targetInput.value.trim().length > 0;
+        if (hasValue) {
+          body.classList.add('is-searching');
+        } else {
+          body.classList.remove('is-searching');
+          body.classList.remove('has-results');
+          resultsInfo.style.opacity = '0';
+        }
+        updateURL();
+      };
 
       sourceInput.addEventListener('input', (e) => {
         clearTimeout(sourceDebounceTimer);
         const value = e.target.value;
         sourceDebounceTimer = setTimeout(() => {
           showAutocomplete(sourceInput, sourceDropdown, value);
+          calculateRoute();
+          handleInputActivity();
         }, 150);
       });
-      
+
       targetInput.addEventListener('input', (e) => {
         clearTimeout(targetDebounceTimer);
         const value = e.target.value;
         targetDebounceTimer = setTimeout(() => {
           showAutocomplete(targetInput, targetDropdown, value);
+          calculateRoute();
+          handleInputActivity();
         }, 150);
+      });
+
+      sourceInput.addEventListener('focus', (e) => {
+        showAutocomplete(sourceInput, sourceDropdown, e.target.value);
+        handleInputActivity();
       });
 
       targetInput.addEventListener('focus', (e) => {
         showAutocomplete(targetInput, targetDropdown, e.target.value);
+        handleInputActivity();
       });
+      
+      // Allow clearing inputs to reset UI
+      sourceInput.addEventListener('change', handleInputActivity);
+      targetInput.addEventListener('change', handleInputActivity);
 
+      // Initialize based on URL params
+      if(fromParam || toParam) handleInputActivity();
+
+      // --- Autocomplete Logic ---
       let previousFiltered = [];
       const abbrListLower = {};
       for (const key in abbrList) {
         abbrListLower[key] = abbrList[key].toLowerCase();
       }
-      
+
       function showAutocomplete(input, dropdown, value) {
         const searchTerm = value.toLowerCase().trim();
         if (!searchTerm) {
@@ -235,7 +275,6 @@
         }
 
         const filtered = [];
-
         for (let i = 0; i < allTrackers.length; i++) {
           const tracker = allTrackers[i];
           const trackerLower = allTrackersLower[i];
@@ -248,19 +287,16 @@
         filtered.sort((a, b) => {
           const aLower = a.toLowerCase();
           const bLower = b.toLowerCase();
-
           const aStarts = aLower.startsWith(searchTerm) ? 0 : 1;
           const bStarts = bLower.startsWith(searchTerm) ? 0 : 1;
-
           if (aStarts !== bStarts) return aStarts - bStarts;
-
           return aLower.localeCompare(bLower);
         });
 
         const limited = filtered.slice(0, 20);
 
         const isSame = limited.length === previousFiltered.length &&
-                      limited.every((t, i) => t === previousFiltered[i]);
+          limited.every((t, i) => t === previousFiltered[i]);
         if (isSame) return;
         previousFiltered = limited.slice();
 
@@ -269,7 +305,6 @@
         limited.forEach(tracker => {
           const item = document.createElement('div');
           item.className = 'autocomplete-item';
-
           const abbr = abbrList[tracker] ? ` (${abbrList[tracker]})` : '';
           const nameHTML = tracker.replace(new RegExp(`(${searchTerm})`, 'ig'), '<mark>$1</mark>');
           const abbrHTML = abbr.replace(new RegExp(`(${searchTerm})`, 'ig'), '<mark>$1</mark>');
@@ -280,17 +315,17 @@
             input.value = tracker;
             dropdown.style.display = 'none';
             calculateRoute();
-            updateURL(); // make sure URL updates
+            handleInputActivity();
+            updateURL();
           });
-
           dropdown.appendChild(item);
         });
 
         dropdown.style.display = limited.length > 0 ? 'block' : 'none';
       }
 
+      // --- Update Time ---
       const apiUrl = `https://api.github.com/repos/x4714/private-tracker-route-planner/commits?path=trackers.json`;
-
       fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
@@ -299,37 +334,33 @@
           document.getElementById('update-time').innerText = `Updated ${updateDate}`;
         })
         .catch(error => {
-          console.error('Error fetching commit data:', error);
-          document.getElementById('update-time').innerText = 'Update date unavailable';
+          document.getElementById('update-time').innerText = ''; 
         });
 
-        function setMaxJumps(value) {
-          maxJumpsInput.value = value;
-          let matched = false;
-          maxJumpsRadios.forEach(r => {
-            r.checked = r.value == value;
-            if (r.checked) matched = true;
-          });
-          // Deselect all if no match
-          if (!matched) maxJumpsRadios.forEach(r => r.checked = false);
-        
-          localStorage.setItem('maxJumps', value);
-          calculateRoute();
-          updateURL();
-        }
+      // --- Settings Logic ---
+      function setMaxJumps(value) {
+        maxJumpsInput.value = value;
+        let matched = false;
+        maxJumpsRadios.forEach(r => {
+          r.checked = r.value == value;
+          if (r.checked) matched = true;
+        });
+        if (!matched) maxJumpsRadios.forEach(r => r.checked = false);
+        localStorage.setItem('maxJumps', value);
+        calculateRoute();
+        updateURL();
+      }
 
       maxJumpsRadios.forEach(radio => {
         radio.addEventListener('change', () => setMaxJumps(parseInt(radio.value, 10)));
       });
-      
       maxJumpsInput.addEventListener('change', () => {
         let val = parseInt(maxJumpsInput.value, 10);
         if (isNaN(val) || val < 1) val = 1;
         setMaxJumps(val);
       });
-    
       setMaxJumps(maxJumps);
-    
+
       function setMaxDays(value) {
         maxDaysInput.value = value;
         let matched = false;
@@ -338,78 +369,81 @@
           if (r.checked) matched = true;
         });
         if (!matched) maxDaysRadios.forEach(r => r.checked = false);
-      
         localStorage.setItem('maxDays', value);
         calculateRoute();
         updateURL();
       }
-          
+
       maxDaysRadios.forEach(radio => {
         radio.addEventListener('change', () => setMaxDays(parseInt(radio.value, 10)));
       });
-    
       maxDaysInput.addEventListener('change', () => {
         let val = parseInt(maxDaysInput.value, 10);
         if (isNaN(val) || val < 1) val = 1;
         setMaxDays(val);
       });
-    
       setMaxDays(maxDays);
-    
+
       function setSortOption(value) {
         sortRadios.forEach(r => r.checked = r.value === value);
         localStorage.setItem('sortOption', value);
         calculateRoute();
       }
-    
       sortRadios.forEach(radio => {
         radio.addEventListener('change', () => setSortOption(radio.value));
       });
-    
       setSortOption(sortOptionValue);
 
+
+      // --- Route Calculation & Rendering ---
+
       function calculateRoute() {
-        const resultsInfo = document.getElementById('resultsInfo');
         const routesGrid = document.getElementById('routesGrid');
         const fragment = document.createDocumentFragment();
 
-        resultsInfo.innerHTML = '';
         routesGrid.innerHTML = '';
 
         const start = sourceInput.value.trim();
         const end = targetInput.value.trim();
 
+        // UI State Handling for empty inputs
         if (!start && !end) {
-          resultsInfo.innerHTML = 'Enter source and/or target tracker to find routes';
+          resultsInfo.innerHTML = '';
+          body.classList.remove('has-results');
           return;
         }
 
         if (start && end && start === end) {
           resultsInfo.innerHTML = 'One account per lifetime!';
+          body.classList.add('has-results'); // Show this message
           return;
         }
 
         let allRoutes = [];
 
+        // Determine route logic
         if (!start || start === '') {
+          // "To Any" mode (not really supported in standard logic, but kept for safety)
           if (end && routeInfo[end]) {
-            resultsInfo.innerHTML = 'Please enter a source tracker';
+            resultsInfo.innerHTML = 'Enter source tracker';
+            body.classList.remove('has-results');
             return;
           }
-          allRoutes = Object.keys(routeInfo)
-            .filter(node => routeInfo[node] && routeInfo[node][end])
-            .map(node => [node, end]);
         } else if (!end || end === '') {
+          // "From Any" mode
           if (!routeInfo[start]) {
             resultsInfo.innerHTML = `No official recruitment from ${start}`;
+            body.classList.add('has-results');
             return;
           }
           allRoutes = Object.keys(routeInfo[start])
             .map(node => [start, node])
             .filter(([from, to]) => routeInfo[from] && routeInfo[from][to]);
         } else {
+          // "From A to B" mode
           if (!routeInfo[start]) {
             resultsInfo.innerHTML = `No official recruitment from ${start}`;
+            body.classList.add('has-results');
             return;
           }
           allRoutes = findAllRoutes(start, end, maxJumps, maxDays);
@@ -417,14 +451,16 @@
 
         if (allRoutes.length === 0) {
           resultsInfo.innerHTML = 'No routes found';
+          body.classList.add('has-results');
           return;
         }
 
+        // Sorting
         let selectedSort = 'fastest';
         sortRadios.forEach(r => {
           if (r.checked) selectedSort = r.value;
         });
-        
+
         if (selectedSort === 'fastest') {
           allRoutes = allRoutes.sort((a, b) => {
             const timeA = calculateRouteDays(a);
@@ -440,6 +476,7 @@
         }
 
         resultsInfo.innerHTML = `Found ${allRoutes.length} route${allRoutes.length !== 1 ? 's' : ''}`;
+        body.classList.add('has-results');
 
         allRoutes.forEach((route, index) => {
           fragment.appendChild(createRouteCard(route, index + 1));
@@ -463,7 +500,7 @@
             const nextNode = route[index + 1];
             const maxDays = getMaxDays(node, nextNode);
             const routeData = routeInfo[node][nextNode];
-            const requirement = routeData.reqs || 'No requirement';
+            const requirement = routeData.reqs || ''; // Default empty string
             const lastActivity = routeData.updated || 'Unknown';
             const activeStatus = routeData.active || 'Unknown';
 
@@ -472,27 +509,44 @@
             if (activeStatus.toLowerCase() === 'yes') statusClass = 'status-recruiting';
             if (activeStatus.toLowerCase() === 'no') statusClass = 'status-closed';
 
+            const statusText = activeStatus === 'Yes' ? 'Recruiting' : (activeStatus === 'No' ? 'Closed' : 'Unknown');
             const daysDisplay = maxDays === null ? 'Unknown' : `${maxDays}d`;
 
-            stepsHTML += `
-              <div class="route-step">
-                <div class="route-step-header">
-                  <span>${node} → ${nextNode}</span>
-                  <span class="route-step-days">${daysDisplay}</span>
-                  <span class="status-badge ${statusClass}">${activeStatus === 'Yes' ? 'Recruiting' : activeStatus === 'No' ? 'Closed' : 'Unknown'}</span>
-                </div>
-                <div class="route-step-detail">
-                  <div class="route-step-label">Class needed:</div>
-                  <div class="route-step-value">${unlockInviteClass[node] ? unlockInviteClass[node][1] : 'N/A'}</div>
-                </div>
+            // Construct details HTML based on requirements
+            let detailsHTML = '';
+            
+            // Class needed
+            const className = unlockInviteClass[node] ? unlockInviteClass[node][1] : 'N/A';
+            detailsHTML += `
+              <div class="route-step-detail">
+                <div class="route-step-label">Class needed:</div>
+                <div class="route-step-value">${className}</div>
+              </div>
+            `;
+
+            // Requirements - Only show if not empty/null/undefined
+            if (requirement && requirement.toLowerCase() !== 'none' && requirement.toLowerCase() !== 'no requirement') {
+               detailsHTML += `
                 <div class="route-step-detail">
                   <div class="route-step-label">Requirements:</div>
                   <div class="route-step-value">${requirement}</div>
                 </div>
-                <div class="route-step-detail">
-                  <div class="route-step-label">Last checked:</div>
-                  <div class="route-step-value">${lastActivity}</div>
+              `;
+            }
+
+            stepsHTML += `
+              <div class="route-step">
+                <div class="route-step-header">
+                  <div class="step-connection">
+                    <span>${node} → ${nextNode}</span>
+                    <span class="route-step-days">${daysDisplay}</span>
+                  </div>
+                  <div class="step-meta-right">
+                    <span class="status-badge ${statusClass}">${statusText}</span>
+                    <span class="last-checked">Checked: ${lastActivity}</span>
+                  </div>
                 </div>
+                ${detailsHTML}
               </div>
             `;
           }
@@ -522,19 +576,20 @@
 
       function findAllRoutes(start, end, maxJumps = 5, maxDays = 1080) {
         const result = [];
+        // Stack element: [currentNode, pathArray, accumulatedDays]
         const stack = [[start, [start], 0]];
-      
+
         while (stack.length) {
           const [node, route, days] = stack.pop();
-      
+
           if (route.length > maxJumps + 1) continue;
           if (days > maxDays) continue; // early cutoff
-      
+
           if (node === end) {
             result.push(route);
             continue;
           }
-      
+
           const neighbors = Object.entries(routeInfo[node] || {});
           for (const [next, _] of neighbors) {
             if (!route.includes(next)) {
@@ -544,7 +599,7 @@
             }
           }
         }
-      
+
         return result;
       }
 
@@ -554,36 +609,22 @@
         const days2 = (unlockInviteClass[start] && unlockInviteClass[start][0]) || 0;
 
         if (days1 === null) return null;
-        
+
         return Math.max(days1, days2);
       }
 
-      // Initial calculation
-      calculateRoute();
-
-      window.addEventListener('error', (e) => {
-        console.error('JS Error:', e.message, e.filename, e.lineno);
-      });
-
-    function updateURL() {
-      const params = new URLSearchParams();
-      if (sourceInput.value) params.set('from', sourceInput.value);
-      if (targetInput.value) params.set('to', targetInput.value);
-      params.set('jumps', maxJumps);
-      params.set('days', maxDays);
-      const selectedSort = Array.from(sortRadios).find(r => r.checked)?.value || 'fastest';
-      params.set('sort', selectedSort);
-      history.replaceState(null, '', '?' + params.toString());
-    }
-  
-    sourceInput.addEventListener('input', updateURL);
-    targetInput.addEventListener('input', updateURL);
-    maxJumpsInput.addEventListener('change', updateURL);
-    maxDaysInput.addEventListener('change', updateURL);
-    sortRadios.forEach(r => r.addEventListener('change', updateURL));
-
+      function updateURL() {
+        const params = new URLSearchParams();
+        if (sourceInput.value) params.set('from', sourceInput.value);
+        if (targetInput.value) params.set('to', targetInput.value);
+        params.set('jumps', maxJumps);
+        params.set('days', maxDays);
+        const selectedSort = Array.from(sortRadios).find(r => r.checked)?.value || 'fastest';
+        params.set('sort', selectedSort);
+        history.replaceState(null, '', '?' + params.toString());
+      }
     });
   </script>
 </body>
-</html>
 
+</html>
