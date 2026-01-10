@@ -166,6 +166,16 @@
      box-sizing: border-box;
    }
 
+<<<<<<< HEAD
+    /* --- Calculation Form --- */
+    #calcForm {
+      width: 100%;
+      max-width: 1400px; /* Limit width for input area */
+      transition: margin-top var(--transition-speed) ease;
+      position: relative;
+      z-index: 10;
+    }
+=======
    /* --- Calculation Form --- */
    #calcForm {
      width: 100%;
@@ -175,6 +185,7 @@
      position: relative;
      z-index: 10;
    }
+>>>>>>> ac9465d728d2865355055e716e2ff48e2f271945
 
    #headerSection {
      display: flex;
@@ -200,18 +211,17 @@
      font-weight: 600;
    }
 
-   .tracker-input {
-     width: 100%;
-     padding: 14px 16px;
-     background: var(--card-bg);
-     border: 1px solid var(--border-color);
-     border-radius: 8px;
-     color: var(--text-main);
-     font-size: 16px;
-     font-family: inherit;
-     font-weight: 500;
-     transition: border-color 0.2s, box-shadow 0.2s;
-   }
+    .tracker-input {
+      padding: 14px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 16px;
+      font-family: inherit;
+      font-weight: 500;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
 
    .tracker-input:focus {
      outline: none;
