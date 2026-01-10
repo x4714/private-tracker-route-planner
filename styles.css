@@ -22,8 +22,8 @@ a:hover {
   display: block;
   position: fixed;
   top: 50px;
-  left: 15px;
-  width: 150px; /* smaller width */
+  right: 15px;
+  width: 180px; /* smaller width */
   background: #1a1a1a;
   border: 1px solid #333;
   border-radius: 8px;
@@ -302,6 +302,7 @@ a:hover {
 		grid-template-columns: 1fr;
 	}
 }
+
 
 
 
