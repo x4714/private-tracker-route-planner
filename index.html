@@ -12,7 +12,7 @@
       height: 100%;
       margin: 0;
       padding: 0;
-      overflow: hidden;
+      overflow-y: auto;
       background: #0a0a0a;
       color: #e0e0e0;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -92,22 +92,15 @@
 
     #routeContainer {
       position: relative;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      min-height: 100vh;
       box-sizing: border-box;
-      overflow: hidden;
       background: #0a0a0a;
-      user-select: none;
+      padding: 20px;
+      padding-bottom: 60px;
     }
 
     #calcForm {
-      position: relative;
-      display: block;
-      color: #e0e0e0;
-      background: transparent;
-      padding: 20px;
       max-width: 1400px;
       margin: 0 auto;
     }
@@ -115,131 +108,119 @@
     #headerSection {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
+      justify-content: center;
       gap: 20px;
+      margin-bottom: 30px;
     }
 
-    .tracker-selector {
-      background: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 8px;
-      padding: 15px 20px;
-      cursor: pointer;
-      transition: all 0.2s;
-      flex: 1;
-      max-width: 300px;
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .tracker-selector:hover {
-      background: #222;
-      border-color: #444;
-    }
-
-    .tracker-label {
+    .input-label {
       font-size: 11px;
       color: #888;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 5px;
+      font-weight: 500;
     }
 
-    .tracker-name {
-      font-size: 18px;
-      font-weight: 600;
-      color: #e0e0e0;
-    }
-
-    .tracker-abbr {
-      font-size: 12px;
-      color: #999;
-      margin-top: 3px;
-    }
-
-    .nav-arrows {
-      display: flex;
-      gap: 10px;
-    }
-
-    .nav-arrow {
+    .tracker-input {
+      width: 250px;
+      padding: 12px 16px;
       background: #1a1a1a;
       border: 1px solid #333;
       border-radius: 8px;
-      padding: 15px 20px;
-      font-size: 24px;
-      cursor: pointer;
       color: #e0e0e0;
+      font-size: 16px;
+      font-family: inherit;
+      font-weight: 500;
       transition: all 0.2s;
+    }
+
+    .tracker-input:focus {
+      outline: none;
+      border-color: #60a5fa;
+      background: #1f1f1f;
+    }
+
+    .tracker-input::placeholder {
+      color: #666;
+    }
+
+    .arrow-separator {
+      font-size: 24px;
+      color: #666;
+      margin-top: 20px;
       font-weight: 600;
     }
 
-    .nav-arrow:hover {
-      background: #222;
+    #resultsInfo {
+      text-align: center;
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 20px;
+      padding: 12px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+    }
+
+    #routesGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .route-card {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 15px;
+      transition: all 0.2s;
+    }
+
+    .route-card:hover {
+      border-color: #444;
       transform: translateY(-2px);
     }
 
-    #routeChain {
-      background: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 8px;
-      padding: 15px 20px;
-      font-size: 16px;
-      font-weight: 500;
-      text-align: center;
-      margin-bottom: 15px;
+    .route-header {
+      font-size: 14px;
+      font-weight: 600;
       color: #60a5fa;
-      min-height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #252525;
+      word-break: break-word;
     }
 
-    #chainInfo {
-      background: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 8px;
-      padding: 12px 20px;
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 15px;
+    .route-summary {
       display: flex;
       justify-content: space-between;
-      color: #b0b0b0;
-    }
-
-    #detailsTable {
-      overflow-y: auto;
-      max-height: calc(100vh - 300px);
-      scrollbar-width: thin;
-      scrollbar-color: #333 #1a1a1a;
-    }
-
-    #detailsTable::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    #detailsTable::-webkit-scrollbar-track {
-      background: #1a1a1a;
-    }
-
-    #detailsTable::-webkit-scrollbar-thumb {
-      background: #333;
-      border-radius: 4px;
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #252525;
     }
 
     .route-step {
-      background: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 8px;
-      padding: 15px 20px;
       margin-bottom: 10px;
+      font-size: 12px;
+    }
+
+    .route-step:last-child {
+      margin-bottom: 0;
     }
 
     .route-step-header {
-      font-size: 15px;
       font-weight: 600;
       color: #e0e0e0;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       display: flex;
       justify-content: space-between;
     }
@@ -248,97 +229,61 @@
       color: #60a5fa;
     }
 
-    .route-step-row {
+    .route-step-detail {
       display: flex;
-      padding: 6px 0;
-      border-bottom: 1px solid #252525;
-    }
-
-    .route-step-row:last-child {
-      border-bottom: none;
+      padding: 3px 0;
+      font-size: 11px;
     }
 
     .route-step-label {
-      width: 180px;
-      color: #888;
-      font-size: 13px;
+      width: 110px;
+      color: #666;
+      flex-shrink: 0;
     }
 
     .route-step-value {
       flex: 1;
-      color: #e0e0e0;
-      font-size: 13px;
+      color: #b0b0b0;
     }
 
-    #gridContainer {
-      display: none;
-      position: fixed;
-      width: 90vw;
-      max-width: 800px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      max-height: 70vh;
+    .autocomplete-dropdown {
+      position: absolute;
       background: #1a1a1a;
-      border: 1px solid #333;
+      border: 1px solid #444;
       border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      margin-top: 4px;
+      max-height: 300px;
       overflow-y: auto;
-      z-index: 10000;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      width: 250px;
       scrollbar-width: thin;
       scrollbar-color: #333 #1a1a1a;
     }
 
-    #gridContainer::-webkit-scrollbar {
+    .autocomplete-dropdown::-webkit-scrollbar {
       width: 8px;
     }
 
-    #gridContainer::-webkit-scrollbar-track {
+    .autocomplete-dropdown::-webkit-scrollbar-track {
       background: #1a1a1a;
     }
 
-    #gridContainer::-webkit-scrollbar-thumb {
+    .autocomplete-dropdown::-webkit-scrollbar-thumb {
       background: #333;
       border-radius: 4px;
     }
 
-    .filter-input {
-      width: 100%;
-      padding: 10px 12px;
-      margin-bottom: 15px;
-      box-sizing: border-box;
-      border: 1px solid #444;
-      border-radius: 6px;
-      background: #2a2a2a;
-      color: #e0e0e0;
-      font-family: inherit;
-      font-size: 14px;
-    }
-
-    .filter-input:focus {
-      outline: none;
-      border-color: #60a5fa;
-    }
-
-    .grid-item {
+    .autocomplete-item {
       padding: 10px 15px;
       cursor: pointer;
+      font-size: 13px;
+      transition: background 0.15s;
+    }
+
+    .autocomplete-item:hover {
       background: #2a2a2a;
-      border-radius: 4px;
-      transition: all 0.2s;
-      font-size: 14px;
-    }
-
-    .grid-item:hover {
-      background: #333;
       color: #60a5fa;
-    }
-
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 8px;
     }
 
     .footer-info {
@@ -349,6 +294,9 @@
       color: #666;
       display: flex;
       gap: 15px;
+      background: #0a0a0a;
+      padding: 8px 12px;
+      border-radius: 6px;
     }
 
     @media (max-width: 768px) {
@@ -356,19 +304,23 @@
         flex-direction: column;
       }
 
-      .tracker-selector {
-        max-width: 100%;
+      .tracker-input {
+        width: 100%;
       }
 
-      .grid-container {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      .arrow-separator {
+        transform: rotate(90deg);
+      }
+
+      #routesGrid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
   <button id="settingsToggle" aria-label="Settings" title="Settings">⚙</button>
-  <form id="routeContainer">
+  <div id="routeContainer">
     <div id="settingsMenu">
       <div class="setting">
         <label for="maxJumps">Max Jumps</label>
@@ -391,31 +343,25 @@
     
     <div id="calcForm">
       <div id="headerSection">
-        <div class="tracker-selector" id="sourceSelector">
-          <div class="tracker-label">From</div>
-          <div class="tracker-name" id="source">Any</div>
-          <div class="tracker-abbr" id="sourceAbbr"></div>
+        <div class="input-group">
+          <label class="input-label">From</label>
+          <input type="text" class="tracker-input" id="sourceInput" placeholder="Any tracker">
+          <div id="sourceDropdown" class="autocomplete-dropdown" style="display: none;"></div>
         </div>
         
-        <div class="nav-arrows">
-          <div class="nav-arrow" id="prevroute">‹‹</div>
-          <div class="nav-arrow" id="nextroute">››</div>
-        </div>
+        <div class="arrow-separator">→</div>
         
-        <div class="tracker-selector" id="targetSelector">
-          <div class="tracker-label">To</div>
-          <div class="tracker-name" id="target">Any</div>
-          <div class="tracker-abbr" id="targetAbbr"></div>
+        <div class="input-group">
+          <label class="input-label">To</label>
+          <input type="text" class="tracker-input" id="targetInput" placeholder="Any tracker">
+          <div id="targetDropdown" class="autocomplete-dropdown" style="display: none;"></div>
         </div>
       </div>
       
-      <div id="routeChain"></div>
-      <div id="chainInfo"></div>
-      <div id="detailsTable"></div>
+      <div id="resultsInfo"></div>
+      <div id="routesGrid"></div>
     </div>
-  </form>
-  
-  <div id="gridContainer"></div>
+  </div>
   
   <div class="footer-info">
     <span id="update-time">Loading...</span>
@@ -439,6 +385,11 @@
       const maxDaysInput = document.getElementById('maxDays');
       const sortOption = document.getElementById('sortOption');
       const settingsToggle = document.getElementById('settingsToggle');
+      const sourceInput = document.getElementById('sourceInput');
+      const targetInput = document.getElementById('targetInput');
+      const sourceDropdown = document.getElementById('sourceDropdown');
+      const targetDropdown = document.getElementById('targetDropdown');
+      
       let maxJumps = parseInt(localStorage.getItem('maxJumps'), 10) || 5;
       let maxDays = parseInt(localStorage.getItem('maxDays'), 10) || 1080;
       let sortOptionValue = localStorage.getItem('sortOption') || 'fastest';
@@ -447,8 +398,13 @@
       maxDaysInput.value = maxDays;
       sortOption.value = sortOptionValue;
 
-      calculateRoute();
-      
+      const { routeInfo, unlockInviteClass, abbrList } = data;
+
+      const allTrackers = Array.from(new Set(
+        Object.keys(routeInfo)
+        .flatMap(startKey => [startKey, ...Object.keys(routeInfo[startKey])])
+      )).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
       maxJumpsInput.addEventListener('change', (event) => {
         maxJumps = parseInt(event.target.value, 10);
         localStorage.setItem('maxJumps', maxJumps);
@@ -475,35 +431,66 @@
         if (!settingsMenu.contains(event.target) && event.target !== settingsToggle) {
           settingsMenu.style.display = 'none';
         }
-      });
-
-      const { routeInfo, unlockInviteClass, abbrList } = data;
-
-      document.getElementById('sourceSelector').addEventListener('click', () => {
-        toggleGrid('source');
-      });
-
-      document.getElementById('targetSelector').addEventListener('click', () => {
-        toggleGrid('target');
-      });
-
-      document.getElementById('prevroute').addEventListener('click', () => {
-        showRoute(-1);
-      });
-
-      document.getElementById('nextroute').addEventListener('click', () => {
-        showRoute(1);
-      });
-      
-      document.addEventListener('click', (event) => {
-        const gridContainer = document.getElementById('gridContainer');
-        if (gridContainer.style.display === 'block' && !gridContainer.contains(event.target) && 
-            !event.target.closest('#sourceSelector') && !event.target.closest('#targetSelector')) {
-          gridContainer.style.display = 'none';
+        if (!sourceDropdown.contains(event.target) && event.target !== sourceInput) {
+          sourceDropdown.style.display = 'none';
+        }
+        if (!targetDropdown.contains(event.target) && event.target !== targetInput) {
+          targetDropdown.style.display = 'none';
         }
       });
 
-      const apiUrl = `https://api.github.com/repos/ti-or/ti-or.github.io/commits?path=trackers.json`;
+      sourceInput.addEventListener('input', (e) => {
+        showAutocomplete(sourceInput, sourceDropdown, e.target.value);
+        calculateRoute();
+      });
+
+      targetInput.addEventListener('input', (e) => {
+        showAutocomplete(targetInput, targetDropdown, e.target.value);
+        calculateRoute();
+      });
+
+      sourceInput.addEventListener('focus', (e) => {
+        showAutocomplete(sourceInput, sourceDropdown, e.target.value);
+      });
+
+      targetInput.addEventListener('focus', (e) => {
+        showAutocomplete(targetInput, targetDropdown, e.target.value);
+      });
+
+      function showAutocomplete(input, dropdown, value) {
+        const searchTerm = value.toLowerCase().trim();
+        
+        let filtered = allTrackers;
+        if (searchTerm) {
+          filtered = allTrackers.filter(tracker => 
+            tracker.toLowerCase().includes(searchTerm) ||
+            (abbrList[tracker] && abbrList[tracker].toLowerCase().includes(searchTerm))
+          );
+        }
+
+        if (filtered.length === 0 && searchTerm) {
+          dropdown.style.display = 'none';
+          return;
+        }
+
+        dropdown.innerHTML = '';
+        filtered.slice(0, 20).forEach(tracker => {
+          const item = document.createElement('div');
+          item.className = 'autocomplete-item';
+          const abbr = abbrList[tracker] ? ` (${abbrList[tracker]})` : '';
+          item.textContent = tracker + abbr;
+          item.addEventListener('click', () => {
+            input.value = tracker;
+            dropdown.style.display = 'none';
+            calculateRoute();
+          });
+          dropdown.appendChild(item);
+        });
+
+        dropdown.style.display = filtered.length > 0 ? 'block' : 'none';
+      }
+
+      const apiUrl = `https://api.github.com/repos/x4714/private-tracker-route-planner/commits?path=trackers.json`;
 
       fetch(apiUrl)
         .then(response => response.json())
@@ -517,114 +504,39 @@
           document.getElementById('update-time').innerText = 'Update date unavailable';
         });
 
-      let allRoutes = [];
-      let currentRouteIndex = 0;
-
-      function toggleGrid(buttonId) {
-        const gridContainer = document.getElementById('gridContainer');
-        if (gridContainer.style.display === 'none' || gridContainer.style.display === '') {
-          populateGrid(buttonId);
-          gridContainer.style.display = 'block';
-        } else {
-          gridContainer.style.display = 'none';
-        }
-      }
-
-      function populateGrid(buttonId) {
-        const gridContainer = document.getElementById('gridContainer');
-        gridContainer.innerHTML = '';
-
-        const uniqueKeys = Array.from(new Set(
-          Object.keys(routeInfo)
-          .flatMap(startKey => [startKey, ...Object.keys(routeInfo[startKey])])
-        ))
-        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-
-        if (buttonId === 'source') uniqueKeys.unshift('Any');
-        if (buttonId === 'target') uniqueKeys.unshift('Any');
-
-        const abbrToNameMap = Object.keys(abbrList).reduce((map, name) => {
-          map[abbrList[name].toLowerCase()] = name.toLowerCase();
-          return map;
-        }, {});
-
-        const container = document.createElement('div');
-        container.className = 'grid-container';
-
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.className = 'filter-input';
-        input.placeholder = 'Search trackers...';
-        container.appendChild(input);
-
-        function updateItems(filterText = '') {
-          const filterTextLower = filterText.toLowerCase();
-          const filteredKeys = uniqueKeys.filter(key => {
-            const keyLower = key.toLowerCase();
-            return keyLower.includes(filterTextLower) || 
-                   Object.keys(abbrToNameMap).some(abbr => 
-                     abbr.includes(filterTextLower) && abbrToNameMap[abbr].includes(keyLower)
-                   );
-          });
-
-          container.querySelectorAll('.grid-item').forEach(item => item.remove());
-
-          filteredKeys.forEach(key => {
-            const item = document.createElement('div');
-            item.textContent = key;
-            item.className = 'grid-item';
-            item.addEventListener('click', () => {
-              if (buttonId === 'source') {
-                setTextContent('source', key);
-                setTextContent('sourceAbbr', key === 'Any' ? '' : abbrList[key] || '');
-              } else {
-                setTextContent('target', key);
-                setTextContent('targetAbbr', key === 'Any' ? '' : abbrList[key] || '');
-              }
-              gridContainer.style.display = 'none';
-              calculateRoute();
-            });
-            container.appendChild(item);
-          });
-        }
-
-        updateItems();
-
-        input.addEventListener('input', (event) => {
-          updateItems(event.target.value);
-        });
-
-        gridContainer.appendChild(container);
-      }
-
       function calculateRoute() {
-        const resultTitle = document.getElementById('routeChain');
-        const resultDescription = document.getElementById('detailsTable');
-        const resultFooter = document.getElementById('chainInfo');
+        const resultsInfo = document.getElementById('resultsInfo');
+        const routesGrid = document.getElementById('routesGrid');
 
-        resultTitle.innerText = '';
-        resultDescription.innerHTML = '';
-        resultFooter.innerHTML = '';
+        resultsInfo.innerHTML = '';
+        routesGrid.innerHTML = '';
 
-        const start = document.getElementById('source').textContent.trim();
-        const end = document.getElementById('target').textContent.trim();
+        const start = sourceInput.value.trim();
+        const end = targetInput.value.trim();
 
-        if (start === end && start !== 'Any') {
-          resultTitle.innerText = 'One account per lifetime!';
+        if (!start && !end) {
+          resultsInfo.innerHTML = 'Enter source and/or target tracker to find routes';
           return;
         }
 
-        if (start === 'Any') {
-          if (end === 'Any') {
-            resultTitle.innerText = 'Select source and target trackers';
+        if (start && end && start === end) {
+          resultsInfo.innerHTML = 'One account per lifetime!';
+          return;
+        }
+
+        let allRoutes = [];
+
+        if (!start || start === '') {
+          if (end && routeInfo[end]) {
+            resultsInfo.innerHTML = 'Please enter a source tracker';
             return;
           }
           allRoutes = Object.keys(routeInfo)
             .filter(node => routeInfo[node] && routeInfo[node][end])
             .map(node => [node, end]);
-        } else if (end === 'Any') {
+        } else if (!end || end === '') {
           if (!routeInfo[start]) {
-            resultTitle.innerText = 'No official recruitment';
+            resultsInfo.innerHTML = `No official recruitment from ${start}`;
             return;
           }
           allRoutes = Object.keys(routeInfo[start])
@@ -632,14 +544,14 @@
             .filter(([from, to]) => routeInfo[from] && routeInfo[from][to]);
         } else {
           if (!routeInfo[start]) {
-            resultTitle.innerText = 'No official recruitment';
+            resultsInfo.innerHTML = `No official recruitment from ${start}`;
             return;
           }
           allRoutes = findAllRoutes(start, end, maxJumps, maxDays);
         }
 
         if (allRoutes.length === 0) {
-          resultTitle.innerText = 'No routes found';
+          resultsInfo.innerHTML = 'No routes found';
           return;
         }
 
@@ -657,14 +569,73 @@
           });
         }
 
-        currentRouteIndex = 0;
-        showRoute(0);
+        resultsInfo.innerHTML = `Found ${allRoutes.length} route${allRoutes.length !== 1 ? 's' : ''}`;
+
+        allRoutes.forEach((route, index) => {
+          routesGrid.appendChild(createRouteCard(route, index + 1));
+        });
+      }
+
+      function createRouteCard(route, routeNumber) {
+        const card = document.createElement('div');
+        card.className = 'route-card';
+
+        const abbreviatedRoute = route.map(node => abbrList[node] || node);
+        const displayRoute = abbreviatedRoute.join(' → ');
+
+        const totalDays = calculateRouteDays(route);
+        const jumps = route.length - 1;
+
+        let stepsHTML = '';
+        route.forEach((node, index) => {
+          if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
+            const nextNode = route[index + 1];
+            const maxDays = getMaxDays(node, nextNode);
+            const routeData = routeInfo[node][nextNode];
+            const requirement = routeData.reqs || 'No requirement';
+            const lastActivity = routeData.updated || 'Unknown';
+            const daysDisplay = maxDays === null ? 'Unknown' : `${maxDays}d`;
+
+            stepsHTML += `
+              <div class="route-step">
+                <div class="route-step-header">
+                  <span>${node} → ${nextNode}</span>
+                  <span class="route-step-days">${daysDisplay}</span>
+                </div>
+                <div class="route-step-detail">
+                  <div class="route-step-label">Class needed:</div>
+                  <div class="route-step-value">${unlockInviteClass[node] ? unlockInviteClass[node][1] : 'N/A'}</div>
+                </div>
+                <div class="route-step-detail">
+                  <div class="route-step-label">Requirements:</div>
+                  <div class="route-step-value">${requirement}</div>
+                </div>
+                <div class="route-step-detail">
+                  <div class="route-step-label">Last checked:</div>
+                  <div class="route-step-value">${lastActivity}</div>
+                </div>
+              </div>
+            `;
+          }
+        });
+
+        card.innerHTML = `
+          <div class="route-header">${displayRoute}</div>
+          <div class="route-summary">
+            <span>Route #${routeNumber}</span>
+            <span>${jumps} jump${jumps !== 1 ? 's' : ''} · ${totalDays} days</span>
+          </div>
+          ${stepsHTML}
+        `;
+
+        return card;
       }
 
       function calculateRouteDays(route) {
         return route.reduce((sum, node, index) => {
           if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
-            return sum + getMaxDays(node, route[index + 1]);
+            const days = getMaxDays(node, route[index + 1]);
+            return sum + (days === null ? 0 : days);
           }
           return sum;
         }, 0);
@@ -687,7 +658,6 @@
           for (const [next, _] of Object.entries(routeInfo[node] || {})) {
             if (!route.includes(next)) {
               const maxDaysToNext = getMaxDays(node, next);
-              // Allow routes with null/unknown days to be explored
               if (maxDaysToNext === null || maxDaysToNext === 0 || (days + maxDaysToNext) <= maxDays) {
                 const newDays = maxDaysToNext === null ? days : days + maxDaysToNext;
                 stack.push([next, [...route, next], newDays]);
@@ -699,81 +669,18 @@
         return result;
       }
 
-      function showRoute(direction) {
-        if (allRoutes.length === 0) return;
-
-        currentRouteIndex = (currentRouteIndex + direction + allRoutes.length) % allRoutes.length;
-        const route = allRoutes[currentRouteIndex];
-        const resultTitle = document.getElementById('routeChain');
-        const resultDescription = document.getElementById('detailsTable');
-        const chainInfo = document.getElementById('chainInfo');
-
-        function getAbbreviation(name) {
-          return abbrList[name] || name;
-        }
-
-        const abbreviatedRoute = route.map(node => getAbbreviation(node));
-        const displayRoute = abbreviatedRoute.join(' → ');
-
-        resultTitle.innerText = displayRoute;
-        
-        const totalDays = calculateRouteDays(route);
-        
-        const details = route.map((node, index) => {
-          if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
-            const nextNode = route[index + 1];
-            const maxDays = getMaxDays(node, nextNode);
-            const routeData = routeInfo[node][nextNode];
-            const requirement = routeData.reqs || 'No requirement';
-            const lastActivity = routeData.updated || 'Unknown';
-            const daysDisplay = maxDays === null ? 'Unknown' : `${maxDays} days`;
-
-            return `
-              <div class="route-step">
-                <div class="route-step-header">
-                  <span>${node} → ${nextNode}</span>
-                  <span class="route-step-days">${daysDisplay}</span>
-                </div>
-                <div class="route-step-row">
-                  <div class="route-step-label">Class for invite forum</div>
-                  <div class="route-step-value">${unlockInviteClass[node] ? unlockInviteClass[node][1] : 'N/A'}</div>
-                </div>
-                <div class="route-step-row">
-                  <div class="route-step-label">Requirements</div>
-                  <div class="route-step-value">${requirement}</div>
-                </div>
-                <div class="route-step-row">
-                  <div class="route-step-label">Last checked</div>
-                  <div class="route-step-value">${lastActivity}</div>
-                </div>
-              </div>
-            `;
-          }
-          return '';
-        }).join('');
-        
-        chainInfo.innerHTML = `
-          <span>Route ${currentRouteIndex + 1} of ${allRoutes.length}</span>
-          <span>Total: ${route.length - 1} Jump(s), ${totalDays} Day(s)</span>
-        `;
-        
-        resultDescription.innerHTML = details;
-      }
-
-      function setTextContent(id, text) {
-        document.getElementById(id).textContent = text;
-      }
-
       function getMaxDays(start, end) {
         const routeData = routeInfo[start] && routeInfo[start][end];
         const days1 = routeData && routeData.days !== undefined ? routeData.days : null;
         const days2 = (unlockInviteClass[start] && unlockInviteClass[start][0]) || 0;
 
-        // If days1 is null (unknown), return null so we can handle it separately
         if (days1 === null) return null;
         
         return Math.max(days1, days2);
       }
+
+      // Initial calculation
+      calculateRoute();
     });
   </script>
 </body>
