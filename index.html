@@ -236,7 +236,6 @@
         const value = e.target.value;
         sourceDebounceTimer = setTimeout(() => {
           showAutocomplete(sourceInput, sourceDropdown, value);
-          calculateRoute();
           handleInputActivity();
         }, 150);
       });
@@ -246,7 +245,6 @@
         const value = e.target.value;
         targetDebounceTimer = setTimeout(() => {
           showAutocomplete(targetInput, targetDropdown, value);
-          calculateRoute();
           handleInputActivity();
         }, 150);
       });
@@ -337,6 +335,7 @@
             dropdown.style.display = 'none';
             calculateRoute();
             handleInputActivity();
+            calculateRoute();
             updateURL();
           });
           dropdown.appendChild(item);
@@ -555,12 +554,12 @@
                 if (edgeDays !== null) {
                   stepDays = Math.max(edgeDays, forumDays || 0);
                 }
-
+                
                 const nextTotalDays = (totalDays === null || stepDays === null) 
-                  ? null 
+                  ? totalDays // Preserve null or current value
                   : totalDays + stepDays;
-
-                if (nextTotalDays !== null && nextTotalDays > maxDays) return;
+                
+                if (maxDays !== null && nextTotalDays !== null && nextTotalDays > maxDays) return;
 
                 queue.push({
                   source,
@@ -688,7 +687,7 @@
           <div class="route-header">${displayRoute}</div>
           <div class="route-summary">
             <span>Route #${routeNumber}</span>
-            <span>${jumps} jump${jumps !== 1 ? 's' : ''} · ${totalDays} days</span>
+            <span>${jumps} jump${jumps !== 1 ? 's' : ''} · ${totalDays !== null ? totalDays + ' days' : 'Unknown days'}</span>
           </div>
           ${stepsHTML}
         `;
@@ -722,3 +721,4 @@
 
 
 </html>
+
