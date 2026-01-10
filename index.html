@@ -38,7 +38,7 @@
       <div id="headerSection">
         <div class="input-group">
           <label class="input-label">From</label>
-          <input type="text" class="tracker-input" id="sourceInput" placeholder="Any tracker">
+          <input type="text" class="tracker-input" id="sourceInput" placeholder="Any tracker (comma-separated)">
           <div id="sourceDropdown" class="autocomplete-dropdown" style="display: none;"></div>
         </div>
 
@@ -196,6 +196,14 @@
 
       const allTrackersLower = allTrackers.map(t => t.toLowerCase());
 
+      // Helper to get abbreviation
+      function getAbbr(name) {
+        if (abbrList[name]) return abbrList[name];
+        const capitals = name.match(/[A-Z]/g);
+        if (capitals && capitals.length >= 2) return capitals.join("");
+        return name.substring(0, 3).toUpperCase();
+      }
+
       // --- Event Listeners ---
 
       document.addEventListener('mousedown', (event) => {
@@ -253,11 +261,9 @@
         handleInputActivity();
       });
       
-      // Allow clearing inputs to reset UI
       sourceInput.addEventListener('change', handleInputActivity);
       targetInput.addEventListener('change', handleInputActivity);
 
-      // Initialize based on URL params
       if(fromParam || toParam) handleInputActivity();
 
       // --- Autocomplete Logic ---
@@ -268,7 +274,14 @@
       }
 
       function showAutocomplete(input, dropdown, value) {
-        const searchTerm = value.toLowerCase().trim();
+        // For source input, get the last term after comma
+        let searchTerm = value.toLowerCase().trim();
+        
+        if (input === sourceInput && searchTerm.includes(',')) {
+          const terms = searchTerm.split(',');
+          searchTerm = terms[terms.length - 1].trim();
+        }
+        
         if (!searchTerm) {
           dropdown.style.display = 'none';
           return;
@@ -312,7 +325,15 @@
           item.innerHTML = nameHTML + abbrHTML;
 
           item.addEventListener('click', () => {
-            input.value = tracker;
+            if (input === sourceInput) {
+              // For source, append to comma-separated list
+              const currentValue = input.value;
+              const terms = currentValue.split(',').map(t => t.trim());
+              terms[terms.length - 1] = tracker;
+              input.value = terms.join(', ');
+            } else {
+              input.value = tracker;
+            }
             dropdown.style.display = 'none';
             calculateRoute();
             handleInputActivity();
@@ -394,7 +415,6 @@
       });
       setSortOption(sortOptionValue);
 
-
       // --- Route Calculation & Rendering ---
 
       function calculateRoute() {
@@ -403,51 +423,169 @@
 
         routesGrid.innerHTML = '';
 
-        const start = sourceInput.value.trim();
-        const end = targetInput.value.trim();
+        const startRaw = sourceInput.value.trim();
+        const endRaw = targetInput.value.trim();
 
-        // UI State Handling for empty inputs
-        if (!start && !end) {
+        // Parse source inputs (comma-separated)
+        const sourceInputs = startRaw ? startRaw.split(',').map(s => s.trim()).filter(s => s) : [];
+        const end = endRaw;
+
+        if (sourceInputs.length === 0 && !end) {
           resultsInfo.innerHTML = '';
           body.classList.remove('has-results');
           return;
         }
 
-        if (start && end && start === end) {
+        if (sourceInputs.length === 1 && end && sourceInputs[0] === end) {
           resultsInfo.innerHTML = 'One account per lifetime!';
-          body.classList.add('has-results'); // Show this message
+          body.classList.add('has-results');
           return;
         }
 
-        let allRoutes = [];
+        // Determine start nodes based on source inputs
+        let startNodes = [];
+        const allTrackerKeys = Object.keys(routeInfo);
 
-        // Determine route logic
-        if (!start || start === '') {
-          // "To Any" mode (not really supported in standard logic, but kept for safety)
-          if (end && routeInfo[end]) {
-            resultsInfo.innerHTML = 'Enter source tracker';
-            body.classList.remove('has-results');
-            return;
-          }
-        } else if (!end || end === '') {
-          // "From Any" mode
-          if (!routeInfo[start]) {
-            resultsInfo.innerHTML = `No official recruitment from ${start}`;
-            body.classList.add('has-results');
-            return;
-          }
-          allRoutes = Object.keys(routeInfo[start])
-            .map(node => [start, node])
-            .filter(([from, to]) => routeInfo[from] && routeInfo[from][to]);
-        } else {
-          // "From A to B" mode
-          if (!routeInfo[start]) {
-            resultsInfo.innerHTML = `No official recruitment from ${start}`;
-            body.classList.add('has-results');
-            return;
-          }
-          allRoutes = findAllRoutes(start, end, maxJumps, maxDays);
+        if (sourceInputs.length > 0) {
+          // Filter trackers based on input (strict or fuzzy match)
+          startNodes = allTrackerKeys.filter(tracker => {
+            const trackerLower = tracker.toLowerCase();
+            const trackerAbbr = getAbbr(tracker).toLowerCase();
+            
+            return sourceInputs.some(input => {
+              const inputLower = input.toLowerCase();
+              
+              // Check if input is an exact match to any valid tracker
+              const isStrictInput = allTrackers.some(validT => 
+                validT.toLowerCase() === inputLower || 
+                getAbbr(validT).toLowerCase() === inputLower
+              );
+              
+              if (isStrictInput) {
+                // Exact match required
+                return trackerLower === inputLower || trackerAbbr === inputLower;
+              } else {
+                // Fuzzy match
+                return trackerLower.includes(inputLower) || trackerAbbr === inputLower;
+              }
+            });
+          });
+        } else if (end) {
+          // No source specified - search from ALL trackers
+          startNodes = allTrackerKeys;
         }
+
+        if (startNodes.length === 0 && sourceInputs.length > 0) {
+          resultsInfo.innerHTML = `No trackers found matching: ${sourceInputs.join(', ')}`;
+          body.classList.add('has-results');
+          return;
+        }
+
+        // Check if target is strict match
+        const isStrictTarget = end && allTrackers.some(t => 
+          t.toLowerCase() === end.toLowerCase() || 
+          getAbbr(t).toLowerCase() === end.toLowerCase()
+        );
+
+        // Find all routes using BFS
+        let allRoutes = [];
+        const startNodeSet = new Set(startNodes);
+        const queue = [];
+
+        // Initialize queue with all start nodes
+        startNodes.forEach(start => {
+          queue.push({
+            source: start,
+            current: start,
+            path: [start],
+            totalDays: 0
+          });
+        });
+
+        while (queue.length > 0) {
+          const { source, current, path, totalDays } = queue.shift();
+
+          // Check if we've reached the target (if specified)
+          if (path.length > 1) {
+            let isTargetMatch = true;
+            
+            if (end) {
+              const currentLower = current.toLowerCase();
+              const currentAbbr = getAbbr(current).toLowerCase();
+              const endLower = end.toLowerCase();
+              
+              if (isStrictTarget) {
+                isTargetMatch = currentLower === endLower || currentAbbr === endLower;
+              } else {
+                isTargetMatch = currentLower.includes(endLower) || currentAbbr.includes(endLower);
+              }
+            }
+            
+            if (isTargetMatch) {
+              if (totalDays <= maxDays) {
+                allRoutes.push({
+                  source,
+                  target: current,
+                  path,
+                  totalDays
+                });
+              }
+            }
+          }
+
+          // Stop if we've reached max jumps
+          if (path.length > maxJumps) continue;
+
+          // Explore neighbors
+          const neighbors = routeInfo[current];
+          if (neighbors) {
+            Object.entries(neighbors).forEach(([nextTracker, details]) => {
+              // Don't revisit start nodes (unless it's the target)
+              if (startNodeSet.has(nextTracker) && nextTracker.toLowerCase() !== end?.toLowerCase()) {
+                return;
+              }
+
+              // Don't revisit nodes in current path
+              if (!path.includes(nextTracker)) {
+                const edgeDays = details.days;
+                const forumReq = unlockInviteClass[current];
+                const forumDays = forumReq ? forumReq[0] : 0;
+                
+                let stepDays = null;
+                if (edgeDays !== null) {
+                  stepDays = Math.max(edgeDays, forumDays || 0);
+                }
+
+                const nextTotalDays = (totalDays === null || stepDays === null) 
+                  ? null 
+                  : totalDays + stepDays;
+
+                if (nextTotalDays !== null && nextTotalDays > maxDays) return;
+
+                queue.push({
+                  source,
+                  current: nextTracker,
+                  path: [...path, nextTracker],
+                  totalDays: nextTotalDays
+                });
+              }
+            });
+          }
+        }
+
+        // Remove duplicates using a Set with path signature
+        const uniqueRoutes = [];
+        const seenPaths = new Set();
+        
+        allRoutes.forEach(route => {
+          const pathSignature = route.path.join('->');
+          if (!seenPaths.has(pathSignature)) {
+            seenPaths.add(pathSignature);
+            uniqueRoutes.push(route);
+          }
+        });
+
+        allRoutes = uniqueRoutes;
 
         if (allRoutes.length === 0) {
           resultsInfo.innerHTML = 'No routes found';
@@ -462,16 +600,14 @@
         });
 
         if (selectedSort === 'fastest') {
-          allRoutes = allRoutes.sort((a, b) => {
-            const timeA = calculateRouteDays(a);
-            const timeB = calculateRouteDays(b);
-            if (timeA !== timeB) return timeA - timeB;
-            return a.length - b.length;
+          allRoutes.sort((a, b) => {
+            if (a.totalDays !== b.totalDays) return a.totalDays - b.totalDays;
+            return a.path.length - b.path.length;
           });
         } else if (selectedSort === 'fewestJumps') {
-          allRoutes = allRoutes.sort((a, b) => {
-            if (a.length !== b.length) return a.length - b.length;
-            return calculateRouteDays(a) - calculateRouteDays(b);
+          allRoutes.sort((a, b) => {
+            if (a.path.length !== b.path.length) return a.path.length - b.path.length;
+            return a.totalDays - b.totalDays;
           });
         }
 
@@ -488,34 +624,31 @@
         const card = document.createElement('div');
         card.className = 'route-card';
 
-        const abbreviatedRoute = route.map(node => abbrList[node] || node);
+        const abbreviatedRoute = route.path.map(node => abbrList[node] || node);
         const displayRoute = abbreviatedRoute.join(' → ');
 
-        const totalDays = calculateRouteDays(route);
-        const jumps = route.length - 1;
+        const totalDays = route.totalDays;
+        const jumps = route.path.length - 1;
 
         let stepsHTML = '';
-        route.forEach((node, index) => {
-          if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
-            const nextNode = route[index + 1];
-            const maxDays = getMaxDays(node, nextNode);
+        route.path.forEach((node, index) => {
+          if (index < route.path.length - 1 && routeInfo[node] && routeInfo[node][route.path[index + 1]]) {
+            const nextNode = route.path[index + 1];
+            const maxDaysValue = getMaxDays(node, nextNode);
             const routeData = routeInfo[node][nextNode];
-            const requirement = routeData.reqs || ''; // Default empty string
+            const requirement = routeData.reqs || '';
             const lastActivity = routeData.updated || 'Unknown';
             const activeStatus = routeData.active || 'Unknown';
 
-            // Determine badge class
             let statusClass = 'status-unknown';
             if (activeStatus.toLowerCase() === 'yes') statusClass = 'status-recruiting';
             if (activeStatus.toLowerCase() === 'no') statusClass = 'status-closed';
 
             const statusText = activeStatus === 'Yes' ? 'Recruiting' : (activeStatus === 'No' ? 'Closed' : 'Unknown');
-            const daysDisplay = maxDays === null ? 'Unknown' : `${maxDays}d`;
+            const daysDisplay = maxDaysValue === null ? 'Unknown' : `${maxDaysValue}d`;
 
-            // Construct details HTML based on requirements
             let detailsHTML = '';
             
-            // Class needed
             const className = unlockInviteClass[node] ? unlockInviteClass[node][1] : 'N/A';
             detailsHTML += `
               <div class="route-step-detail">
@@ -524,7 +657,6 @@
               </div>
             `;
 
-            // Requirements - Only show if not empty/null/undefined
             if (requirement && requirement.toLowerCase() !== 'none' && requirement.toLowerCase() !== 'no requirement') {
                detailsHTML += `
                 <div class="route-step-detail">
@@ -564,45 +696,6 @@
         return card;
       }
 
-      function calculateRouteDays(route) {
-        return route.reduce((sum, node, index) => {
-          if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
-            const days = getMaxDays(node, route[index + 1]);
-            return sum + (days === null ? 0 : days);
-          }
-          return sum;
-        }, 0);
-      }
-
-      function findAllRoutes(start, end, maxJumps = 5, maxDays = 1080) {
-        const result = [];
-        // Stack element: [currentNode, pathArray, accumulatedDays]
-        const stack = [[start, [start], 0]];
-
-        while (stack.length) {
-          const [node, route, days] = stack.pop();
-
-          if (route.length > maxJumps + 1) continue;
-          if (days > maxDays) continue; // early cutoff
-
-          if (node === end) {
-            result.push(route);
-            continue;
-          }
-
-          const neighbors = Object.entries(routeInfo[node] || {});
-          for (const [next, _] of neighbors) {
-            if (!route.includes(next)) {
-              const maxDaysToNext = getMaxDays(node, next);
-              const newDays = (maxDaysToNext === null ? days : days + maxDaysToNext);
-              stack.push([next, [...route, next], newDays]);
-            }
-          }
-        }
-
-        return result;
-      }
-
       function getMaxDays(start, end) {
         const routeData = routeInfo[start] && routeInfo[start][end];
         const days1 = routeData && routeData.days !== undefined ? routeData.days : null;
@@ -623,8 +716,3 @@
         params.set('sort', selectedSort);
         history.replaceState(null, '', '?' + params.toString());
       }
-    });
-  </script>
-</body>
-
-</html>
