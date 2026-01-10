@@ -19,15 +19,15 @@ a:hover {
 }
 
 #settingsMenu {
-  display: block; /* always visible */
+  display: block;
   position: fixed;
-  top: 80px;
+  top: 50px;
   left: 15px;
-  width: 180px;
+  width: 150px; /* smaller width */
   background: #1a1a1a;
   border: 1px solid #333;
   border-radius: 8px;
-  padding: 12px;
+  padding: 10px;
   font-size: 12px;
   color: #e0e0e0;
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
@@ -35,11 +35,7 @@ a:hover {
 }
 
 #settingsMenu .setting {
-  margin-bottom: 12px;
-}
-
-#settingsMenu .setting:last-child {
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 #settingsMenu label {
@@ -52,7 +48,7 @@ a:hover {
 .radio-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 4px; /* tighter spacing */
   margin-bottom: 4px;
 }
 
@@ -67,12 +63,13 @@ a:hover {
 #maxJumpsInput,
 #maxDaysInput {
   width: 100%;
-  padding: 4px 6px;
+  padding: 4px 6px; /* smaller input */
+  font-size: 12px;
   border: 1px solid #444;
   border-radius: 4px;
   background: #2a2a2a;
   color: #e0e0e0;
-  font-size: 12px;
+  box-sizing: border-box;
 }
 
 #routeContainer {
@@ -305,6 +302,7 @@ a:hover {
 		grid-template-columns: 1fr;
 	}
 }
+
 
 
 
