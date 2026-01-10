@@ -79,12 +79,14 @@
       const sourceInput = document.getElementById('sourceInput');
       const targetInput = document.getElementById('targetInput');
       const sourceDropdown = document.getElementById('sourceDropdown');
-      const targetDropdown = document.getElementById('targetDropdown');
-      
+      const targetDropdown = document.getElementById('targetDropdown');      
       let maxJumps = parseInt(localStorage.getItem('maxJumps'), 10) || 5;
       let maxDays = parseInt(localStorage.getItem('maxDays'), 10) || 1080;
       let sortOptionValue = localStorage.getItem('sortOption') || 'fastest';
 
+      let sourceDebounceTimer;
+      let targetDebounceTimer;
+      
       maxJumpsInput.value = maxJumps;
       maxDaysInput.value = maxDays;
       sortOption.value = sortOptionValue;
@@ -95,6 +97,8 @@
         Object.keys(routeInfo)
         .flatMap(startKey => [startKey, ...Object.keys(routeInfo[startKey])])
       )).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
+      const allTrackersLower = allTrackers.map(t => t.toLowerCase());
 
       maxJumpsInput.addEventListener('change', (event) => {
         maxJumps = parseInt(event.target.value, 10);
@@ -118,66 +122,114 @@
         settingsMenu.style.display = settingsMenu.style.display === 'block' ? 'none' : 'block';
       });
 
-      document.addEventListener('click', (event) => {
+      document.addEventListener('mousedown', (event) => {
         if (!settingsMenu.contains(event.target) && event.target !== settingsToggle) {
           settingsMenu.style.display = 'none';
         }
-        if (!sourceDropdown.contains(event.target) && event.target !== sourceInput) {
+      
+        if (
+          !sourceDropdown.contains(event.target) &&
+          !sourceInput.contains(event.target)
+        ) {
           sourceDropdown.style.display = 'none';
         }
-        if (!targetDropdown.contains(event.target) && event.target !== targetInput) {
+      
+        if (
+          !targetDropdown.contains(event.target) &&
+          !targetInput.contains(event.target)
+        ) {
           targetDropdown.style.display = 'none';
         }
       });
 
-      sourceInput.addEventListener('input', (e) => {
-        showAutocomplete(sourceInput, sourceDropdown, e.target.value);
-        calculateRoute();
+      [sourceDropdown, targetDropdown].forEach(dropdown => {
+        dropdown.addEventListener('mousedown', (e) => {
+          e.stopPropagation();
+        });
       });
-
-      targetInput.addEventListener('input', (e) => {
-        showAutocomplete(targetInput, targetDropdown, e.target.value);
-        calculateRoute();
+      
+      [sourceInput, targetInput].forEach(input => {
+        input.addEventListener('mousedown', (e) => {
+          e.stopPropagation();
+        });
       });
 
       sourceInput.addEventListener('focus', (e) => {
         showAutocomplete(sourceInput, sourceDropdown, e.target.value);
       });
 
+      sourceInput.addEventListener('input', (e) => {
+        clearTimeout(sourceDebounceTimer);
+        const value = e.target.value;
+        sourceDebounceTimer = setTimeout(() => {
+          showAutocomplete(sourceInput, sourceDropdown, value);
+        }, 150);
+      });
+      
+      targetInput.addEventListener('input', (e) => {
+        clearTimeout(targetDebounceTimer);
+        const value = e.target.value;
+        targetDebounceTimer = setTimeout(() => {
+          showAutocomplete(targetInput, targetDropdown, value);
+        }, 150);
+      });
+
       targetInput.addEventListener('focus', (e) => {
         showAutocomplete(targetInput, targetDropdown, e.target.value);
       });
 
+      let previousFiltered = [];
+      const abbrListLower = {};
+      for (const key in abbrList) {
+        abbrListLower[key] = abbrList[key].toLowerCase();
+      }
+      
       function showAutocomplete(input, dropdown, value) {
         const searchTerm = value.toLowerCase().trim();
-        
-        let filtered = allTrackers;
-        if (searchTerm) {
-          filtered = allTrackers.filter(tracker => 
-            tracker.toLowerCase().includes(searchTerm) ||
-            (abbrList[tracker] && abbrList[tracker].toLowerCase().includes(searchTerm))
-          );
-        }
-
-        if (filtered.length === 0 && searchTerm) {
+        if (!searchTerm) {
           dropdown.style.display = 'none';
           return;
         }
 
+        const filtered = [];
+        for (let i = 0; i < allTrackers.length; i++) {
+          const tracker = allTrackers[i];
+          const trackerLower = allTrackersLower[i];
+          const abbrLower = abbrListLower[tracker] || '';
+          if (trackerLower.includes(searchTerm) || abbrLower.includes(searchTerm)) {
+            filtered.push(tracker);
+            if (filtered.length >= 20) break;
+          }
+        }
+
+        const isSame = filtered.length === previousFiltered.length &&
+                       filtered.every((t, i) => t === previousFiltered[i] &&
+                         ((abbrList[t] || '') === (abbrList[previousFiltered[i]] || '')));
+        if (isSame) return;
+        previousFiltered = filtered.slice();
+      
         dropdown.innerHTML = '';
-        filtered.slice(0, 20).forEach(tracker => {
+
+        filtered.forEach(tracker => {
           const item = document.createElement('div');
           item.className = 'autocomplete-item';
+      
           const abbr = abbrList[tracker] ? ` (${abbrList[tracker]})` : '';
-          item.textContent = tracker + abbr;
+
+          const nameHTML = tracker.replace(new RegExp(`(${searchTerm})`, 'ig'), '<mark>$1</mark>');
+          const abbrHTML = abbr.replace(new RegExp(`(${searchTerm})`, 'ig'), '<mark>$1</mark>');
+      
+          item.innerHTML = nameHTML + abbrHTML;
+      
           item.addEventListener('click', () => {
             input.value = tracker;
             dropdown.style.display = 'none';
             calculateRoute();
           });
+      
           dropdown.appendChild(item);
         });
-
+      
         dropdown.style.display = filtered.length > 0 ? 'block' : 'none';
       }
 
@@ -198,6 +250,7 @@
       function calculateRoute() {
         const resultsInfo = document.getElementById('resultsInfo');
         const routesGrid = document.getElementById('routesGrid');
+        const fragment = document.createDocumentFragment();
 
         resultsInfo.innerHTML = '';
         routesGrid.innerHTML = '';
@@ -263,8 +316,9 @@
         resultsInfo.innerHTML = `Found ${allRoutes.length} route${allRoutes.length !== 1 ? 's' : ''}`;
 
         allRoutes.forEach((route, index) => {
-          routesGrid.appendChild(createRouteCard(route, index + 1));
+          fragment.appendChild(createRouteCard(route, index + 1));
         });
+        routesGrid.appendChild(fragment);
       }
 
       function createRouteCard(route, routeNumber) {
@@ -335,28 +389,28 @@
       function findAllRoutes(start, end, maxJumps = 5, maxDays = 1080) {
         const result = [];
         const stack = [[start, [start], 0]];
-
+      
         while (stack.length) {
           const [node, route, days] = stack.pop();
-          
+      
           if (route.length > maxJumps + 1) continue;
-
+          if (days > maxDays) continue; // early cutoff
+      
           if (node === end) {
             result.push(route);
             continue;
           }
-
-          for (const [next, _] of Object.entries(routeInfo[node] || {})) {
+      
+          const neighbors = Object.entries(routeInfo[node] || {});
+          for (const [next, _] of neighbors) {
             if (!route.includes(next)) {
               const maxDaysToNext = getMaxDays(node, next);
-              if (maxDaysToNext === null || maxDaysToNext === 0 || (days + maxDaysToNext) <= maxDays) {
-                const newDays = maxDaysToNext === null ? days : days + maxDaysToNext;
-                stack.push([next, [...route, next], newDays]);
-              }
+              const newDays = (maxDaysToNext === null ? days : days + maxDaysToNext);
+              stack.push([next, [...route, next], newDays]);
             }
           }
         }
-
+      
         return result;
       }
 
@@ -372,8 +426,14 @@
 
       // Initial calculation
       calculateRoute();
+
+      window.addEventListener('error', (e) => {
+        console.error('JS Error:', e.message, e.filename, e.lineno);
+      });
+
     });
   </script>
 </body>
 </html>
+
 
