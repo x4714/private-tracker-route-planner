@@ -1,11 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="data"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrackersInfo Official Recruitments</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      --light: hsl(0, 0%, 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    #settingsMenu {
+      display: none;
+      position: absolute;
+      top: 10px;
+      right: 50px;
+      background: #0000005e;
+      font-size: 13px;
+      color: white;
+      padding: 10px 10px 0px 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    #settingsMenu .setting {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    #settingsMenu.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #settingsMenu .setting label {
+      width: 80px;
+      font-weight: 500;
+    }
+
+    #settingsMenu .setting input,
+    #settingsMenu .setting select {
+      flex: 1;
+      padding: 4px;
+      width: 120px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    #settingsToggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: white;
+      z-index: 1001;
+    }
+
+    #settingsToggle:hover {
+      color: #ddd;
+    }
+
+    #routeContainer {
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      box-sizing: border-box;
+      overflow: hidden;
+      background: var(--background);
+      user-select: none;
+    }
+
+    #calcForm {
+      position: relative;
+      display: block;
+      align-items: center;
+      color: var(--light);
+      background: transparent;
+      padding: 5px;
+    }
+
+    #headerTable {
+      margin: 0 auto;
+      width: 100vw;
+      height: 80px;
+      max-height: 80px;
+      table-layout: fixed;
+      text-align: center;
+      max-width: calc(min(100%,1080px));
+      border-collapse: collapse;
+      overflow: hidden;
+    }
+
+    .col1, .col5 {
+      width: 7.5%;
+    }
+
+    .col2, .col4 {
+      text-align: center;
+      position: relative;
+      width: 22.5%;
+    }
+
+    .col3 {
+      width: 40%;
+    }
+
+    #routeChain {
+      font-size: calc(max(1vw,13px));
+      overflow: hidden;
+      max-height: 78px;
+      text-overflow: ellipsis;
+      white-space: normal;
+      font-weight: 500;
+    }
+
+    #target, #source {
+      font-size: calc(max(1.25vw,14px));
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      overflow: hidden;
+      color: var(--light);
+      background: transparent;
+    }
+
+    .trackerButton {
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      width: 100%;
+      height: 80%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0);
+      z-index: 900;
+      cursor: pointer;
+      word-break: break-all;
+    }
+
+    #sourceAbbr, #targetAbbr {
+      position: absolute;
+      width: 100%;
+      font-size: calc(max(1vw,13px));
+      font-weight: 500;
+    }
+
+    #prevroute, #nextroute {
+      position: relative;
+      font-size: calc(max(2.5vw,32px));
+      letter-spacing: 1px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #prevroute:hover, #nextroute:hover, .trackerButton:hover {
+      transform: translateY(-4px);
+    }
+
+    #detailsTable {
+      margin-top: 8px;
+      color: var(--light);
+      overflow: auto;
+      line-height: 1.6;
+      max-height: calc(100vh - 180px);
+    }
+
+    #detailsTable td, #chainInfo td {
+      padding: 4px 8px;
+    }
+
+    #routeTable {
+      margin: 0 auto;
+      background-color: rgba(0, 0, 0, 0.25);
+      width: 100vw;
+      max-width: calc(min(100%,1080px));
+      font-size: 13px;
+      text-align: left;
+      border-collapse: collapse;
+    }
+
+    #chainInfo {
+      margin: 8px auto 0 auto;
+      width: 100vw;
+      max-width: calc(min(100%,1080px));
+      font-size: 13px;
+      font-weight: 600;
+      text-align: left;
+      border-collapse: collapse;
+    }
+
+    .table-container {
+      margin-top: 8px;
+    }
+
+    td {
+      overflow: hidden;
+    }
+
+    #detailsTable::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+
+    #detailsTable::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    #detailsTable::-webkit-scrollbar-thumb {
+      background: transparent;
+    }
+
+    #gridContainer {
+      display: none;
+      position: absolute;
+      width: 90vw;
+      max-width: 960px;
+      top: 150px;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-height: 480px;
+      overflow: hidden;
+      font-size: 16px;
+      background: #f9f9f9;
+      padding: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      z-index: 10000;
+    }
+
+    #gridContainer::-webkit-scrollbar {
+      display: none;
+    }
+
+    #gridContainer div {
+      padding: 12px;
+      background: #fff;
+      text-align: center;
+      cursor: pointer;
+      white-space: nowrap;
+      min-width: max-content;
+      font-weight: 500;
+    }
+
+    .filter-input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      grid-column: 1 / -1;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .grid-item {
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, auto));
+      gap: 0px;
+    }
+
+    @media (max-width: 720px) {
+      .grid-container {
+        grid-template-columns: repeat(auto-fit, minmax(120px, auto));
+      }
+      #gridContainer {
+        font-size: 13px;
+      }
+      #detailsTable {
+        max-height: calc(100vh - 200px);
+      }
+    }
+
+    @media (max-width: 1600px) {
+      #settingsMenu {
+        box-sizing: border-box;
+      }
+      #calcForm {
+        margin-top: 25px;
+      }
+    }
+  </style>
 </head>
 <body>
   <button id="settingsToggle" aria-label="Settings" title="Settings">⚙</button>
@@ -61,318 +364,294 @@
       <div id="detailsTable"></div>
     </div>
   </form>
-    <div id="gridContainer"></div>
-      <div style="position: absolute; bottom: 0.5em; right: 0.5em; font-size: 13px; text-align: right; color: white; text-decoration: none;">
-      <p id="update-time" style="display: inline;">last updated Loading...</p>
-      <a href="https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/">TrackersInfo</a>
-      <a href="https://github.com/ti-or/ti-or.github.io">GitHub</a>
-    </div>
+  <div id="gridContainer"></div>
+  <div style="position: absolute; bottom: 0.5em; right: 0.5em; font-size: 13px; text-align: right; color: white; text-decoration: none;">
+    <p id="update-time" style="display: inline;">last updated Loading...</p>
+    <a href="https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/">TrackersInfo</a>
+    <a href="https://github.com/ti-or/ti-or.github.io">GitHub</a>
+  </div>
   <script>
+    window.addEventListener('load', async function() {
+      // Fetch trackers.json
+      let data;
+      try {
+        const response = await fetch('trackers.json');
+        data = await response.json();
+      } catch (error) {
+        console.error('Error loading trackers.json:', error);
+        return;
+      }
 
-  window.addEventListener('load', function() {
-    
-    const settingsMenu = document.getElementById('settingsMenu');
-    const maxJumpsInput = document.getElementById('maxJumps');
-    const maxDaysInput = document.getElementById('maxDays');
-    const sortOption = document.getElementById('sortOption');
-    const themeOption = document.getElementById('themeOption');
-    const settingsToggle = document.getElementById('settingsToggle');
-    let maxJumps = parseInt(localStorage.getItem('maxJumps'), 10) || 5;
-    let maxDays = parseInt(localStorage.getItem('maxDays'), 10) || 1080;
-    let sortOptionValue = localStorage.getItem('sortOption') || 'fastest';
-    let themeOptionValue = localStorage.getItem('themeOption') || 'red';
+      const settingsMenu = document.getElementById('settingsMenu');
+      const maxJumpsInput = document.getElementById('maxJumps');
+      const maxDaysInput = document.getElementById('maxDays');
+      const sortOption = document.getElementById('sortOption');
+      const themeOption = document.getElementById('themeOption');
+      const settingsToggle = document.getElementById('settingsToggle');
+      let maxJumps = parseInt(localStorage.getItem('maxJumps'), 10) || 5;
+      let maxDays = parseInt(localStorage.getItem('maxDays'), 10) || 1080;
+      let sortOptionValue = localStorage.getItem('sortOption') || 'fastest';
+      let themeOptionValue = localStorage.getItem('themeOption') || 'red';
 
-    maxJumpsInput.value = maxJumps;
-    maxDaysInput.value = maxDays;
-    sortOption.value = sortOptionValue;
-    themeOption.value = themeOptionValue;
+      maxJumpsInput.value = maxJumps;
+      maxDaysInput.value = maxDays;
+      sortOption.value = sortOptionValue;
+      themeOption.value = themeOptionValue;
 
-    changeTheme(themeOptionValue);
-    calculateRoute();
-    
-    maxJumpsInput.addEventListener('change', (event) => {
+      changeTheme(themeOptionValue);
+      calculateRoute();
+      
+      maxJumpsInput.addEventListener('change', (event) => {
         maxJumps = parseInt(event.target.value, 10);
         localStorage.setItem('maxJumps', maxJumps);
         calculateRoute();
-    });
+      });
 
-    maxDaysInput.addEventListener('change', (event) => {
+      maxDaysInput.addEventListener('change', (event) => {
         maxDays = parseInt(event.target.value, 10);
         localStorage.setItem('maxDays', maxDays);
         calculateRoute();
-    });
+      });
 
-    sortOption.addEventListener('change', () => {
+      sortOption.addEventListener('change', () => {
         localStorage.setItem('sortOption', sortOption.value);
         calculateRoute();
-    });
+      });
 
-    themeOption.addEventListener('change', function() {
+      themeOption.addEventListener('change', function() {
         const theme = this.value;
         localStorage.setItem('themeOption', theme);
         changeTheme(theme);
-    });
-    
-    settingsToggle.addEventListener('click', (event) => {
-      event.stopPropagation();
-      if (settingsMenu.style.display === 'none' || settingsMenu.style.display === '') {
-        settingsMenu.style.display = 'block';
-      } else {
-        settingsMenu.style.display = 'none';
-      }
-    });
-
-    document.addEventListener('click', (event) => {
-      if (!settingsMenu.contains(event.target) && event.target !== settingsToggle) {
-        settingsMenu.style.display = 'none';
-      }
-    });
-
-    const { routeInfo, unlockInviteClass, abbrList } = data;
-
-    const style = document.createElement('style');
-    style.textContent = `
-    `;
-    document.head.appendChild(style);
-
-    const inviteForm = document.getElementById('routeContainer');
-
-    document.getElementById('source').addEventListener('click', () => {
-      toggleGrid('source');
-    });
-
-    document.getElementById('target').addEventListener('click', () => {
-      toggleGrid('target');
-    });
-
-    document.getElementById('prevroute').addEventListener('click', () => {
-      showRoute(-1);
-    });
-
-    document.getElementById('nextroute').addEventListener('click', () => {
-      showRoute(1);
-    });
-    
-    document.addEventListener('click', (event) => {
-      const gridContainer = document.getElementById('gridContainer');
-      if (gridContainer.style.display === 'block' && !gridContainer.contains(event.target) && !['source', 'target'].includes(event.target.id)) {
-        gridContainer.style.display = 'none';
-      }
-    });
-
-    const apiUrl = `https://api.github.com/repos/ti-or/ti-or.github.io/commits?path=data`;
-
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            const commitDate = data[0].commit.committer.date;
-            const updateDate = new Date(commitDate).toLocaleDateString();
-            document.getElementById('update-time').innerText = `last updated ${updateDate}`;
-        })
-        .catch(error => {
-            console.error('Error fetching commit data:', error);
-            document.getElementById('update-time').innerText = 'Unable to fetch data update time';
-        });
-
-    let allRoutes = [];
-    let currentRouteIndex = 0;
-
-    function changeTheme(theme) {
-      let color;
+      });
       
-      switch(theme) {
-        case 'red':
-          color = 'hsl(0, 40%, 40%)';
-          break;
-        case 'orange':
-          color = 'hsl(30, 80%, 40%)';
-          break;
-        case 'yellow':
-          color = 'hsl(60, 40%, 40%)';
-          break;
-        case 'green':
-          color = 'hsl(120, 40%, 40%)';
-          break;
-        case 'cyan':
-          color = 'hsl(180, 40%, 40%)';
-          break;
-        case 'blue':
-          color = 'hsl(240, 40%, 40%)';
-          break;
-        case 'violet':
-          color = 'hsl(300, 40%, 40%)';
-          break;
-        default:
-          color = 'hsl(0, 40%, 40%)';
-      }
-      
-      document.body.style.setProperty('--background', `linear-gradient(to right bottom, hsl(0, 0%, 0%), ${color})`);
-    }
-
-    function toggleGrid(buttonId) {
-      const gridContainer = document.getElementById('gridContainer');
-      if (gridContainer.style.display === 'none' || gridContainer.style.display === '') {
-        populateGrid(buttonId);
-        gridContainer.style.display = 'block';
-      } else {
-        gridContainer.style.display = 'none';
-      }
-    }
-
-    function populateGrid(buttonId) {
-      const gridContainer = document.getElementById('gridContainer');
-      gridContainer.innerHTML = '';
-
-      const uniqueKeys = Array.from(new Set(
-        Object.keys(routeInfo)
-        .flatMap(startKey => [startKey, ...Object.keys(routeInfo[startKey])])
-      ))
-      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-
-      if (buttonId === 'source') uniqueKeys.unshift('From');
-      if (buttonId === 'target') uniqueKeys.unshift('To');
-
-      const abbrToNameMap = Object.keys(abbrList).reduce((map, name) => {
-        map[abbrList[name].toLowerCase()] = name.toLowerCase();
-        return map;
-      }, {});
-
-      const container = document.createElement('div');
-      container.className = 'grid-container';
-
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.className = 'filter-input';
-      container.appendChild(input);
-
-      function updateItems(filterText = '') {
-        const filterTextLower = filterText.toLowerCase();
-        const filteredKeys = uniqueKeys.filter(key => {
-          const keyLower = key.toLowerCase();
-          return keyLower.includes(filterTextLower) || 
-                 Object.keys(abbrToNameMap).some(abbr => 
-                   abbr.includes(filterTextLower) && abbrToNameMap[abbr].includes(keyLower)
-                 );
-        });
-
-        container.querySelectorAll('.grid-item').forEach(item => item.remove());
-
-        filteredKeys.forEach(key => {
-          const item = document.createElement('div');
-          item.textContent = key;
-          item.className = 'grid-item';
-          item.addEventListener('click', () => {
-            if (buttonId === 'source') {
-              setTextContent('source', key);
-              setTextContent('sourceAbbr', key === 'From' ? 'Any' : abbrList[key] || key);
-            } else {
-              setTextContent('target', key);
-              setTextContent('targetAbbr', key === 'To' ? 'Any' : abbrList[key] || key);
-            }
-            gridContainer.style.display = 'none';
-            calculateRoute();
-          });
-          container.appendChild(item);
-        });
-      }
-
-      updateItems();
-
-      input.addEventListener('input', (event) => {
-        updateItems(event.target.value);
+      settingsToggle.addEventListener('click', (event) => {
+        event.stopPropagation();
+        if (settingsMenu.style.display === 'none' || settingsMenu.style.display === '') {
+          settingsMenu.style.display = 'block';
+        } else {
+          settingsMenu.style.display = 'none';
+        }
       });
 
-      gridContainer.appendChild(container);
-    }
-
-    function calculateRoute() {
-      const calcForm = document.getElementById('calcForm');
-      const resultTitle = document.getElementById('routeChain');
-      const resultDescription = document.getElementById('detailsTable');
-      const resultFooter = document.getElementById('chainInfo');
-
-      resultTitle.innerText = '';
-      resultDescription.innerHTML = '';
-      resultFooter.innerText = '';
-
-      const start = document.getElementById('source').textContent.trim();
-      const end = document.getElementById('target').textContent.trim();
-
-      if (start === end) {
-        resultTitle.innerText = 'One account per lifetime!';
-        resultDescription.innerText = '';
-        calcForm.style.display = 'block';
-        return;
-      }
-
-      if (start === 'From') {
-        if (end === 'To') {
-          resultTitle.innerText = '';
-          resultDescription.innerText = '';
-          calcForm.style.display = 'block';
-          return;
+      document.addEventListener('click', (event) => {
+        if (!settingsMenu.contains(event.target) && event.target !== settingsToggle) {
+          settingsMenu.style.display = 'none';
         }
-        allRoutes = Object.keys(routeInfo)
-          .filter(node => routeInfo[node] && routeInfo[node][end])
-          .map(node => [node, end]);
-      } else if (end === 'To') {
-        if (!routeInfo[start]) {
-          resultTitle.innerText = 'No official recruitment';
-          resultDescription.innerText = '';
-          calcForm.style.display = 'block';
-          return;
+      });
+
+      const { routeInfo, unlockInviteClass, abbrList } = data;
+
+      const inviteForm = document.getElementById('routeContainer');
+
+      document.getElementById('source').addEventListener('click', () => {
+        toggleGrid('source');
+      });
+
+      document.getElementById('target').addEventListener('click', () => {
+        toggleGrid('target');
+      });
+
+      document.getElementById('prevroute').addEventListener('click', () => {
+        showRoute(-1);
+      });
+
+      document.getElementById('nextroute').addEventListener('click', () => {
+        showRoute(1);
+      });
+      
+      document.addEventListener('click', (event) => {
+        const gridContainer = document.getElementById('gridContainer');
+        if (gridContainer.style.display === 'block' && !gridContainer.contains(event.target) && !['source', 'target'].includes(event.target.id)) {
+          gridContainer.style.display = 'none';
         }
-        allRoutes = Object.keys(routeInfo[start])
-          .map(node => [start, node])
-          .filter(([from, to]) => routeInfo[from] && routeInfo[from][to])
-          .map(([from, to]) => [from, to]);
-      } else {
-        if (!routeInfo[start]) {
-          resultTitle.innerText = 'No official recruitment';
-          resultDescription.innerText = '';
-          calcForm.style.display = 'block';
-          return;
-        }
-        allRoutes = findAllRoutes(start, end, maxJumps, maxDays);
-      }
+      });
 
-      if (allRoutes.length === 0) {
-        resultTitle.innerText = 'No results found';
-        resultDescription.innerText = '';
-        calcForm.style.display = 'block';
-        return;
-      }
+      const apiUrl = `https://api.github.com/repos/ti-or/ti-or.github.io/commits?path=trackers.json`;
 
-      if (sortOption.value === 'fastest') {
-        allRoutes = allRoutes.sort((a, b) => {
-          const timeA = a.reduce((sum, node, index) => {
-            if (index < a.length - 1 && routeInfo[node] && routeInfo[node][a[index + 1]]) {
-              return sum + getMaxDays(node, a[index + 1]);
-            }
-            return sum;
-          }, 0);
-
-          const timeB = b.reduce((sum, node, index) => {
-            if (index < b.length - 1 && routeInfo[node] && routeInfo[node][b[index + 1]]) {
-              return sum + getMaxDays(node, b[index + 1]);
-            }
-            return sum;
-          }, 0);
-
-          if (timeA !== timeB) {
-            return timeA - timeB;
-          } else {
-            return a.length - b.length;
-          }
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          const commitDate = data[0].commit.committer.date;
+          const updateDate = new Date(commitDate).toLocaleDateString();
+          document.getElementById('update-time').innerText = `last updated ${updateDate}`;
+        })
+        .catch(error => {
+          console.error('Error fetching commit data:', error);
+          document.getElementById('update-time').innerText = 'Unable to fetch data update time';
         });
-      } else if (sortOption.value === 'fewestJumps') {
-        allRoutes = allRoutes.sort((a, b) => {
-          const lengthA = a.length;
-          const lengthB = b.length;
 
-          if (lengthA !== lengthB) {
-            return lengthA - lengthB;
-          } else {
+      let allRoutes = [];
+      let currentRouteIndex = 0;
+
+      function changeTheme(theme) {
+        let color;
+        
+        switch(theme) {
+          case 'red':
+            color = 'hsl(0, 40%, 40%)';
+            break;
+          case 'orange':
+            color = 'hsl(30, 80%, 40%)';
+            break;
+          case 'yellow':
+            color = 'hsl(60, 40%, 40%)';
+            break;
+          case 'green':
+            color = 'hsl(120, 40%, 40%)';
+            break;
+          case 'cyan':
+            color = 'hsl(180, 40%, 40%)';
+            break;
+          case 'blue':
+            color = 'hsl(240, 40%, 40%)';
+            break;
+          case 'violet':
+            color = 'hsl(300, 40%, 40%)';
+            break;
+          default:
+            color = 'hsl(0, 40%, 40%)';
+        }
+        
+        document.body.style.setProperty('--background', `linear-gradient(to right bottom, hsl(0, 0%, 0%), ${color})`);
+      }
+
+      function toggleGrid(buttonId) {
+        const gridContainer = document.getElementById('gridContainer');
+        if (gridContainer.style.display === 'none' || gridContainer.style.display === '') {
+          populateGrid(buttonId);
+          gridContainer.style.display = 'block';
+        } else {
+          gridContainer.style.display = 'none';
+        }
+      }
+
+      function populateGrid(buttonId) {
+        const gridContainer = document.getElementById('gridContainer');
+        gridContainer.innerHTML = '';
+
+        const uniqueKeys = Array.from(new Set(
+          Object.keys(routeInfo)
+          .flatMap(startKey => [startKey, ...Object.keys(routeInfo[startKey])])
+        ))
+        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
+        if (buttonId === 'source') uniqueKeys.unshift('From');
+        if (buttonId === 'target') uniqueKeys.unshift('To');
+
+        const abbrToNameMap = Object.keys(abbrList).reduce((map, name) => {
+          map[abbrList[name].toLowerCase()] = name.toLowerCase();
+          return map;
+        }, {});
+
+        const container = document.createElement('div');
+        container.className = 'grid-container';
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'filter-input';
+        input.placeholder = 'Search trackers...';
+        container.appendChild(input);
+
+        function updateItems(filterText = '') {
+          const filterTextLower = filterText.toLowerCase();
+          const filteredKeys = uniqueKeys.filter(key => {
+            const keyLower = key.toLowerCase();
+            return keyLower.includes(filterTextLower) || 
+                   Object.keys(abbrToNameMap).some(abbr => 
+                     abbr.includes(filterTextLower) && abbrToNameMap[abbr].includes(keyLower)
+                   );
+          });
+
+          container.querySelectorAll('.grid-item').forEach(item => item.remove());
+
+          filteredKeys.forEach(key => {
+            const item = document.createElement('div');
+            item.textContent = key;
+            item.className = 'grid-item';
+            item.addEventListener('click', () => {
+              if (buttonId === 'source') {
+                setTextContent('source', key);
+                setTextContent('sourceAbbr', key === 'From' ? 'Any' : abbrList[key] || key);
+              } else {
+                setTextContent('target', key);
+                setTextContent('targetAbbr', key === 'To' ? 'Any' : abbrList[key] || key);
+              }
+              gridContainer.style.display = 'none';
+              calculateRoute();
+            });
+            container.appendChild(item);
+          });
+        }
+
+        updateItems();
+
+        input.addEventListener('input', (event) => {
+          updateItems(event.target.value);
+        });
+
+        gridContainer.appendChild(container);
+      }
+
+      function calculateRoute() {
+        const calcForm = document.getElementById('calcForm');
+        const resultTitle = document.getElementById('routeChain');
+        const resultDescription = document.getElementById('detailsTable');
+        const resultFooter = document.getElementById('chainInfo');
+
+        resultTitle.innerText = '';
+        resultDescription.innerHTML = '';
+        resultFooter.innerText = '';
+
+        const start = document.getElementById('source').textContent.trim();
+        const end = document.getElementById('target').textContent.trim();
+
+        if (start === end) {
+          resultTitle.innerText = 'One account per lifetime!';
+          resultDescription.innerText = '';
+          calcForm.style.display = 'block';
+          return;
+        }
+
+        if (start === 'From') {
+          if (end === 'To') {
+            resultTitle.innerText = '';
+            resultDescription.innerText = '';
+            calcForm.style.display = 'block';
+            return;
+          }
+          allRoutes = Object.keys(routeInfo)
+            .filter(node => routeInfo[node] && routeInfo[node][end])
+            .map(node => [node, end]);
+        } else if (end === 'To') {
+          if (!routeInfo[start]) {
+            resultTitle.innerText = 'No official recruitment';
+            resultDescription.innerText = '';
+            calcForm.style.display = 'block';
+            return;
+          }
+          allRoutes = Object.keys(routeInfo[start])
+            .map(node => [start, node])
+            .filter(([from, to]) => routeInfo[from] && routeInfo[from][to])
+            .map(([from, to]) => [from, to]);
+        } else {
+          if (!routeInfo[start]) {
+            resultTitle.innerText = 'No official recruitment';
+            resultDescription.innerText = '';
+            calcForm.style.display = 'block';
+            return;
+          }
+          allRoutes = findAllRoutes(start, end, maxJumps, maxDays);
+        }
+
+        if (allRoutes.length === 0) {
+          resultTitle.innerText = 'No results found';
+          resultDescription.innerText = '';
+          calcForm.style.display = 'block';
+          return;
+        }
+
+        if (sortOption.value === 'fastest') {
+          allRoutes = allRoutes.sort((a, b) => {
             const timeA = a.reduce((sum, node, index) => {
               if (index < a.length - 1 && routeInfo[node] && routeInfo[node][a[index + 1]]) {
                 return sum + getMaxDays(node, a[index + 1]);
@@ -387,138 +666,169 @@
               return sum;
             }, 0);
 
-            return timeA - timeB;
-          }
-        });
+            if (timeA !== timeB) {
+              return timeA - timeB;
+            } else {
+              return a.length - b.length;
+            }
+          });
+        } else if (sortOption.value === 'fewestJumps') {
+          allRoutes = allRoutes.sort((a, b) => {
+            const lengthA = a.length;
+            const lengthB = b.length;
+
+            if (lengthA !== lengthB) {
+              return lengthA - lengthB;
+            } else {
+              const timeA = a.reduce((sum, node, index) => {
+                if (index < a.length - 1 && routeInfo[node] && routeInfo[node][a[index + 1]]) {
+                  return sum + getMaxDays(node, a[index + 1]);
+                }
+                return sum;
+              }, 0);
+
+              const timeB = b.reduce((sum, node, index) => {
+                if (index < b.length - 1 && routeInfo[node] && routeInfo[node][b[index + 1]]) {
+                  return sum + getMaxDays(node, b[index + 1]);
+                }
+                return sum;
+              }, 0);
+
+              return timeA - timeB;
+            }
+          });
+        }
+
+        currentRouteIndex = 0;
+        showRoute(0);
       }
 
-      currentRouteIndex = 0;
-      showRoute(0);
-    }
+      function findAllRoutes(start, end, maxJumps = 5, maxDays = 1080) {
+        const result = [];
+        const stack = [[start, [start], 0]];
 
-    function findAllRoutes(start, end, maxJumps = 5, maxDays = 1080) {
-      const result = [];
-      const stack = [[start, [start], 0]];
+        while (stack.length) {
+          const [node, route, days] = stack.pop();
+          
+          if (route.length > maxJumps + 1 || days > maxDays) continue;
 
-      while (stack.length) {
-        const [node, route, days] = stack.pop();
+          if (node === end) {
+            result.push(route);
+            continue;
+          }
+
+          for (const [next, _] of Object.entries(routeInfo[node] || {})) {
+            const maxDaysToNext = getMaxDays(node, next);
+            if (!route.includes(next) && (days + maxDaysToNext) <= maxDays) {
+              stack.push([next, [...route, next], days + maxDaysToNext]);
+            }
+          }
+        }
+
+        return result;
+      }
+
+      function showRoute(direction) {
+        if (allRoutes.length === 0) return;
+
+        currentRouteIndex = (currentRouteIndex + direction + allRoutes.length) % allRoutes.length;
+        const route = allRoutes[currentRouteIndex];
+        const calcForm = document.getElementById('calcForm');
+        const resultTitle = document.getElementById('routeChain');
+        const resultDescription = document.getElementById('detailsTable');
+        const chainInfo = document.getElementById('chainInfo');
+
+        function getAbbreviation(name) {
+          return abbrList[name] || name;
+        }
+
+        const abbreviatedRoute = route.map(node => getAbbreviation(node));
+
+        let displayRoute;
+        if (abbreviatedRoute.length === 2) {
+          displayRoute = ' -> ';
+        } else if (abbreviatedRoute.length > 2) {
+          const middleItems = abbreviatedRoute.slice(1, -1);
+          displayRoute = middleItems.length > 0 ? ` -> ${middleItems.join(' -> ')} -> ` : '';
+        } else {
+          displayRoute = abbreviatedRoute[0] || '';
+        }
+
+        resultTitle.innerText = displayRoute;
         
-        if (route.length > maxJumps + 1 || days > maxDays) continue;
-
-        if (node === end) {
-          result.push(route);
-          continue;
-        }
-
-        for (const [next, _] of Object.entries(routeInfo[node] || {})) {
-          const maxDaysToNext = getMaxDays(node, next);
-          if (!route.includes(next) && (days + maxDaysToNext) <= maxDays) {
-            stack.push([next, [...route, next], days + maxDaysToNext]);
+        const totalDays = route.reduce((sum, node, index) => {
+          if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
+            return sum + getMaxDays(node, route[index + 1]);
           }
-        }
+          return sum;
+        }, 0);
+        
+        const details = route.map((node, index) => {
+          if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
+            const nextNode = route[index + 1];
+            const maxDays = getMaxDays(node, nextNode);
+            const routeData = routeInfo[node][nextNode];
+            const requirement = routeData.reqs || '';
+            const lastActivity = routeData.updated || '';
+
+            let tableHTML = `
+              <table id="routeTable">
+                <colgroup>
+                  <col style="width: 200px;" />
+                  <col />
+                </colgroup>
+                <tr>
+                  <td>${node} -> ${nextNode}</td>
+                  <td>${maxDays} days</td>
+                </tr>
+                <tr>
+                  <td>Class for invite forum</td>
+                  <td>${unlockInviteClass[node] ? unlockInviteClass[node][1] : ''}</td>
+                </tr>
+                <tr>
+                  <td>Requirements</td>
+                  <td>${requirement}</td>
+                </tr>
+                <tr>
+                  <td>Last time checked</td>
+                  <td>${lastActivity}</td>
+                </tr>
+              </table>
+            `;
+            return `<div class="table-container">${tableHTML}</div>`;
+          }
+          return '';
+        }).join('');
+        
+        const footerHTML = `
+          <table id="routeTable">
+            <colgroup>
+              <col style="width: 200px;" />
+              <col />
+            </colgroup>
+            <tr>
+              <td>Route ${currentRouteIndex + 1} of ${allRoutes.length}</td>
+              <td>Total ${route.length - 1} Jump(s) ${totalDays} Day(s)</td>
+            </tr>
+          </table>
+        `;
+        
+        resultDescription.innerHTML = details;
+        chainInfo.innerHTML = footerHTML;
       }
 
-      return result;
-    }
-
-    function showRoute(direction) {
-      if (allRoutes.length === 0) return;
-
-      currentRouteIndex = (currentRouteIndex + direction + allRoutes.length) % allRoutes.length;
-      const route = allRoutes[currentRouteIndex];
-      const calcForm = document.getElementById('calcForm');
-      const resultTitle = document.getElementById('routeChain');
-      const resultDescription = document.getElementById('detailsTable');
-      const chainInfo = document.getElementById('chainInfo');
-
-      function getAbbreviation(name) {
-        return abbrList[name] || name;
+      function setTextContent(id, text) {
+        document.getElementById(id).textContent = text;
       }
 
-      const abbreviatedRoute = route.map(node => getAbbreviation(node));
+      function getMaxDays(start, end) {
+        const routeData = routeInfo[start] && routeInfo[start][end];
+        const days1 = (routeData && routeData.days) || 0;
+        const days2 = (unlockInviteClass[start] && unlockInviteClass[start][0]) || 0;
 
-      let displayRoute;
-      if (abbreviatedRoute.length === 2) {
-        displayRoute = ' -> ';
-      } else if (abbreviatedRoute.length > 2) {
-        const middleItems = abbreviatedRoute.slice(1, -1);
-        displayRoute = middleItems.length > 0 ? ` -> ${middleItems.join(' -> ')} -> ` : '';
-      } else {
-        displayRoute = abbreviatedRoute[0] || '';
+        return Math.max(days1, days2);
       }
-
-      resultTitle.innerText = displayRoute;
-      
-      const totalDays = route.reduce((sum, node, index) => {
-        if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
-          return sum + getMaxDays(node, route[index + 1]);
-        }
-        return sum;
-      }, 0);
-      
-      const details = route.map((node, index) => {
-        if (index < route.length - 1 && routeInfo[node] && routeInfo[node][route[index + 1]]) {
-          const nextNode = route[index + 1];
-          const maxDays = getMaxDays(node, nextNode);
-          const [time, requirement, lastActivity] = routeInfo[node][nextNode];
-
-          let tableHTML = `
-            <table id="routeTable">
-              <colgroup>
-                <col style="width: 200px;" />
-                <col />
-              </colgroup>
-              <tr>
-                <td>${node} -> ${nextNode}</td>
-                <td>${maxDays} days</td>
-              </tr>
-              <tr>
-                <td>Class for invite forum</td>
-                <td>${unlockInviteClass[node] ? unlockInviteClass[node][1] : ''}</td>
-              </tr>
-              <tr>
-                <td>Requirements</td>
-                <td>${requirement ? requirement : ''}</td>
-              </tr>
-              <tr>
-                <td>Last time checked</td>
-                <td>${lastActivity}</td>
-              </tr>
-            </table>
-          `;
-          return `<div class="table-container">${tableHTML}</div>`;
-        }
-        return '';
-      }).join('');
-      
-      const footerHTML = `
-        <table id="routeTable">
-          <colgroup>
-            <col style="width: 200px;" />
-            <col />
-          </colgroup>
-          <tr>
-            <td>Route ${currentRouteIndex + 1} of ${allRoutes.length}</td>
-            <td>Total ${route.length - 1} Jump(s) ${totalDays} Day(s)</td>
-          </tr>
-        </table>
-      `;
-      
-      resultDescription.innerHTML = details;
-      chainInfo.innerHTML = footerHTML;
-    }
-
-    function setTextContent(id, text) {
-      document.getElementById(id).textContent = text;
-    }
-
-    function getMaxDays(start, end) {
-      const days1 = (routeInfo[start] && routeInfo[start][end] && routeInfo[start][end][0]) || 0;
-      const days2 = (unlockInviteClass[start] && unlockInviteClass[start][0]) || 0;
-
-      return Math.max(days1, days2);
-    }
-  });
+    });
   </script>
   <script data-goatcounter="https://98et5e.goatcounter.com/count"
   async src="//gc.zgo.at/count.js"></script>
