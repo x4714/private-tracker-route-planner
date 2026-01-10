@@ -166,8 +166,6 @@
    	box-sizing: border-box;
    }
 
-   <<<<<<< HEAD
-
    /* --- Calculation Form --- */
    #calcForm {
    	width: 100%;
@@ -178,19 +176,7 @@
    	z-index: 10;
    }
 
-   =======
-
-   /* --- Calculation Form --- */
-   #calcForm {
-   	width: 100%;
-   	max-width: 800px;
-   	/* Limit width for input area */
-   	transition: margin-top var(--transition-speed) ease;
-   	position: relative;
-   	z-index: 10;
-   }
-
-   >>>>>>>ac9465d728d2865355055e716e2ff48e2f271945 #headerSection {
+   #headerSection {
    	display: flex;
    	align-items: center;
    	justify-content: center;
