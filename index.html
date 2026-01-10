@@ -14,21 +14,35 @@
   <div id="routeContainer">
     <div id="settingsMenu">
       <div class="setting">
-        <label for="maxJumps">Max Jumps</label>
-        <input type="number" id="maxJumps" value="5" min="1">
+        <label>Max Jumps</label>
+        <div class="radio-group" id="maxJumpsRadios">
+          <label><input type="radio" name="maxJumps" value="1"> 1</label>
+          <label><input type="radio" name="maxJumps" value="2"> 2</label>
+          <label><input type="radio" name="maxJumps" value="3"> 3</label>
+          <label><input type="radio" name="maxJumps" value="4"> 4</label>
+          <label><input type="radio" name="maxJumps" value="5"> 5</label>
+        </div>
+        <input type="number" id="maxJumpsInput" value="5" min="1" style="margin-top:6px;">
       </div>
-      
+    
       <div class="setting">
-        <label for="maxDays">Max Days</label>
-        <input type="number" id="maxDays" value="1080" min="1">
+        <label>Max Days</label>
+        <div class="radio-group" id="maxDaysRadios">
+          <label><input type="radio" name="maxDays" value="180">6m</label>
+          <label><input type="radio" name="maxDays" value="360">1y</label>
+          <label><input type="radio" name="maxDays" value="720">2y</label>
+          <label><input type="radio" name="maxDays" value="1800">5y</label>
+          <label><input type="radio" name="maxDays" value="3600">10y</label>
+        </div>
+        <input type="number" id="maxDaysInput" value="1080" min="1" style="margin-top:6px;">
       </div>
-      
+    
       <div class="setting">
-        <label for="sortOption">Sort By</label>
-        <select id="sortOption">
-          <option value="fastest">Fastest Route</option>
-          <option value="fewestJumps">Least Jumps</option>
-        </select>
+        <label>Sort By</label>
+        <div class="radio-group" id="sortRadios">
+          <label><input type="radio" name="sortOption" value="fastest">Fastest Route</label>
+          <label><input type="radio" name="sortOption" value="fewestJumps">Least Jumps</label>
+        </div>
       </div>
     </div>
     
@@ -80,6 +94,9 @@
       const targetInput = document.getElementById('targetInput');
       const sourceDropdown = document.getElementById('sourceDropdown');
       const targetDropdown = document.getElementById('targetDropdown');      
+      const maxJumpsInput = document.getElementById('maxJumpsInput');
+      const maxJumpsRadios = document.querySelectorAll('#maxJumpsRadios input');
+      
       let maxJumps = parseInt(localStorage.getItem('maxJumps'), 10) || 5;
       let maxDays = parseInt(localStorage.getItem('maxDays'), 10) || 1080;
       let sortOptionValue = localStorage.getItem('sortOption') || 'fastest';
@@ -246,6 +263,61 @@
           console.error('Error fetching commit data:', error);
           document.getElementById('update-time').innerText = 'Update date unavailable';
         });
+
+      function setMaxJumps(value) {
+        maxJumpsInput.value = value;
+        maxJumpsRadios.forEach(r => r.checked = r.value === value.toString());
+        localStorage.setItem('maxJumps', value);
+        calculateRoute();
+      }
+
+      maxJumpsRadios.forEach(radio => {
+        radio.addEventListener('change', () => setMaxJumps(parseInt(radio.value,10)));
+      });
+      
+      maxJumpsInput.addEventListener('change', () => {
+        let val = parseInt(maxJumpsInput.value,10);
+        if (isNaN(val) || val < 1) val = 1;
+        setMaxJumps(val);
+      });
+      
+      setMaxJumps(parseInt(localStorage.getItem('maxJumps'),10) || 5);
+      
+      const maxDaysInput = document.getElementById('maxDaysInput');
+      const maxDaysRadios = document.querySelectorAll('#maxDaysRadios input');
+      
+      function setMaxDays(value) {
+        maxDaysInput.value = value;
+        maxDaysRadios.forEach(r => r.checked = r.value === value.toString());
+        localStorage.setItem('maxDays', value);
+        calculateRoute();
+      }
+      
+      maxDaysRadios.forEach(radio => {
+        radio.addEventListener('change', () => setMaxDays(parseInt(radio.value,10)));
+      });
+      
+      maxDaysInput.addEventListener('change', () => {
+        let val = parseInt(maxDaysInput.value,10);
+        if (isNaN(val) || val < 1) val = 1;
+        setMaxDays(val);
+      });
+      
+      setMaxDays(parseInt(localStorage.getItem('maxDays'),10) || 1080);
+      
+      const sortRadios = document.querySelectorAll('#sortRadios input');
+      
+      function setSortOption(value) {
+        sortRadios.forEach(r => r.checked = r.value === value);
+        localStorage.setItem('sortOption', value);
+        calculateRoute();
+      }
+      
+      sortRadios.forEach(radio => {
+        radio.addEventListener('change', () => setSortOption(radio.value));
+      });
+      
+      setSortOption(localStorage.getItem('sortOption') || 'fastest');
 
       function calculateRoute() {
         const resultsInfo = document.getElementById('resultsInfo');
@@ -435,5 +507,6 @@
   </script>
 </body>
 </html>
+
 
 
