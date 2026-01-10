@@ -19,57 +19,60 @@ a:hover {
 }
 
 #settingsMenu {
-  display: block;
-  position: fixed;
-  top: 50px;
-  right: 30px;
-  width: 180px; /* smaller width */
-  background: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 8px;
-  padding: 10px;
-  font-size: 12px;
-  color: #e0e0e0;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-  z-index: 1000;
+	display: block;
+	position: fixed;
+	top: 50px;
+	right: 30px;
+	width: 180px;
+	/* smaller width */
+	background: #1a1a1a;
+	border: 1px solid #333;
+	border-radius: 8px;
+	padding: 10px;
+	font-size: 12px;
+	color: #e0e0e0;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+	z-index: 1000;
 }
 
 #settingsMenu .setting {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 #settingsMenu label {
-  display: block;
-  font-weight: 500;
-  color: #b0b0b0;
-  margin-bottom: 4px;
+	display: block;
+	font-weight: 500;
+	color: #b0b0b0;
+	margin-bottom: 4px;
 }
 
 .radio-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px; /* tighter spacing */
-  margin-bottom: 4px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	/* tighter spacing */
+	margin-bottom: 4px;
 }
 
 .radio-group label {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  font-size: 12px;
-  cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	font-size: 12px;
+	cursor: pointer;
 }
 
 #maxJumpsInput,
 #maxDaysInput {
-  width: 100%;
-  padding: 4px 6px; /* smaller input */
-  font-size: 12px;
-  border: 1px solid #444;
-  border-radius: 4px;
-  background: #2a2a2a;
-  color: #e0e0e0;
-  box-sizing: border-box;
+	width: 100%;
+	padding: 4px 6px;
+	/* smaller input */
+	font-size: 12px;
+	border: 1px solid #444;
+	border-radius: 4px;
+	background: #2a2a2a;
+	color: #e0e0e0;
+	box-sizing: border-box;
 }
 
 #routeContainer {
@@ -304,20 +307,26 @@ a:hover {
 }
 
 .status-badge {
-  display: inline-block;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 10px;
-  font-weight: 600;
-  color: #fff;
-  text-transform: uppercase;
+	display: inline-block;
+	padding: 2px 6px;
+	border-radius: 4px;
+	font-size: 10px;
+	font-weight: 600;
+	color: #fff;
+	text-transform: uppercase;
 }
 
-.status-recruiting { background-color: #22c55e; } /* green */
-.status-closed { background-color: #ef4444; }     /* red */
-.status-unknown { background-color: #facc15; }    /* yellow */
+.status-recruiting {
+	color: #8ddf78;
+	background-color: #0d351b;
+}
 
+.status-closed {
+	color: #cf4c4c;
+	background-color: #4e1515;
+}
 
-
-
-
+.status-unknown {
+	color: #ffae00;
+	background-color: #694817;
+}
