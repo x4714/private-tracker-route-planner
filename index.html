@@ -6,13 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Private Tracker Route Planner</title>
 
-  <meta name="description" content="Find the fastest and shortest routes between private trackers. Official TrackersInfo recruitment and route planner tool." />
+  <meta name="description"
+    content="Find the fastest and shortest routes between private trackers. Official TrackersInfo recruitment and route planner tool." />
   <meta name="keywords" content="private trackers, tracker route, trackersinfo, torrent trackers, tracker jumps" />
   <meta name="author" content="TrackersInfo" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="Private Tracker Route Planner" />
-  <meta property="og:description" content="Calculate optimal routes between private trackers using TrackersInfo data." />
+  <meta property="og:description"
+    content="Calculate optimal routes between private trackers using TrackersInfo data." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://github.com/x4714/private-tracker-route-planner" />
 
@@ -252,13 +254,13 @@
         showAutocomplete(targetInput, targetDropdown, e.target.value);
         handleInputActivity();
       });
-      
+
       // Allow clearing inputs to reset UI
       sourceInput.addEventListener('change', handleInputActivity);
       targetInput.addEventListener('change', handleInputActivity);
 
       // Initialize based on URL params
-      if(fromParam || toParam) handleInputActivity();
+      if (fromParam || toParam) handleInputActivity();
 
       // --- Autocomplete Logic ---
       let previousFiltered = [];
@@ -334,7 +336,7 @@
           document.getElementById('update-time').innerText = `Updated ${updateDate}`;
         })
         .catch(error => {
-          document.getElementById('update-time').innerText = ''; 
+          document.getElementById('update-time').innerText = '';
         });
 
       // --- Settings Logic ---
@@ -422,13 +424,22 @@
         let allRoutes = [];
 
         // Determine route logic
-        if (!start || start === '') {
-          // "To Any" mode (not really supported in standard logic, but kept for safety)
-          if (end && routeInfo[end]) {
-            resultsInfo.innerHTML = 'Enter source tracker';
-            body.classList.remove('has-results');
+        if (!start && end) {
+          // "Destination-only" mode: find all routes that end at the target
+          allRoutes = [];
+
+          // Iterate over all possible starting trackers
+          for (const possibleStart of Object.keys(routeInfo)) {
+            const routesFromStart = findAllRoutes(possibleStart, end, maxJumps, maxDays);
+            allRoutes.push(...routesFromStart);
+          }
+
+          if (allRoutes.length === 0) {
+            resultsInfo.innerHTML = `No routes lead to ${end}`;
+            body.classList.add('has-results');
             return;
           }
+
         } else if (!end || end === '') {
           // "From Any" mode
           if (!routeInfo[start]) {
@@ -514,7 +525,7 @@
 
             // Construct details HTML based on requirements
             let detailsHTML = '';
-            
+
             // Class needed
             const className = unlockInviteClass[node] ? unlockInviteClass[node][1] : 'N/A';
             detailsHTML += `
@@ -526,7 +537,7 @@
 
             // Requirements - Only show if not empty/null/undefined
             if (requirement && requirement.toLowerCase() !== 'none' && requirement.toLowerCase() !== 'no requirement') {
-               detailsHTML += `
+              detailsHTML += `
                 <div class="route-step-detail">
                   <div class="route-step-label">Requirements:</div>
                   <div class="route-step-value">${requirement}</div>
