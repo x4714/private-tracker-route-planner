@@ -317,16 +317,16 @@ a:hover {
 }
 
 .status-recruiting {
-	color: #8ddf78;
-	background-color: #0d351b;
+	color: #7bf1a8;
+	background-color: #0b4a26;
 }
 
 .status-closed {
-	color: #cf4c4c;
-	background-color: #4e1515;
+	color: #ffa2a2;
+	background-color: #82181a;
 }
 
 .status-unknown {
-	color: #ffae00;
-	background-color: #694817;
+	color: #ffb86a;
+	background-color: #7e2a0c;
 }
