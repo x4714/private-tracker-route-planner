@@ -1,9 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Private Tracker Route Planner",
+  "url": "https://x4714.github.io/private-tracker-route-planner/",
+  "description": "Find the fastest and shortest routes between private trackers using TrackersInfo recruitment data.",
+  "applicationCategory": "Utility",
+  "operatingSystem": "All"
+}
+</script>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrackersInfo Official Recruitments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Private Tracker Route Planner</title>
+
+  <meta name="description" content="Find the fastest and shortest routes between private trackers. Official TrackersInfo recruitment and route planner tool." />
+  <meta name="keywords" content="private trackers, tracker route, trackersinfo, torrent trackers, tracker jumps" />
+  <meta name="author" content="TrackersInfo" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Private Tracker Route Planner" />
+  <meta property="og:description" content="Calculate optimal routes between private trackers using TrackersInfo data." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://github.com/x4714/private-tracker-route-planner" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Private Tracker Route Planner" />
+  <meta name="twitter:description" content="Fastest and fewest-jumps tracker route calculator." />
+
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -70,7 +98,7 @@
   <div class="footer-info">
     <span id="update-time">Loading...</span>
     <a href="https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/">TrackersInfo</a>
-    <a href="https://github.com/ti-or/ti-or.github.io">GitHub</a>
+    <a href="https://github.com/x4714/private-tracker-route-planner">GitHub</a>
   </div>
 
   <script>
@@ -422,6 +450,13 @@
             const routeData = routeInfo[node][nextNode];
             const requirement = routeData.reqs || 'No requirement';
             const lastActivity = routeData.updated || 'Unknown';
+            const activeStatus = routeData.active || 'Unknown';
+
+            // Determine badge class
+            let statusClass = 'status-unknown';
+            if (activeStatus.toLowerCase() === 'yes') statusClass = 'status-recruiting';
+            if (activeStatus.toLowerCase() === 'no') statusClass = 'status-closed';
+
             const daysDisplay = maxDays === null ? 'Unknown' : `${maxDays}d`;
 
             stepsHTML += `
@@ -429,6 +464,7 @@
                 <div class="route-step-header">
                   <span>${node} → ${nextNode}</span>
                   <span class="route-step-days">${daysDisplay}</span>
+                  <span class="status-badge ${statusClass}">${activeStatus === 'Yes' ? 'Recruiting' : activeStatus === 'No' ? 'Closed' : 'Unknown'}</span>
                 </div>
                 <div class="route-step-detail">
                   <div class="route-step-label">Class needed:</div>

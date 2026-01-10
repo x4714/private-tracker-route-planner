@@ -303,6 +303,19 @@ a:hover {
 	}
 }
 
+.status-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.status-recruiting { background-color: #22c55e; } /* green */
+.status-closed { background-color: #ef4444; }     /* red */
+.status-unknown { background-color: #facc15; }    /* yellow */
 
 
 
