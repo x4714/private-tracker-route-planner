@@ -235,46 +235,58 @@
         }
 
         const filtered = [];
+
         for (let i = 0; i < allTrackers.length; i++) {
           const tracker = allTrackers[i];
           const trackerLower = allTrackersLower[i];
           const abbrLower = abbrListLower[tracker] || '';
           if (trackerLower.includes(searchTerm) || abbrLower.includes(searchTerm)) {
             filtered.push(tracker);
-            if (filtered.length >= 20) break;
           }
         }
 
-        const isSame = filtered.length === previousFiltered.length &&
-                       filtered.every((t, i) => t === previousFiltered[i] &&
-                         ((abbrList[t] || '') === (abbrList[previousFiltered[i]] || '')));
+        filtered.sort((a, b) => {
+          const aLower = a.toLowerCase();
+          const bLower = b.toLowerCase();
+
+          const aStarts = aLower.startsWith(searchTerm) ? 0 : 1;
+          const bStarts = bLower.startsWith(searchTerm) ? 0 : 1;
+
+          if (aStarts !== bStarts) return aStarts - bStarts;
+
+          return aLower.localeCompare(bLower);
+        });
+
+        const limited = filtered.slice(0, 20);
+
+        const isSame = limited.length === previousFiltered.length &&
+                      limited.every((t, i) => t === previousFiltered[i]);
         if (isSame) return;
-        previousFiltered = filtered.slice();
-      
+        previousFiltered = limited.slice();
+
         dropdown.innerHTML = '';
 
-        filtered.forEach(tracker => {
+        limited.forEach(tracker => {
           const item = document.createElement('div');
           item.className = 'autocomplete-item';
-      
-          const abbr = abbrList[tracker] ? ` (${abbrList[tracker]})` : '';
 
+          const abbr = abbrList[tracker] ? ` (${abbrList[tracker]})` : '';
           const nameHTML = tracker.replace(new RegExp(`(${searchTerm})`, 'ig'), '<mark>$1</mark>');
           const abbrHTML = abbr.replace(new RegExp(`(${searchTerm})`, 'ig'), '<mark>$1</mark>');
-      
+
           item.innerHTML = nameHTML + abbrHTML;
-      
+
           item.addEventListener('click', () => {
             input.value = tracker;
             dropdown.style.display = 'none';
             calculateRoute();
-            updateURL();
+            updateURL(); // make sure URL updates
           });
-      
+
           dropdown.appendChild(item);
         });
-      
-        dropdown.style.display = filtered.length > 0 ? 'block' : 'none';
+
+        dropdown.style.display = limited.length > 0 ? 'block' : 'none';
       }
 
       const apiUrl = `https://api.github.com/repos/x4714/private-tracker-route-planner/commits?path=trackers.json`;
