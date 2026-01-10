@@ -242,7 +242,7 @@ a:hover {
 	position: absolute;
 	top: 100%;
 	left: 0;
-	width: 100%
+	width: 100%;
 	background: #1a1a1a;
 	border: 1px solid #444;
 	border-radius: 8px;
@@ -311,4 +311,5 @@ a:hover {
 		grid-template-columns: 1fr;
 	}
 }
+
 
