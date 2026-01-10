@@ -85,28 +85,39 @@
       }
 
       const settingsMenu = document.getElementById('settingsMenu');
+      const settingsToggle = document.getElementById('settingsToggle');
       const sourceInput = document.getElementById('sourceInput');
       const targetInput = document.getElementById('targetInput');
       const sourceDropdown = document.getElementById('sourceDropdown');
       const targetDropdown = document.getElementById('targetDropdown');      
+      const maxJumpsInput = document.getElementById('maxJumpsInput');
+      const maxJumpsRadios = document.querySelectorAll('#maxJumpsRadios input');
+      const maxDaysInput = document.getElementById('maxDaysInput');
+      const maxDaysRadios = document.querySelectorAll('#maxDaysRadios input');
+      const sortRadios = document.querySelectorAll('#sortRadios input'); 
       
       let sourceDebounceTimer;
       let targetDebounceTimer;
       
       const { routeInfo, unlockInviteClass, abbrList } = data;
       
-      const maxJumpsInput = document.getElementById('maxJumpsInput');
-      const maxJumpsRadios = document.querySelectorAll('#maxJumpsRadios input');
-    
-      const maxDaysInput = document.getElementById('maxDaysInput');
-      const maxDaysRadios = document.querySelectorAll('#maxDaysRadios input');
-    
-      const sortRadios = document.querySelectorAll('#sortRadios input');
-
       let maxJumps = parseInt(localStorage.getItem('maxJumps'), 10);
       let maxDays = parseInt(localStorage.getItem('maxDays'), 10);
       let sortOptionValue = localStorage.getItem('sortOption');
 
+      const urlParams = new URLSearchParams(window.location.search);
+      const fromParam = urlParams.get('from');
+      const toParam = urlParams.get('to');
+      const jumpsParam = parseInt(urlParams.get('jumps'), 10);
+      const daysParam = parseInt(urlParams.get('days'), 10);
+      const sortParam = urlParams.get('sort');
+    
+      if (fromParam) sourceInput.value = fromParam;
+      if (toParam) targetInput.value = toParam;
+      if (!isNaN(jumpsParam)) maxJumps = jumpsParam;
+      if (!isNaN(daysParam)) maxDays = daysParam;
+      if (sortParam) sortOptionValue = sortParam;
+          
       if (isNaN(maxJumps)) maxJumps = 4;
       if (isNaN(maxDays)) maxDays = 720;
       if (!sortOptionValue) sortOptionValue = 'fastest';
@@ -503,14 +514,25 @@
         console.error('JS Error:', e.message, e.filename, e.lineno);
       });
 
+    function updateURL() {
+      const params = new URLSearchParams();
+      if (sourceInput.value) params.set('from', sourceInput.value);
+      if (targetInput.value) params.set('to', targetInput.value);
+      params.set('jumps', maxJumps);
+      params.set('days', maxDays);
+      const selectedSort = Array.from(sortRadios).find(r => r.checked)?.value || 'fastest';
+      params.set('sort', selectedSort);
+      history.replaceState(null, '', '?' + params.toString());
+    }
+  
+    sourceInput.addEventListener('input', updateURL);
+    targetInput.addEventListener('input', updateURL);
+    maxJumpsInput.addEventListener('change', updateURL);
+    maxDaysInput.addEventListener('change', updateURL);
+    sortRadios.forEach(r => r.addEventListener('change', updateURL));
+
     });
   </script>
 </body>
 </html>
-
-
-
-
-
-
 
