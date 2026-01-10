@@ -85,29 +85,28 @@
       }
 
       const settingsMenu = document.getElementById('settingsMenu');
-      const maxJumpsInput = document.getElementById('maxJumps');
-      const maxDaysInput = document.getElementById('maxDays');
-      const sortOption = document.getElementById('sortOption');
       const settingsToggle = document.getElementById('settingsToggle');
       const sourceInput = document.getElementById('sourceInput');
       const targetInput = document.getElementById('targetInput');
       const sourceDropdown = document.getElementById('sourceDropdown');
       const targetDropdown = document.getElementById('targetDropdown');      
-      const maxJumpsInput = document.getElementById('maxJumpsInput');
-      const maxJumpsRadios = document.querySelectorAll('#maxJumpsRadios input');
       
-      let maxJumps = parseInt(localStorage.getItem('maxJumps'), 10) || 5;
-      let maxDays = parseInt(localStorage.getItem('maxDays'), 10) || 1080;
-      let sortOptionValue = localStorage.getItem('sortOption') || 'fastest';
-
       let sourceDebounceTimer;
       let targetDebounceTimer;
       
-      maxJumpsInput.value = maxJumps;
-      maxDaysInput.value = maxDays;
-      sortOption.value = sortOptionValue;
-
       const { routeInfo, unlockInviteClass, abbrList } = data;
+      
+      const maxJumpsInput = document.getElementById('maxJumpsInput');
+      const maxJumpsRadios = document.querySelectorAll('#maxJumpsRadios input');
+    
+      const maxDaysInput = document.getElementById('maxDaysInput');
+      const maxDaysRadios = document.querySelectorAll('#maxDaysRadios input');
+    
+      const sortRadios = document.querySelectorAll('#sortRadios input');
+
+      let maxJumps = parseInt(localStorage.getItem('maxJumps'), 10) || 5;
+      let maxDays = parseInt(localStorage.getItem('maxDays'), 10) || 1080;
+      let sortOptionValue = localStorage.getItem('sortOption') || 'fastest';
 
       const allTrackers = Array.from(new Set(
         Object.keys(routeInfo)
@@ -271,52 +270,47 @@
       }
 
       maxJumpsRadios.forEach(radio => {
-        radio.addEventListener('change', () => setMaxJumps(parseInt(radio.value,10)));
+        radio.addEventListener('change', () => setMaxJumps(parseInt(radio.value, 10)));
       });
       
       maxJumpsInput.addEventListener('change', () => {
-        let val = parseInt(maxJumpsInput.value,10);
+        let val = parseInt(maxJumpsInput.value, 10);
         if (isNaN(val) || val < 1) val = 1;
         setMaxJumps(val);
       });
-      
-      setMaxJumps(parseInt(localStorage.getItem('maxJumps'),10) || 5);
-      
-      const maxDaysInput = document.getElementById('maxDaysInput');
-      const maxDaysRadios = document.querySelectorAll('#maxDaysRadios input');
-      
+    
+      setMaxJumps(maxJumps);
+    
       function setMaxDays(value) {
         maxDaysInput.value = value;
         maxDaysRadios.forEach(r => r.checked = r.value === value.toString());
         localStorage.setItem('maxDays', value);
         calculateRoute();
       }
-      
+    
       maxDaysRadios.forEach(radio => {
-        radio.addEventListener('change', () => setMaxDays(parseInt(radio.value,10)));
+        radio.addEventListener('change', () => setMaxDays(parseInt(radio.value, 10)));
       });
-      
+    
       maxDaysInput.addEventListener('change', () => {
-        let val = parseInt(maxDaysInput.value,10);
+        let val = parseInt(maxDaysInput.value, 10);
         if (isNaN(val) || val < 1) val = 1;
         setMaxDays(val);
       });
-      
-      setMaxDays(parseInt(localStorage.getItem('maxDays'),10) || 1080);
-      
-      const sortRadios = document.querySelectorAll('#sortRadios input');
-      
+    
+      setMaxDays(maxDays);
+    
       function setSortOption(value) {
         sortRadios.forEach(r => r.checked = r.value === value);
         localStorage.setItem('sortOption', value);
         calculateRoute();
       }
-      
+    
       sortRadios.forEach(radio => {
         radio.addEventListener('change', () => setSortOption(radio.value));
       });
-      
-      setSortOption(localStorage.getItem('sortOption') || 'fastest');
+    
+      setSortOption(sortOptionValue);
 
       function calculateRoute() {
         const resultsInfo = document.getElementById('resultsInfo');
@@ -506,6 +500,7 @@
   </script>
 </body>
 </html>
+
 
 
 
