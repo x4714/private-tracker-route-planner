@@ -6,23 +6,23 @@ class Autocomplete {
     this.allTrackersLower = allTrackers.map(t => t.toLowerCase());
     this.abbrList = abbrList;
     this.abbrListLower = {};
-    
+
     for (const key in abbrList) {
       this.abbrListLower[key] = abbrList[key].toLowerCase();
     }
-    
+
     this.previousFiltered = [];
   }
 
   show(input, dropdown, value, onSelect) {
     let searchTerm = value.toLowerCase().trim();
-    
+
     // For source input, get the last term after comma
     if (input.id === 'sourceInput' && searchTerm.includes(',')) {
       const terms = searchTerm.split(',');
       searchTerm = terms[terms.length - 1].trim();
     }
-    
+
     if (!searchTerm) {
       dropdown.style.display = 'none';
       return;
@@ -41,9 +41,21 @@ class Autocomplete {
     filtered.sort((a, b) => {
       const aLower = a.toLowerCase();
       const bLower = b.toLowerCase();
-      const aStarts = aLower.startsWith(searchTerm) ? 0 : 1;
-      const bStarts = bLower.startsWith(searchTerm) ? 0 : 1;
-      if (aStarts !== bStarts) return aStarts - bStarts;
+      const aAbbr = (this.abbrListLower[a] || '');
+      const bAbbr = (this.abbrListLower[b] || '');
+
+      const score = (name, abbr) => {
+        if (name.startsWith(searchTerm)) return 0;
+        if (abbr.startsWith(searchTerm)) return 1;
+        if (name.includes(searchTerm)) return 2;
+        if (abbr.includes(searchTerm)) return 3;
+        return 4;
+      };
+
+      const aScore = score(aLower, aAbbr);
+      const bScore = score(bLower, bAbbr);
+
+      if (aScore !== bScore) return aScore - bScore;
       return aLower.localeCompare(bLower);
     });
 
@@ -59,9 +71,17 @@ class Autocomplete {
     limited.forEach(tracker => {
       const item = document.createElement('div');
       item.className = 'autocomplete-item';
-      const abbr = this.abbrList[tracker] ? ` (${this.abbrList[tracker]})` : '';
-      const nameHTML = tracker.replace(new RegExp(`(${searchTerm})`, 'ig'), '<mark>$1</mark>');
-      const abbrHTML = abbr.replace(new RegExp(`(${searchTerm})`, 'ig'), '<mark>$1</mark>');
+      const highlight = (text) =>
+        text.replace(
+          new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig'),
+          '<mark>$1</mark>'
+        );
+
+      const nameHTML = highlight(tracker);
+      const abbrHTML = this.abbrList[tracker]
+        ? ` (${highlight(this.abbrList[tracker])})`
+        : '';
+
 
       item.innerHTML = nameHTML + abbrHTML;
 
