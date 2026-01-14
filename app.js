@@ -8,8 +8,7 @@ window.addEventListener('load', async function () {
     if (!response.ok) throw new Error("File not found");
     data = await response.json();
   } catch (error) {
-    console.warn('Using mock data as trackers.json is missing:', error);
-    data = MOCK_DATA;
+    console.log("%c" + "Data missing!", "color: #ff0000; -webkit-text-stroke: 2px black; font-size: 72px; font-weight: bold;");
   }
 
   const { routeInfo, unlockInviteClass, abbrList } = data;
