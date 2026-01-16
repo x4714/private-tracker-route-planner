@@ -39,9 +39,9 @@ class UIRenderer {
         routes = this.filterDetours(routes);
         routes = this.mergeRoutesByPath(routes);
       } else if (mergeRoutes === "extreme") {
+        routes = this.mergeRoutesByPath(routes, true);
         routes = this.filterStrictlyDominatedRoutes(routes);
         routes = this.filterDetours(routes);
-        routes = this.mergeRoutesByPath(routes, true);
       }
 
       this.resultsInfo.innerHTML = `Found ${routes.length} route${
