@@ -8,9 +8,9 @@ class RouteCalculator {
     this.getAbbr = getAbbrFn;
   }
 
-    calculate(sourceInputs, targetInputs, maxJumps, maxDays) {
+  calculate(sourceInputs, targetInputs, maxJumps, maxDays) {
     if (sourceInputs.length === 0 && targetInputs.length === 0) {
-      return { status: 'empty', routes: [] };
+      return { status: "empty", routes: [] };
     }
 
     // Check if any source matches any target
@@ -18,7 +18,11 @@ class RouteCalculator {
       for (const src of sourceInputs) {
         for (const tgt of targetInputs) {
           if (src === tgt) {
-            return { status: 'same', message: 'One account per lifetime!', routes: [] };
+            return {
+              status: "same",
+              message: "One account per lifetime!",
+              routes: [],
+            };
           }
         }
       }
@@ -28,22 +32,25 @@ class RouteCalculator {
     const allTrackerKeys = Object.keys(this.routeInfo);
 
     if (sourceInputs.length > 0) {
-      startNodes = allTrackerKeys.filter(tracker => {
+      startNodes = allTrackerKeys.filter((tracker) => {
         const trackerLower = tracker.toLowerCase();
         const trackerAbbr = this.getAbbr(tracker).toLowerCase();
-        
-        return sourceInputs.some(input => {
+
+        return sourceInputs.some((input) => {
           const inputLower = input.toLowerCase();
-          
-          const isStrictInput = this.allTrackers.some(validT => 
-            validT.toLowerCase() === inputLower || 
-            this.getAbbr(validT).toLowerCase() === inputLower
+
+          const isStrictInput = this.allTrackers.some(
+            (validT) =>
+              validT.toLowerCase() === inputLower ||
+              this.getAbbr(validT).toLowerCase() === inputLower
           );
-          
+
           if (isStrictInput) {
             return trackerLower === inputLower || trackerAbbr === inputLower;
           } else {
-            return trackerLower.includes(inputLower) || trackerAbbr === inputLower;
+            return (
+              trackerLower.includes(inputLower) || trackerAbbr === inputLower
+            );
           }
         });
       });
@@ -52,10 +59,10 @@ class RouteCalculator {
     }
 
     if (startNodes.length === 0 && sourceInputs.length > 0) {
-      return { 
-        status: 'not_found', 
-        message: `No trackers found matching: ${sourceInputs.join(', ')}`,
-        routes: [] 
+      return {
+        status: "not_found",
+        message: `No trackers found matching: ${sourceInputs.join(", ")}`,
+        routes: [],
       };
     }
 
@@ -63,13 +70,20 @@ class RouteCalculator {
 
     if (targetInputs.length > 0) {
       // Find routes to each target
-      targetInputs.forEach(targetInput => {
-        const isStrictTarget = this.allTrackers.some(t => 
-          t.toLowerCase() === targetInput.toLowerCase() || 
-          this.getAbbr(t).toLowerCase() === targetInput.toLowerCase()
+      targetInputs.forEach((targetInput) => {
+        const isStrictTarget = this.allTrackers.some(
+          (t) =>
+            t.toLowerCase() === targetInput.toLowerCase() ||
+            this.getAbbr(t).toLowerCase() === targetInput.toLowerCase()
         );
 
-        const routes = this._findRoutes(startNodes, targetInput, isStrictTarget, maxJumps, maxDays);
+        const routes = this._findRoutes(
+          startNodes,
+          targetInput,
+          isStrictTarget,
+          maxJumps,
+          maxDays
+        );
         allRoutes = allRoutes.concat(routes);
       });
     } else {
@@ -78,10 +92,10 @@ class RouteCalculator {
     }
 
     if (allRoutes.length === 0) {
-      return { status: 'no_routes', message: 'No routes found', routes: [] };
+      return { status: "no_routes", message: "No routes found", routes: [] };
     }
 
-    return { status: 'success', routes: allRoutes };
+    return { status: "success", routes: allRoutes };
   }
 
   _findRoutes(startNodes, end, isStrictTarget, maxJumps, maxDays) {
@@ -89,12 +103,12 @@ class RouteCalculator {
     const startNodeSet = new Set(startNodes);
     const queue = [];
 
-    startNodes.forEach(start => {
+    startNodes.forEach((start) => {
       queue.push({
         source: start,
         current: start,
         path: [start],
-        totalDays: 0
+        totalDays: 0,
       });
     });
 
@@ -103,26 +117,28 @@ class RouteCalculator {
 
       if (path.length > 1) {
         let isTargetMatch = true;
-        
+
         if (end) {
           const currentLower = current.toLowerCase();
           const currentAbbr = this.getAbbr(current).toLowerCase();
           const endLower = end.toLowerCase();
-          
+
           if (isStrictTarget) {
-            isTargetMatch = currentLower === endLower || currentAbbr === endLower;
+            isTargetMatch =
+              currentLower === endLower || currentAbbr === endLower;
           } else {
-            isTargetMatch = currentLower.includes(endLower) || currentAbbr.includes(endLower);
+            isTargetMatch =
+              currentLower.includes(endLower) || currentAbbr.includes(endLower);
           }
         }
-        
+
         if (isTargetMatch) {
           if (totalDays <= maxDays) {
             allRoutes.push({
               source,
               target: current,
               path,
-              totalDays
+              totalDays,
             });
           }
         }
@@ -133,7 +149,10 @@ class RouteCalculator {
       const neighbors = this.routeInfo[current];
       if (neighbors) {
         Object.entries(neighbors).forEach(([nextTracker, details]) => {
-          if (startNodeSet.has(nextTracker) && nextTracker.toLowerCase() !== end?.toLowerCase()) {
+          if (
+            startNodeSet.has(nextTracker) &&
+            nextTracker.toLowerCase() !== end?.toLowerCase()
+          ) {
             return;
           }
 
@@ -141,23 +160,29 @@ class RouteCalculator {
             const edgeDays = details.days;
             const forumReq = this.unlockInviteClass[current];
             const forumDays = forumReq ? forumReq[0] : 0;
-            
+
             let stepDays = null;
             if (edgeDays !== null) {
               stepDays = Math.max(edgeDays, forumDays || 0);
             }
-            
-            const nextTotalDays = (totalDays === null || stepDays === null) 
-              ? totalDays
-              : totalDays + stepDays;
-            
-            if (maxDays !== null && nextTotalDays !== null && nextTotalDays > maxDays) return;
+
+            const nextTotalDays =
+              totalDays === null || stepDays === null
+                ? totalDays
+                : totalDays + stepDays;
+
+            if (
+              maxDays !== null &&
+              nextTotalDays !== null &&
+              nextTotalDays > maxDays
+            )
+              return;
 
             queue.push({
               source,
               current: nextTracker,
               path: [...path, nextTracker],
-              totalDays: nextTotalDays
+              totalDays: nextTotalDays,
             });
           }
         });
@@ -170,9 +195,9 @@ class RouteCalculator {
   _removeDuplicates(routes) {
     const uniqueRoutes = [];
     const seenPaths = new Set();
-    
-    routes.forEach(route => {
-      const pathSignature = route.path.join('->');
+
+    routes.forEach((route) => {
+      const pathSignature = route.path.join("->");
       if (!seenPaths.has(pathSignature)) {
         seenPaths.add(pathSignature);
         uniqueRoutes.push(route);
@@ -183,17 +208,35 @@ class RouteCalculator {
   }
 
   sortRoutes(routes, sortOption) {
-    if (sortOption === 'fastest') {
+    if (sortOption === "fastest") {
       routes.sort((a, b) => {
         if (a.totalDays !== b.totalDays) return a.totalDays - b.totalDays;
         return a.path.length - b.path.length;
       });
-    } else if (sortOption === 'fewestJumps') {
+    } else if (sortOption === "fewestJumps") {
       routes.sort((a, b) => {
-        if (a.path.length !== b.path.length) return a.path.length - b.path.length;
+        if (a.path.length !== b.path.length)
+          return a.path.length - b.path.length;
         return a.totalDays - b.totalDays;
       });
     }
     return routes;
+  }
+
+  filterDominatedRoutes(routes) {
+    return routes.filter((routeA) => {
+      return !routes.some((routeB) => {
+        if (routeA === routeB) return false;
+        if (routeA.target !== routeB.target) return false;
+
+        const betterOrEqualJumps = routeB.path.length <= routeA.path.length;
+        const betterOrEqualDays = routeB.totalDays <= routeA.totalDays;
+        const strictlyBetter =
+          routeB.path.length < routeA.path.length ||
+          routeB.totalDays < routeA.totalDays;
+
+        return betterOrEqualJumps && betterOrEqualDays && strictlyBetter;
+      });
+    });
   }
 }
