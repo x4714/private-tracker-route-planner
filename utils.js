@@ -1,21 +1,4 @@
 // Utility functions
-
-function getAbbr(name, abbrList) {
-  return abbrList[name] || name;
-}
-
-function getMaxDays(start, end, routeInfo, unlockInviteClass) {
-  if (!routeInfo[start] || !routeInfo[start][end]) return null;
-
-  const edgeDays = routeInfo[start][end].days;
-  const forumReq = unlockInviteClass[start];
-  const forumDays = forumReq ? forumReq[0] : 0;
-
-  if (edgeDays === null) return null;
-
-  return Math.max(edgeDays, forumDays || 0);
-}
-
 function updateURL(sourceValue, targetValue, maxJumps, maxDays, sortRadios, mergeRoutes) {
   const params = new URLSearchParams();
   if (sourceValue) params.set('from', sourceValue);
@@ -61,17 +44,6 @@ function getMaxDays(start, end, routeInfo, unlockInviteClass) {
   if (days1 === null) return null;
 
   return Math.max(days1, days2);
-}
-
-function updateURL(sourceValue, targetValue, maxJumps, maxDays, sortRadios) {
-  const params = new URLSearchParams();
-  if (sourceValue) params.set('from', sourceValue);
-  if (targetValue) params.set('to', targetValue);
-  params.set('jumps', maxJumps);
-  params.set('days', maxDays);
-  const selectedSort = Array.from(sortRadios).find(r => r.checked)?.value || 'fastest';
-  params.set('sort', selectedSort);
-  history.replaceState(null, '', '?' + params.toString());
 }
 
 function fetchLastUpdate() {
