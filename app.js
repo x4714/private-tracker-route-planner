@@ -37,7 +37,7 @@ window.addEventListener("load", async function () {
   let maxDays = parseInt(localStorage.getItem("maxDays"), 10);
   let sortOptionValue = localStorage.getItem("sortOption");
   let savedMerge = localStorage.getItem("mergeRoutes") || "no";
-
+  let mergeRoutes = savedMerge;
 
   const urlParams = new URLSearchParams(window.location.search);
   const fromParam = urlParams.get("from");
@@ -52,7 +52,7 @@ window.addEventListener("load", async function () {
   if (!isNaN(jumpsParam)) maxJumps = jumpsParam;
   if (!isNaN(daysParam)) maxDays = daysParam;
   if (sortParam) sortOptionValue = sortParam;
-  if (mergeParam !== null) mergeRoutes = mergeParam === "true";
+  if (mergeParam !== null) mergeRoutes = mergeParam;
 
   if (isNaN(maxJumps)) maxJumps = 4;
   if (isNaN(maxDays)) maxDays = 720;
@@ -295,8 +295,8 @@ window.addEventListener("load", async function () {
 
   // Merge routes setting
   function setMergeRoutes(value) {
-  mergeRadios.forEach((r) => (r.checked = r.value === value));
-   mergeRoutes = value; 
+    mergeRadios.forEach((r) => (r.checked = r.value === value));
+    mergeRoutes = value;
     localStorage.setItem("mergeRoutes", value);
     calculateRoute();
     updateURL(
@@ -309,10 +309,10 @@ window.addEventListener("load", async function () {
     );
   }
   mergeRadios.forEach((radio) => {
-  radio.addEventListener("change", () => {
-    if (radio.checked) setMergeRoutes(radio.value);
+    radio.addEventListener("change", () => {
+      if (radio.checked) setMergeRoutes(radio.value);
+    });
   });
-});
 
   setMergeRoutes(savedMerge);
 
