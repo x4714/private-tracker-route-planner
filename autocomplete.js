@@ -3,7 +3,7 @@
 class Autocomplete {
   constructor(allTrackers, abbrList) {
     this.allTrackers = allTrackers;
-    this.allTrackersLower = allTrackers.map(t => t.toLowerCase());
+    this.allTrackersLower = allTrackers.map((t) => t.toLowerCase());
     this.abbrList = abbrList;
     this.abbrListLower = {};
 
@@ -18,13 +18,16 @@ class Autocomplete {
     let searchTerm = value.toLowerCase().trim();
 
     // For source input, get the last term after comma
-    if (input.id === 'sourceInput' && searchTerm.includes(',')) {
-      const terms = searchTerm.split(',');
+    if (
+      (input.id === "sourceInput" || input.id === "targetInput") &&
+      searchTerm.includes(",")
+    ) {
+      const terms = searchTerm.split(",");
       searchTerm = terms[terms.length - 1].trim();
     }
 
     if (!searchTerm) {
-      dropdown.style.display = 'none';
+      dropdown.style.display = "none";
       return;
     }
 
@@ -32,7 +35,7 @@ class Autocomplete {
     for (let i = 0; i < this.allTrackers.length; i++) {
       const tracker = this.allTrackers[i];
       const trackerLower = this.allTrackersLower[i];
-      const abbrLower = this.abbrListLower[tracker] || '';
+      const abbrLower = this.abbrListLower[tracker] || "";
       if (trackerLower.includes(searchTerm) || abbrLower.includes(searchTerm)) {
         filtered.push(tracker);
       }
@@ -41,8 +44,8 @@ class Autocomplete {
     filtered.sort((a, b) => {
       const aLower = a.toLowerCase();
       const bLower = b.toLowerCase();
-      const aAbbr = (this.abbrListLower[a] || '');
-      const bAbbr = (this.abbrListLower[b] || '');
+      const aAbbr = this.abbrListLower[a] || "";
+      const bAbbr = this.abbrListLower[b] || "";
 
       const score = (name, abbr) => {
         if (name.startsWith(searchTerm)) return 0;
@@ -61,60 +64,80 @@ class Autocomplete {
 
     const limited = filtered.slice(0, 20);
 
-    const isSame = limited.length === this.previousFiltered.length &&
+    const isSame =
+      limited.length === this.previousFiltered.length &&
       limited.every((t, i) => t === this.previousFiltered[i]);
     if (isSame) return;
     this.previousFiltered = limited.slice();
 
-    dropdown.innerHTML = '';
+    dropdown.innerHTML = "";
 
-    limited.forEach(tracker => {
-      const item = document.createElement('div');
-      item.className = 'autocomplete-item';
+    limited.forEach((tracker) => {
+      const item = document.createElement("div");
+      item.className = "autocomplete-item";
       const highlight = (text) =>
         text.replace(
-          new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig'),
-          '<mark>$1</mark>'
+          new RegExp(
+            `(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+            "ig"
+          ),
+          "<mark>$1</mark>"
         );
 
       const nameHTML = highlight(tracker);
       const abbrHTML = this.abbrList[tracker]
         ? ` (${highlight(this.abbrList[tracker])})`
-        : '';
-
+        : "";
 
       item.innerHTML = nameHTML + abbrHTML;
 
-      item.addEventListener('click', () => {
-        if (input.id === 'sourceInput') {
+      item.addEventListener("click", () => {
+        if (input.id === "sourceInput") {
           const currentValue = input.value;
-          const terms = currentValue.split(',').map(t => t.trim());
+          const terms = currentValue.split(",").map((t) => t.trim());
           terms[terms.length - 1] = tracker;
-          input.value = terms.join(', ');
+          input.value = terms.join(", ");
+        } else if (input.id === "targetInput") {
+          const currentValue = input.value;
+          const terms = currentValue.split(",").map((t) => t.trim());
+          terms[terms.length - 1] = tracker;
+          input.value = terms.join(", ");
         } else {
           input.value = tracker;
         }
-        dropdown.style.display = 'none';
+        dropdown.style.display = "none";
         onSelect();
       });
       dropdown.appendChild(item);
     });
 
-    dropdown.style.display = limited.length > 0 ? 'block' : 'none';
+    dropdown.style.display = limited.length > 0 ? "block" : "none";
   }
 
-  setupEventListeners(sourceInput, sourceDropdown, targetInput, targetDropdown, onSelect) {
-    document.addEventListener('mousedown', (event) => {
-      if (!sourceDropdown.contains(event.target) && !sourceInput.contains(event.target)) {
-        sourceDropdown.style.display = 'none';
+  setupEventListeners(
+    sourceInput,
+    sourceDropdown,
+    targetInput,
+    targetDropdown,
+    onSelect
+  ) {
+    document.addEventListener("mousedown", (event) => {
+      if (
+        !sourceDropdown.contains(event.target) &&
+        !sourceInput.contains(event.target)
+      ) {
+        sourceDropdown.style.display = "none";
       }
-      if (!targetDropdown.contains(event.target) && !targetInput.contains(event.target)) {
-        targetDropdown.style.display = 'none';
+      if (
+        !targetDropdown.contains(event.target) &&
+        !targetInput.contains(event.target)
+      ) {
+        targetDropdown.style.display = "none";
       }
     });
 
-    [sourceDropdown, targetDropdown].forEach(dropdown => {
-      dropdown.addEventListener('mousedown', (e) => e.stopPropagation());
+    [sourceDropdown, targetDropdown].forEach((dropdown) => {
+      dropdown.addEventListener("mousedown", (e) => e.stopPropagation());
     });
   }
 }
