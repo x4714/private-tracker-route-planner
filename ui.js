@@ -34,14 +34,14 @@ class UIRenderer {
     if (result.status === "success") {
       let routes = result.routes;
 
-      if (mergeRoutes === "yes" || mergeRoutes === "extreme") {
-        routes =
-          mergeRoutes === "extreme"
-            ? this.filterStrictlyDominatedRoutes(routes)
-            : this.filterDominatedRoutes(routes);
-
+      if (mergeRoutes === "yes") {
+        routes = this.filterDominatedRoutes(routes);
         routes = this.filterDetours(routes);
         routes = this.mergeRoutesByPath(routes);
+      } else if (mergeRoutes === "extreme") {
+        routes = this.filterStrictlyDominatedRoutes(routes);
+        routes = this.filterDetours(routes);
+        routes = this.mergeRoutesByPath(routes, true);
       }
 
       this.resultsInfo.innerHTML = `Found ${routes.length} route${
