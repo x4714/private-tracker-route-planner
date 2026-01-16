@@ -26,7 +26,7 @@ window.addEventListener("load", async function () {
   const maxDaysInput = document.getElementById("maxDaysInput");
   const maxDaysRadios = document.querySelectorAll("#maxDaysRadios input");
   const sortRadios = document.querySelectorAll("#sortRadios input");
-  const mergeRadios = document.getElementById("mergeRoutesOption");
+  const mergeRadios = document.querySelectorAll("#mergeRoutesRadios input");
 
   // Debounce timers
   let sourceDebounceTimer;
