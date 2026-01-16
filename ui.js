@@ -150,7 +150,12 @@ class UIRenderer {
     const abbreviatedRoute = mergedRoute.path.map(
       (node) => this.abbrList[node] || node
     );
-    const displayRoute = abbreviatedRoute.join(" → ");
+    const displayRoute = mergedRoute.path
+      .map((node) => {
+        const abbr = this.abbrList[node] || node;
+        return `${abbr} (${node})`;
+      })
+      .join(" → ");
 
     const jumps = mergedRoute.path.length;
     const daysRange =
