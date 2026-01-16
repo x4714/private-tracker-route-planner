@@ -23,6 +23,7 @@ window.addEventListener('load', async function () {
   const maxDaysInput = document.getElementById('maxDaysInput');
   const maxDaysRadios = document.querySelectorAll('#maxDaysRadios input');
   const sortRadios = document.querySelectorAll('#sortRadios input');
+  const mergeCheckbox = document.getElementById('mergeRoutesCheckbox');
 
   // Debounce timers
   let sourceDebounceTimer;
@@ -32,6 +33,7 @@ window.addEventListener('load', async function () {
   let maxJumps = parseInt(localStorage.getItem('maxJumps'), 10);
   let maxDays = parseInt(localStorage.getItem('maxDays'), 10);
   let sortOptionValue = localStorage.getItem('sortOption');
+  let mergeRoutes = localStorage.getItem('mergeRoutes') === 'true';
 
   const urlParams = new URLSearchParams(window.location.search);
   const fromParam = urlParams.get('from');
@@ -39,12 +41,14 @@ window.addEventListener('load', async function () {
   const jumpsParam = parseInt(urlParams.get('jumps'), 10);
   const daysParam = parseInt(urlParams.get('days'), 10);
   const sortParam = urlParams.get('sort');
+  const mergeParam = urlParams.get('merge');
 
   if (fromParam) sourceInput.value = fromParam;
   if (toParam) targetInput.value = toParam;
   if (!isNaN(jumpsParam)) maxJumps = jumpsParam;
   if (!isNaN(daysParam)) maxDays = daysParam;
   if (sortParam) sortOptionValue = sortParam;
+  if (mergeParam !== null) mergeRoutes = mergeParam === 'true';
 
   if (isNaN(maxJumps)) maxJumps = 4;
   if (isNaN(maxDays)) maxDays = 720;
@@ -78,21 +82,21 @@ window.addEventListener('load', async function () {
       routeCalculator.sortRoutes(result.routes, selectedSort);
     }
     
-    uiRenderer.renderResults(result);
+    uiRenderer.renderResults(result, mergeRoutes);
   }
 
   // Handle input activity
   const handleInputActivity = () => {
     const hasValue = sourceInput.value.trim().length > 0 || targetInput.value.trim().length > 0;
     uiRenderer.updateSearchState(hasValue);
-    updateURL(sourceInput.value, targetInput.value, maxJumps, maxDays, sortRadios);
+    updateURL(sourceInput.value, targetInput.value, maxJumps, maxDays, sortRadios, mergeRoutes);
   };
 
   // Autocomplete callback
   const onAutocompleteSelect = () => {
     calculateRoute();
     handleInputActivity();
-    updateURL(sourceInput.value, targetInput.value, maxJumps, maxDays, sortRadios);
+    updateURL(sourceInput.value, targetInput.value, maxJumps, maxDays, sortRadios, mergeRoutes);
   };
 
   // Setup autocomplete
@@ -143,7 +147,7 @@ window.addEventListener('load', async function () {
     maxJumps = value;
     localStorage.setItem('maxJumps', value);
     calculateRoute();
-    updateURL(sourceInput.value, targetInput.value, maxJumps, maxDays, sortRadios);
+    updateURL(sourceInput.value, targetInput.value, maxJumps, maxDays, sortRadios, mergeRoutes);
   }
 
   maxJumpsRadios.forEach(radio => {
@@ -167,7 +171,7 @@ window.addEventListener('load', async function () {
     maxDays = value;
     localStorage.setItem('maxDays', value);
     calculateRoute();
-    updateURL(sourceInput.value, targetInput.value, maxJumps, maxDays, sortRadios);
+    updateURL(sourceInput.value, targetInput.value, maxJumps, maxDays, sortRadios, mergeRoutes);
   }
 
   maxDaysRadios.forEach(radio => {
@@ -189,6 +193,17 @@ window.addEventListener('load', async function () {
     radio.addEventListener('change', () => setSortOption(radio.value));
   });
   setSortOption(sortOptionValue);
+
+  // Merge routes setting
+  function setMergeRoutes(value) {
+    mergeRoutes = value;
+    mergeCheckbox.checked = value;
+    localStorage.setItem('mergeRoutes', value);
+    calculateRoute();
+    updateURL(sourceInput.value, targetInput.value, maxJumps, maxDays, sortRadios, mergeRoutes);
+  }
+  mergeCheckbox.addEventListener('change', () => setMergeRoutes(mergeCheckbox.checked));
+  setMergeRoutes(mergeRoutes);
 
   // Fetch last update time
   fetchLastUpdate();
