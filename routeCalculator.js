@@ -222,21 +222,4 @@ class RouteCalculator {
     }
     return routes;
   }
-
-  filterDominatedRoutes(routes) {
-    return routes.filter((routeA) => {
-      return !routes.some((routeB) => {
-        if (routeA === routeB) return false;
-        if (routeA.target !== routeB.target) return false;
-
-        const betterOrEqualJumps = routeB.path.length <= routeA.path.length;
-        const betterOrEqualDays = routeB.totalDays <= routeA.totalDays;
-        const strictlyBetter =
-          routeB.path.length < routeA.path.length ||
-          routeB.totalDays < routeA.totalDays;
-
-        return betterOrEqualJumps && betterOrEqualDays && strictlyBetter;
-      });
-    });
-  }
 }
