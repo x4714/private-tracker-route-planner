@@ -11,7 +11,8 @@ class UIRenderer {
     this.body = document.body;
   }
 
-  renderResults(result, mergeRoutes = false) {
+  renderResults(result, mergeRoutes = false, wantDestinationTracker = false) {
+    this.wantDestinationTracker = wantDestinationTracker;
     this.routesGrid.innerHTML = "";
 
     if (result.status === "empty") {
@@ -151,9 +152,14 @@ class UIRenderer {
       (node) => this.abbrList[node] || node
     );
     const displayRoute = mergedRoute.path
-      .map((node) => {
+      .map((node, index) => {
         const abbr = this.abbrList[node] || node;
-        return `${abbr} (${node})`;
+
+        // Only show full name on last node AND only if no destination tracker is wanted
+        const isLast = index === mergedRoute.path.length - 1;
+        const showFullName = isLast && !this.wantDestinationTracker;
+
+        return showFullName ? `${abbr} (${node})` : abbr;
       })
       .join(" → ");
 
@@ -337,9 +343,14 @@ class UIRenderer {
       (node) => this.abbrList[node] || node
     );
     const displayRoute = route.path
-      .map((node) => {
+      .map((node, index) => {
         const abbr = this.abbrList[node] || node;
-        return `${abbr} (${node})`;
+
+        // Only show full name on last node AND only if no destination tracker is wanted
+        const isLast = index === route.path.length - 1;
+        const showFullName = isLast && !this.wantDestinationTracker;
+
+        return showFullName ? `${abbr} (${node})` : abbr;
       })
       .join(" → ");
 
