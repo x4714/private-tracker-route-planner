@@ -26,7 +26,7 @@ window.addEventListener("load", async function () {
   const maxDaysInput = document.getElementById("maxDaysInput");
   const maxDaysRadios = document.querySelectorAll("#maxDaysRadios input");
   const sortRadios = document.querySelectorAll("#sortRadios input");
-  const mergeCheckbox = document.getElementById("mergeRoutesCheckbox");
+  const mergeRadios = document.getElementById("mergeRoutesOption");
 
   // Debounce timers
   let sourceDebounceTimer;
@@ -36,7 +36,8 @@ window.addEventListener("load", async function () {
   let maxJumps = parseInt(localStorage.getItem("maxJumps"), 10);
   let maxDays = parseInt(localStorage.getItem("maxDays"), 10);
   let sortOptionValue = localStorage.getItem("sortOption");
-  let mergeRoutes = localStorage.getItem("mergeRoutes") === "true";
+  let savedMerge = localStorage.getItem("mergeRoutes") || "no";
+
 
   const urlParams = new URLSearchParams(window.location.search);
   const fromParam = urlParams.get("from");
@@ -294,8 +295,8 @@ window.addEventListener("load", async function () {
 
   // Merge routes setting
   function setMergeRoutes(value) {
-    mergeRoutes = value;
-    mergeCheckbox.checked = value;
+  mergeRadios.forEach((r) => (r.checked = r.value === value));
+   mergeRoutes = value; 
     localStorage.setItem("mergeRoutes", value);
     calculateRoute();
     updateURL(
@@ -307,10 +308,13 @@ window.addEventListener("load", async function () {
       mergeRoutes
     );
   }
-  mergeCheckbox.addEventListener("change", () =>
-    setMergeRoutes(mergeCheckbox.checked)
-  );
-  setMergeRoutes(mergeRoutes);
+  mergeRadios.forEach((radio) => {
+  radio.addEventListener("change", () => {
+    if (radio.checked) setMergeRoutes(radio.value);
+  });
+});
+
+  setMergeRoutes(savedMerge);
 
   // Fetch last update time
   fetchLastUpdate();

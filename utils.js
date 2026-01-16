@@ -9,7 +9,7 @@ function updateURL(sourceValue, targetValue, maxJumps, maxDays, sortRadios, merg
   const selectedSort = Array.from(sortRadios).find(r => r.checked)?.value;
   if (selectedSort && selectedSort !== 'fastest') params.set('sort', selectedSort);
   
-  if (mergeRoutes) params.set('merge', 'true');
+  if (mergeRoutes && mergeRoutes !== 'no') params.set('merge', mergeRoutes);
 
   const newURL = params.toString() ? `?${params.toString()}` : window.location.pathname;
   window.history.replaceState({}, '', newURL);

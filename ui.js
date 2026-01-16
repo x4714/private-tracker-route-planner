@@ -11,7 +11,7 @@ class UIRenderer {
     this.body = document.body;
   }
 
-  renderResults(result, mergeRoutes = false, wantDestinationTracker = false) {
+  renderResults(result, mergeRoutes = "no", wantDestinationTracker = false) {
     this.wantDestinationTracker = wantDestinationTracker;
     this.routesGrid.innerHTML = "";
 
@@ -34,8 +34,12 @@ class UIRenderer {
     if (result.status === "success") {
       let routes = result.routes;
 
-      if (mergeRoutes) {
-        routes = this.filterDominatedRoutes(routes);
+      if (mergeRoutes === "yes" || mergeRoutes === "extreme") {
+        routes =
+          mergeRoutes === "extreme"
+            ? this.filterStrictlyDominatedRoutes(routes)
+            : this.filterDominatedRoutes(routes);
+
         routes = this.filterDetours(routes);
         routes = this.mergeRoutesByPath(routes);
       }
@@ -142,6 +146,37 @@ class UIRenderer {
         return betterDays && betterJumps && strictlyBetter;
       });
     });
+  }
+
+  filterStrictlyDominatedRoutes(routes) {
+    return routes.filter((a) => {
+      return !routes.some((b) => {
+        if (a === b) return false;
+        if (a.target !== b.target) return false;
+
+        const aSub = this.normalizePath(a);
+        const bSub = this.normalizePath(b);
+
+        let i = 0;
+        for (let j = 0; j < aSub.length && i < bSub.length; j++) {
+          if (aSub[j] === bSub[i]) i++;
+        }
+
+        const bIsSubsequence = i === bSub.length;
+        if (!bIsSubsequence) return false;
+
+        const betterDays = b.totalDays <= a.totalDays;
+        const betterJumps = bSub.length <= aSub.length;
+        const strictlyBetter =
+          b.totalDays < a.totalDays || bSub.length < aSub.length;
+
+        return betterDays && betterJumps && strictlyBetter;
+      });
+    });
+  }
+
+  normalizePath(route) {
+    return route.path.slice(1);
   }
 
   createMergedRouteCard(mergedRoute, routeNumber) {
