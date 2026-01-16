@@ -336,7 +336,7 @@ class UIRenderer {
     const abbreviatedRoute = route.path.map(
       (node) => this.abbrList[node] || node
     );
-    const displayRoute = mergedRoute.path
+    const displayRoute = route.path
       .map((node) => {
         const abbr = this.abbrList[node] || node;
         return `${abbr} (${node})`;
