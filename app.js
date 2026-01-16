@@ -73,9 +73,9 @@ window.addEventListener('load', async function () {
     const endRaw = targetInput.value.trim();
 
     const sourceInputs = startRaw ? startRaw.split(',').map(s => s.trim()).filter(s => s) : [];
-    const end = endRaw;
+    const targetInputs = endRaw ? endRaw.split(',').map(s => s.trim()).filter(s => s) : [];
 
-    const result = routeCalculator.calculate(sourceInputs, end, maxJumps, maxDays);
+    const result = routeCalculator.calculate(sourceInputs, targetInputs, maxJumps, maxDays);
     
     if (result.status === 'success') {
       const selectedSort = Array.from(sortRadios).find(r => r.checked)?.value || 'fastest';

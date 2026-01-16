@@ -8,13 +8,20 @@ class RouteCalculator {
     this.getAbbr = getAbbrFn;
   }
 
-  calculate(sourceInputs, end, maxJumps, maxDays) {
-    if (sourceInputs.length === 0 && !end) {
+    calculate(sourceInputs, targetInputs, maxJumps, maxDays) {
+    if (sourceInputs.length === 0 && targetInputs.length === 0) {
       return { status: 'empty', routes: [] };
     }
 
-    if (sourceInputs.length === 1 && end && sourceInputs[0] === end) {
-      return { status: 'same', message: 'One account per lifetime!', routes: [] };
+    // Check if any source matches any target
+    if (sourceInputs.length > 0 && targetInputs.length > 0) {
+      for (const src of sourceInputs) {
+        for (const tgt of targetInputs) {
+          if (src === tgt) {
+            return { status: 'same', message: 'One account per lifetime!', routes: [] };
+          }
+        }
+      }
     }
 
     let startNodes = [];
@@ -40,7 +47,7 @@ class RouteCalculator {
           }
         });
       });
-    } else if (end) {
+    } else if (targetInputs.length > 0) {
       startNodes = allTrackerKeys;
     }
 
@@ -52,12 +59,23 @@ class RouteCalculator {
       };
     }
 
-    const isStrictTarget = end && this.allTrackers.some(t => 
-      t.toLowerCase() === end.toLowerCase() || 
-      this.getAbbr(t).toLowerCase() === end.toLowerCase()
-    );
+    let allRoutes = [];
 
-    let allRoutes = this._findRoutes(startNodes, end, isStrictTarget, maxJumps, maxDays);
+    if (targetInputs.length > 0) {
+      // Find routes to each target
+      targetInputs.forEach(targetInput => {
+        const isStrictTarget = this.allTrackers.some(t => 
+          t.toLowerCase() === targetInput.toLowerCase() || 
+          this.getAbbr(t).toLowerCase() === targetInput.toLowerCase()
+        );
+
+        const routes = this._findRoutes(startNodes, targetInput, isStrictTarget, maxJumps, maxDays);
+        allRoutes = allRoutes.concat(routes);
+      });
+    } else {
+      // No target specified, find all possible routes
+      allRoutes = this._findRoutes(startNodes, null, false, maxJumps, maxDays);
+    }
 
     if (allRoutes.length === 0) {
       return { status: 'no_routes', message: 'No routes found', routes: [] };
