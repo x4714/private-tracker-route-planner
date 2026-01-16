@@ -122,31 +122,26 @@ class UIRenderer {
     return routes.filter((a) => {
       return !routes.some((b) => {
         if (a === b) return false;
-
         if (a.target !== b.target) return false;
 
-        const aSub = this.normalizePath(a);
-        const bSub = this.normalizePath(b);
-
+        // Check if b's path is a subsequence of a's path
         let i = 0;
-        for (let j = 0; j < aSub.length && i < bSub.length; j++) {
-          if (aSub[j] === bSub[i]) i++;
+        for (let j = 0; j < a.path.length && i < b.path.length; j++) {
+          if (a.path[j] === b.path[i]) i++;
         }
-        const bIsSubsequence = i === bSub.length;
+        const bIsSubsequence = i === b.path.length;
+
         if (!bIsSubsequence) return false;
 
+        // If b is strictly better, remove a
         const betterDays = b.totalDays <= a.totalDays;
-        const betterJumps = bSub.length <= aSub.length;
+        const betterJumps = b.path.length <= a.path.length;
         const strictlyBetter =
-          b.totalDays < a.totalDays || bSub.length < aSub.length;
+          b.totalDays < a.totalDays || b.path.length < a.path.length;
 
         return betterDays && betterJumps && strictlyBetter;
       });
     });
-  }
-
-  normalizePath(route) {
-    return route.path.slice(1);
   }
 
   createMergedRouteCard(mergedRoute, routeNumber) {
