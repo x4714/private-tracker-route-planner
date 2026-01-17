@@ -38,6 +38,14 @@ jobs:
             exit 1
           fi
 
+          if [ ! -s trackers.json ]; then
+            echo "Downloaded file is empty!"
+            exit 1
+          fi
+          
+          jq empty trackers.json || { echo "Invalid JSON!"; exit 1; }
+
+
           git add trackers.json
 
           if git diff --cached --quiet; then
