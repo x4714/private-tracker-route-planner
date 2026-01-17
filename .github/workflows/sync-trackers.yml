@@ -21,7 +21,7 @@ jobs:
           set -euo pipefail
 
           curl -fSL \
-            https://github.com/HDVinnie/Private-Trackers-Spreadsheet/blob/master/trackers.json \
+            https://raw.githubusercontent.com/HDVinnie/Private-Trackers-Spreadsheet/refs/heads/master/trackers.json \
             -o trackers_hd.json
 
           echo "Downloaded file size:"
