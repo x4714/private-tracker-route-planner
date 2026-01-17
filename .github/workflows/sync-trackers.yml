@@ -1,0 +1,52 @@
+name: Daily sync trackers.json
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download trackers.json to repo root
+        run: |
+          set -euo pipefail
+
+          curl -fSL \
+            https://github.com/HDVinnie/Private-Trackers-Spreadsheet/blob/master/trackers.json \
+            -o trackers_hd.json
+
+          echo "Downloaded file size:"
+          wc -c trackers.json
+
+      - name: Commit and push if needed
+        run: |
+          set -euo pipefail
+
+          git status --short
+
+          if [ ! -f trackers.json ]; then
+            echo "File missing after download!"
+            exit 1
+          fi
+
+          git add trackers.json
+
+          if git diff --cached --quiet; then
+            echo "No changes detected"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git commit -m "chore: sync trackers.json from trackerpathways"
+          git push
