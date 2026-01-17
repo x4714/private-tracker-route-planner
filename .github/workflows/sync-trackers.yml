@@ -1,4 +1,4 @@
-name: Daily sync trackers.json
+name: Daily sync trackers_hd.json
 
 on:
   schedule:
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Download trackers.json to repo root
+      - name: Download trackers_hd.json to repo root
         run: |
           set -euo pipefail
 
@@ -25,7 +25,7 @@ jobs:
             -o trackers_hd.json
 
           echo "Downloaded file size:"
-          wc -c trackers.json
+          wc -c trackers_hd.json
 
       - name: Commit and push if needed
         run: |
@@ -33,12 +33,12 @@ jobs:
 
           git status --short
 
-          if [ ! -f trackers.json ]; then
+          if [ ! -f trackers_hd.json ]; then
             echo "File missing after download!"
             exit 1
           fi
 
-          git add trackers.json
+          git add trackers_hd.json
 
           if git diff --cached --quiet; then
             echo "No changes detected"
@@ -48,5 +48,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git commit -m "chore: sync trackers.json from trackerpathways"
+          git commit -m "chore: sync trackers_hd.json from HDVinnie"
           git push
