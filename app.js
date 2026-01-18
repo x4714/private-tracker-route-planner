@@ -1,5 +1,13 @@
 // Main application entry point
 
+// Handle extension messages to prevent console errors
+if (typeof chrome !== 'undefined' && chrome.runtime) {
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    sendResponse({});
+    return false;
+  });
+}
+
 window.addEventListener("load", async function () {
   // Load data
   let data;
@@ -31,6 +39,8 @@ window.addEventListener("load", async function () {
   // Debounce timers
   let sourceDebounceTimer;
   let targetDebounceTimer;
+  let previousSourceValue = "";
+  let previousTargetValue = "";
 
   // Load settings from localStorage and URL params
   let maxJumps = parseInt(localStorage.getItem("maxJumps"), 10);
@@ -78,12 +88,14 @@ window.addEventListener("load", async function () {
     allTrackers,
     getAbbrFn
   );
-  const uiRenderer = new UIRenderer(
+  const uiRenderer = await UIRenderer.create(
     routeInfo,
     unlockInviteClass,
     abbrList,
     getMaxDays
   );
+
+  await uiRenderer.ensureTrackersLoaded();
 
   // Calculate and render routes
   async function calculateRoute() {
@@ -96,15 +108,15 @@ window.addEventListener("load", async function () {
 
     const sourceInputs = startRaw
       ? startRaw
-          .split(",")
-          .map((s) => s.trim())
-          .filter((s) => s)
+        .split(",")
+        .map((s) => s.trim())
+        .filter((s) => s)
       : [];
     const targetInputs = endRaw
       ? endRaw
-          .split(",")
-          .map((s) => s.trim())
-          .filter((s) => s)
+        .split(",")
+        .map((s) => s.trim())
+        .filter((s) => s)
       : [];
 
     const result = routeCalculator.calculate(
@@ -166,29 +178,59 @@ window.addEventListener("load", async function () {
   sourceInput.addEventListener("input", (e) => {
     clearTimeout(sourceDebounceTimer);
     const value = e.target.value;
+    const hasCommaAdded = value.includes(",") && !previousSourceValue.includes(",");
+    previousSourceValue = value;
+
+    // Show autocomplete immediately for user suggestions
+    autocomplete.show(
+      sourceInput,
+      sourceDropdown,
+      value,
+      onAutocompleteSelect
+    );
+
+    // But only calculate routes on comma or after 1 second
     sourceDebounceTimer = setTimeout(() => {
-      autocomplete.show(
-        sourceInput,
-        sourceDropdown,
-        value,
-        onAutocompleteSelect
-      );
       handleInputActivity();
-    }, 150);
+      calculateRoute();
+      updateURL(
+        sourceInput.value,
+        targetInput.value,
+        maxJumps,
+        maxDays,
+        sortRadios,
+        mergeRoutes
+      );
+    }, hasCommaAdded ? 0 : 1000);
   });
 
   targetInput.addEventListener("input", (e) => {
     clearTimeout(targetDebounceTimer);
     const value = e.target.value;
+    const hasCommaAdded = value.includes(",") && !previousTargetValue.includes(",");
+    previousTargetValue = value;
+
+    // Show autocomplete immediately for user suggestions
+    autocomplete.show(
+      targetInput,
+      targetDropdown,
+      value,
+      onAutocompleteSelect
+    );
+
+    // But only calculate routes on comma or after 1 second
     targetDebounceTimer = setTimeout(() => {
-      autocomplete.show(
-        targetInput,
-        targetDropdown,
-        value,
-        onAutocompleteSelect
-      );
       handleInputActivity();
-    }, 150);
+      calculateRoute();
+      updateURL(
+        sourceInput.value,
+        targetInput.value,
+        maxJumps,
+        maxDays,
+        sortRadios,
+        mergeRoutes
+      );
+    }, hasCommaAdded ? 0 : 1000);
   });
 
   sourceInput.addEventListener("focus", (e) => {
@@ -214,7 +256,12 @@ window.addEventListener("load", async function () {
   sourceInput.addEventListener("change", handleInputActivity);
   targetInput.addEventListener("change", handleInputActivity);
 
-  if (fromParam || toParam) handleInputActivity();
+  if (fromParam || toParam) {
+    handleInputActivity();
+    // Ensure tracker data is loaded before initial calculation
+    await uiRenderer.ensureTrackersLoaded();
+    await calculateRoute();
+  }
 
   // Settings management
   function setMaxJumps(value) {

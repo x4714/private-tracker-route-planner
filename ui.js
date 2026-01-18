@@ -11,15 +11,105 @@ class UIRenderer {
     this.body = document.body;
     this.trackersData = null;
     this.missingTrackers = new Set();
-    this.loadTrackersData();
+  }
+
+  static async create(routeInfo, unlockInviteClass, abbrList, getMaxDaysFn) {
+    const renderer = new UIRenderer(routeInfo, unlockInviteClass, abbrList, getMaxDaysFn);
+    await renderer.loadTrackersData();
+    return renderer;
   }
 
   async loadTrackersData() {
+    this.trackersData = new Map();
+
+    // Add hardcoded trackers not in trackers_hd.json
+    const hardcodedTrackers = {
+      "IMT": {
+        "Name": "Immortal-s",
+        "Abbreviation": "IMT",
+        "Type": "Forum",
+        "Description": "IMT is a small, close-knit forum where experienced, helpful members discuss file sharing and a wide range of related topics, including news, technology, software, hardware, mobile, and security."
+      },
+
+      "CCC": {
+        "Name": "Cryptichaven Comedy Club",
+        "Abbreviation": "CCC",
+        "Type": "Comedy",
+        "Description": "Cryptichaven Comedy Club is a private tracker focused on comedy, offering stand-up content along with comedy films, TV, books, rare bootlegs, and hard-to-find material."
+      },
+
+      "LearnBits": {
+        "Name": "LearnBits",
+        "Abbreviation": "LearnBits",
+        "Type": "Documentary/E-learning",
+        "Description": "LearnBits is being rebuilt as a new home for documentary and e-learning content after ScienceHD’s closure, seeking active contributors to help restore, seed, and grow the site as it transitions from TBDev to a new Gazelle platform."
+      },
+      "TLF": {
+        "Name": "TLFBits",
+        "Abbreviation": "TLF",
+        "Type": "Chinese Movies/TV",
+        "Description": "TLFBits is a private tracker founded in 2010, affiliated with The Last Fantasy Forum, known for small HD movies and internal groups, offering global content with Chinese and English subtitles, an English interface, generous seeding bonuses, frequent freeleech, and easy account maintenance."
+      },
+      "PxHD": {
+        "Name": "PixelHD",
+        "Abbreviation": "PxHD",
+        "Type": "Movies",
+        "Description": "PixelHD is a small, well-maintained, ratio-free private movie tracker with a limited userbase, offering over 6,500 exclusive, high-quality custom encodes sourced only from full Blu-ray discs or untouched remuxes."
+      },
+      "OCD": {
+        "Name": "OpenCD",
+        "Abbreviation": "OCD",
+        "Type": "Music",
+        "Description": "OpenCD is a NexusPHP-based, ratio-enforced private music tracker focused on lossless music, mainly in Chinese, with IPv6 support and a community for music sharing and discussion."
+      },
+      "D3": {
+        "Name": "D3Si",
+        "Abbreviation": "D3",
+        "Type": "Music",
+        "Description": "D3Si is an ambitious South Asian (Indian) audio archive with an impressive library."
+      },
+      "FF": {
+        "Name": "FunFile",
+        "Abbreviation": "FF",
+        "Type": "General",
+        "Description": "This is a large ratio-based private tracker offering a wide range of new TV shows, movies, music, games, and 0Day content, with strong retention, fast speeds and a bonus system."
+      },
+      "TE": {
+        "Name": "TheEmpire",
+        "Abbreviation": "TE",
+        "Type": "TV/Radio",
+        "Description": "TheEmpire.click is a private tracker focused on Commonwealth TV and radio, and is part of the .click tracker family, formerly known as the .biz network."
+      },
+      "HD-O": {
+        "Name": "HD-Only",
+        "Abbreviation": "HD-O",
+        "Type": "French Movies/TV",
+        "Description": "HD-Only (HD-O) is a French private torrent tracker dedicated to HD movies and TV, serving as the internal tracker for multiple release groups."
+      },
+      "BHDTV": {
+        "Name": "Bit-HDTV",
+        "Abbreviation": "BHDTV",
+        "Type": "Movies/TV/Audio",
+        "Description": "Bit-HDTV is a long-standing HD-focused private tracker with 8K+ users and 320K+ torrents, offering movies, TV, and audio in various HD and 4K formats. It is ratio-based with seeding requirements, a bonus system for rewards and featured freeleech torrents."
+      },
+      "THD": {
+        "Name": "TeamHD",
+        "Abbreviation": "THD",
+        "Type": "Russian Movies/TV",
+        "Description": "TeamHD is a Russian private tracker specializing in HD video, run by experienced encoders, attracting former HDClub uploaders and users, with ongoing efforts to restore HDClub’s legacy content. Registration is by invite only."
+      },
+      "CG": {
+        "Name": "Cinemageddon",
+        "Abbreviation": "CG",
+        "Type": "Movies",
+        "Description": "Cinemageddon is a private movie tracker specializing in rare, old, and cult films, including low-budget and hard-to-find titles, with an active community, user uploads, and content available in HD and SSD formats."
+      }
+    };
+
     try {
       const response = await fetch("trackers_hd.json");
       if (response.ok) {
         const data = await response.json();
-        this.trackersData = new Map();
         data.trackers.forEach(tracker => {
           this.trackersData.set(tracker.Name, tracker);
         });
@@ -28,6 +118,11 @@ class UIRenderer {
     } catch (error) {
       console.warn("Could not load tracker info:", error);
     }
+
+    // Always add hardcoded trackers (overrides if exists)
+    Object.values(hardcodedTrackers).forEach(tracker => {
+      this.trackersData.set(tracker.Name, tracker);
+    });
   }
 
   async ensureTrackersLoaded() {
@@ -91,6 +186,7 @@ class UIRenderer {
     if (!tracker) {
       if (!this.missingTrackers.has(trackerName)) {
         this.missingTrackers.add(trackerName);
+        console.warn(`Tracker info not found for: ${trackerName}`);
       }
       return "";
     }
@@ -119,8 +215,8 @@ class UIRenderer {
       tooltipLines.push(`Abbr: ${abbrDisplay}`);
     }
 
-    if (tracker.Type) tooltipLines.push(`Type: ${tracker.Type}`);
-    if (tracker.Codebase) tooltipLines.push(`Codebase: ${tracker.Codebase}`);
+    if (tracker.Type && tracker.Type !== "-") tooltipLines.push(`Type: ${tracker.Type}`);
+    if (tracker.Codebase && tracker.Codebase !== "-") tooltipLines.push(`Codebase: ${tracker.Codebase}`);
     if (tracker.Users && tracker.Users !== "-") tooltipLines.push(`Users: ${tracker.Users}`);
     if (tracker.Torrents && tracker.Torrents !== "-") tooltipLines.push(`Torrents: ${tracker.Torrents}`);
     if (tracker.Peers && tracker.Peers !== "-") tooltipLines.push(`Peers: ${tracker.Peers}`);
@@ -130,9 +226,10 @@ class UIRenderer {
     if (tracker.Freeleech === "Yes") tooltipLines.push(`Freeleech: Available`);
     if (tracker.Points === "Yes") tooltipLines.push(`Points System: Yes`);
     if (tracker["Hit & Run"] === "Yes") tooltipLines.push(`Hit & Run: Yes`);
-    if (tracker.Birthdate) tooltipLines.push(`Established: ${tracker.Birthdate}`);
-    if (tracker.Join) tooltipLines.push(`Join Method: ${tracker.Join}`);
-    if (tracker["Join Diff"]) tooltipLines.push(`Join Difficulty: ${tracker["Join Diff"]}`);
+    if (tracker.Birthdate && tracker.Birthdate !== "-") tooltipLines.push(`Established: ${tracker.Birthdate}`);
+    if (tracker.Join && tracker.Join !== "-") tooltipLines.push(`Join Method: ${tracker.Join}`);
+    if (tracker["Join Diff"] && tracker["Join Diff"] !== "-") tooltipLines.push(`Join Difficulty: ${tracker["Join Diff"]}`);
+    if (tracker.Description) tooltipLines.push(`\n${tracker.Description}`);
 
     const tooltipText = tooltipLines.join('\n');
     const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#a3a3a3" stroke-width="1.5"/><path stroke="#a3a3a3" stroke-linecap="round" stroke-width="1.5" d="M12 17v-6"/><circle cx="1" cy="1" r="1" fill="#a3a3a3" transform="matrix(1 0 0 -1 11 9)"/></svg>`;
