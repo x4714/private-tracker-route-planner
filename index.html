@@ -1,152 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Private Tracker Route Planner</title>
 
-    <meta
-      name="description"
-      content="Find the fastest and shortest routes between private trackers. Official TrackersInfo recruitment and route planner tool."
-    />
-    <meta
-      name="keywords"
-      content="private trackers, tracker route, trackersinfo, torrent trackers, tracker jumps"
-    />
-    <meta name="author" content="TrackersInfo" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Private Tracker Route Planner</title>
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Private Tracker Route Planner" />
-    <meta
-      property="og:description"
-      content="Calculate optimal routes between private trackers using TrackersInfo data."
-    />
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content="https://github.com/x4714/private-tracker-route-planner"
-    />
+  <meta name="description"
+    content="Find the fastest and shortest routes between private trackers. Official TrackersInfo recruitment and route planner tool." />
+  <meta name="keywords" content="private trackers, tracker route, trackersinfo, torrent trackers, tracker jumps" />
+  <meta name="author" content="TrackersInfo" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Private Tracker Route Planner" />
-    <meta
-      name="twitter:description"
-      content="Fastest and fewest-jumps tracker route calculator."
-    />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Private Tracker Route Planner" />
+  <meta property="og:description"
+    content="Calculate optimal routes between private trackers using TrackersInfo data." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://github.com/x4714/private-tracker-route-planner" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  </head>
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Private Tracker Route Planner" />
+  <meta name="twitter:description" content="Fastest and fewest-jumps tracker route calculator." />
 
-  <body>
-    <header>
-      <h1>Private Tracker Route Planner</h1>
-      <p>Official TrackersInfo recruitment route calculator</p>
-    </header>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+</head>
 
-    <div id="routeContainer">
-      <div id="calcForm">
-        <div id="headerSection">
-          <div class="input-group">
-            <label class="input-label">From</label>
-            <input
-              type="text"
-              class="tracker-input"
-              id="sourceInput"
-              placeholder="Any tracker (comma-separated)"
-            />
-            <div
-              id="sourceDropdown"
-              class="autocomplete-dropdown"
-              style="display: none;"
-            ></div>
-          </div>
+<body>
+  <header>
+    <h1>Private Tracker Route Planner</h1>
+    <p>Official TrackersInfo recruitment route calculator</p>
+  </header>
 
-          <div class="arrow-separator">→</div>
-
-          <div class="input-group">
-            <label class="input-label">To</label>
-            <input
-              type="text"
-              class="tracker-input"
-              id="targetInput"
-              placeholder="Any tracker (comma-separated)"
-            />
-            <div
-              id="targetDropdown"
-              class="autocomplete-dropdown"
-              style="display: none;"
-            ></div>
-          </div>
+  <div id="routeContainer">
+    <div id="calcForm">
+      <div id="headerSection">
+        <div class="input-group">
+          <label class="input-label">From</label>
+          <input type="text" class="tracker-input" id="sourceInput" placeholder="Any tracker (comma-separated)" />
+          <div id="sourceDropdown" class="autocomplete-dropdown" style="display: none;"></div>
         </div>
 
-        <div id="resultsInfo"></div>
-        <div id="routesGrid"></div>
+        <div class="arrow-separator">→</div>
+
+        <div class="input-group">
+          <label class="input-label">To</label>
+          <input type="text" class="tracker-input" id="targetInput" placeholder="Any tracker (comma-separated)" />
+          <div id="targetDropdown" class="autocomplete-dropdown" style="display: none;"></div>
+        </div>
+      </div>
+
+      <div id="resultsInfo"></div>
+      <div id="routesGrid"></div>
+    </div>
+  </div>
+
+  <div id="settingsMenu">
+    <div class="setting">
+      <label>Max Jumps</label>
+      <div class="radio-group" id="maxJumpsRadios">
+        <label><input type="radio" name="maxJumps" value="1" />1</label>
+        <label><input type="radio" name="maxJumps" value="2" />2</label>
+        <label><input type="radio" name="maxJumps" value="3" />3</label>
+        <label><input type="radio" name="maxJumps" value="4" />4</label>
+        <label><input type="radio" name="maxJumps" value="5" />5</label>
+      </div>
+      <input type="number" id="maxJumpsInput" value="5" min="1" />
+    </div>
+
+    <div class="setting">
+      <label>Max Days</label>
+      <div class="radio-group" id="maxDaysRadios">
+        <label><input type="radio" name="maxDays" value="185" />6m</label>
+        <label><input type="radio" name="maxDays" value="365" />1y</label>
+        <label><input type="radio" name="maxDays" value="730" />2y</label>
+        <label><input type="radio" name="maxDays" value="1830" />5y</label>
+      </div>
+      <input type="number" id="maxDaysInput" value="1080" min="1" />
+    </div>
+
+    <div class="setting">
+      <label>Sort By</label>
+      <div class="radio-group" id="sortRadios">
+        <label><input type="radio" name="sortOption" value="fastest" />Fastest</label>
+        <label><input type="radio" name="sortOption" value="fewestJumps" />Fewest
+          Jumps</label>
       </div>
     </div>
 
-    <div id="settingsMenu">
-      <div class="setting">
-        <label>Max Jumps</label>
-        <div class="radio-group" id="maxJumpsRadios">
-          <label><input type="radio" name="maxJumps" value="1" />1</label>
-          <label><input type="radio" name="maxJumps" value="2" />2</label>
-          <label><input type="radio" name="maxJumps" value="3" />3</label>
-          <label><input type="radio" name="maxJumps" value="4" />4</label>
-          <label><input type="radio" name="maxJumps" value="5" />5</label>
-        </div>
-        <input type="number" id="maxJumpsInput" value="5" min="1" />
+    <div class="setting">
+      <label>Merge Routes</label>
+      <div class="radio-group" id="mergeRoutesRadios">
+        <label>
+          <input type="radio" name="mergeRoutesOption" value="no" checked />
+          No
+        </label>
+        <label>
+          <input type="radio" name="mergeRoutesOption" value="yes" /> Yes
+        </label>
+        <label>
+          <input type="radio" name="mergeRoutesOption" value="extreme" />
+          Extreme
+        </label>
+      </div>
+    </div>
+
+    <div class="setting">
+      <label>Destination Tracker Color</label>
+      <div class="radio-group" id="colorSchemeRadios">
+        <label>
+          <input type="radio" name="colorSchemeOption" value="default" checked />
+          Default
+        </label>
+        <label>
+          <input type="radio" name="colorSchemeOption" value="custom" />
+          Custom
+        </label>
+        <label>
+          <input type="radio" name="colorSchemeOption" value="typebased" />
+          Tracker Type Based
+        </label>
       </div>
 
-      <div class="setting">
-        <label>Max Days</label>
-        <div class="radio-group" id="maxDaysRadios">
-          <label><input type="radio" name="maxDays" value="185" />6m</label>
-          <label><input type="radio" name="maxDays" value="365" />1y</label>
-          <label><input type="radio" name="maxDays" value="730" />2y</label>
-          <label><input type="radio" name="maxDays" value="1830" />5y</label>
-        </div>
-        <input type="number" id="maxDaysInput" value="1080" min="1" />
-      </div>
-
-      <div class="setting">
-        <label>Sort By</label>
-        <div class="radio-group" id="sortRadios">
-          <label
-            ><input
-              type="radio"
-              name="sortOption"
-              value="fastest"
-            />Fastest</label
-          >
-          <label
-            ><input type="radio" name="sortOption" value="fewestJumps" />Fewest
-            Jumps</label
-          >
-        </div>
-      </div>
-
-      <div class="setting">
-        <label>Merge Routes</label>
-        <div class="radio-group" id="mergeRoutesRadios">
-          <label>
-            <input type="radio" name="mergeRoutesOption" value="no" checked />
-            No
+      <!-- Color Picker -->
+      <div id="customColorPicker" style="display:none; margin-top:12px;">
+        <div class="color-picker-wrapper">
+          <label class="color-picker-label">
+            Destination color:
           </label>
-          <label>
-            <input type="radio" name="mergeRoutesOption" value="yes" /> Yes
-          </label>
-          <label>
-            <input type="radio" name="mergeRoutesOption" value="extreme" />
-            Extreme
-          </label>
+          <div class="color-picker-container">
+            <input type="color" id="colorPicker" value="#4CAF50" />
+            <span id="colorValue" class="color-value">#4CAF50</span>
+          </div>
         </div>
       </div>
     </div>
@@ -157,16 +146,8 @@
 
     <div class="footer-info">
       <span id="update-time">Loading...</span>
-      <a
-        href="https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/"
-        target="_blank"
-        >TrackersInfo</a
-      >
-      <a
-        href="https://github.com/x4714/private-tracker-route-planner"
-        target="_blank"
-        >GitHub</a
-      >
+      <a href="https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/" target="_blank">TrackersInfo</a>
+      <a href="https://github.com/x4714/private-tracker-route-planner" target="_blank">GitHub</a>
     </div>
 
     <script src="utils.js"></script>
@@ -174,5 +155,6 @@
     <script src="routeCalculator.js"></script>
     <script src="ui.js"></script>
     <script src="app.js"></script>
-  </body>
+</body>
+
 </html>

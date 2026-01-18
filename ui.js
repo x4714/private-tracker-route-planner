@@ -133,6 +133,90 @@ class UIRenderer {
     }
   }
 
+  getTrackerTypeColor(type) {
+    if (!type || type === "-") return null;
+
+    const normalizedType = type.toLowerCase().trim();
+
+    // Handle combined Movie + TV first
+    if (
+      (normalizedType.includes('movie') || normalizedType.includes('movies')) &&
+      normalizedType.includes('tv')
+    ) {
+      return '#730077'; // movies/tv color
+    }
+
+    const typeMap = [
+      ['music', '#2d8f32'],
+      ['radio', '#2563eb'],
+      ['movie', '#a30000'],
+      ['tv', '#2563eb'],
+      ['general', '#47eeee'],
+      ['e-learning', '#ea580c'],
+      ['documentary', '#fda65f'],
+      ['anime', '#7b43ff'],
+      ['comics', '#10b981'],
+      ['games', '#ff6b6b'],
+      ['software', '#013b97'],
+      ['ebooks', '#14a0b8'],
+      ['comedy', '#d0ff00'],
+      ['forum', '#ffd900'],
+      ['podcast', '#ff4500'],
+      ['sports', '#c7003c'],
+    ];
+
+    for (const [key, color] of typeMap) {
+      if (normalizedType.includes(key)) {
+        return color;
+      }
+    }
+
+    return null;
+  }
+
+  getTrackerData(trackerName) {
+    if (!this.trackersData) {
+      return null;
+    }
+
+    // Try exact match first
+    let tracker = this.trackersData.get(trackerName);
+    if (tracker) return tracker;
+
+    // Try case-insensitive match
+    const lowerName = trackerName.toLowerCase();
+    for (const [key, value] of this.trackersData.entries()) {
+      if (key.toLowerCase() === lowerName) {
+        return value;
+      }
+    }
+
+    // Try partial match (remove spaces and special chars)
+    const searchTerm = trackerName.toLowerCase().replace(/[()]/g, '').replace(/\s+/g, '');
+    for (const [key, value] of this.trackersData.entries()) {
+      const trackerKey = key.toLowerCase().replace(/[()]/g, '').replace(/\s+/g, '');
+      if (trackerKey.includes(searchTerm) || searchTerm.includes(trackerKey)) {
+        return value;
+      }
+    }
+
+    // Try matching by abbreviation
+    for (const [key, value] of this.trackersData.entries()) {
+      let aliases = [];
+      if (value.Abbreviation && typeof value.Abbreviation === "string") {
+        aliases = value.Abbreviation === "-" ? [] : value.Abbreviation.split(',').map(a => a.trim().toLowerCase());
+      } else if (Array.isArray(value.Abbreviation)) {
+        aliases = value.Abbreviation.map(a => a.toLowerCase());
+      }
+
+      if (aliases.includes(lowerName)) {
+        return value;
+      }
+    }
+
+    return null;
+  }
+
   getTrackerInfoHTML(trackerName) {
     if (!this.trackersData) {
       return "";
@@ -243,10 +327,11 @@ class UIRenderer {
     return div.innerHTML;
   }
 
-  async renderResults(result, mergeRoutes = "no", wantDestinationTracker = false) {
+  async renderResults(result, mergeRoutes = "no", color = "default", customColor = null, wantDestinationTracker = false) {
     await this.ensureTrackersLoaded();
 
     this.wantDestinationTracker = wantDestinationTracker;
+    this.customColor = customColor;
     this.routesGrid.innerHTML = "";
 
     document.querySelectorAll('.tracker-tooltip, .tracker-tooltip-arrow').forEach(el => el.remove());
@@ -283,8 +368,8 @@ class UIRenderer {
       routes.forEach((route, index) => {
         fragment.appendChild(
           route.merged
-            ? this.createMergedRouteCard(route, index + 1)
-            : this.createRouteCard(route, index + 1)
+            ? this.createMergedRouteCard(route, color, index + 1)
+            : this.createRouteCard(route, color, index + 1)
         );
       });
       this.routesGrid.appendChild(fragment);
@@ -497,7 +582,7 @@ class UIRenderer {
     return route.path.slice(1);
   }
 
-  createMergedRouteCard(mergedRoute, routeNumber) {
+  createMergedRouteCard(mergedRoute, color, routeNumber) {
     const card = document.createElement("div");
     card.className = "route-card merged-route-card";
 
@@ -507,9 +592,30 @@ class UIRenderer {
         const isLast = index === mergedRoute.path.length - 1;
         const showFullName = isLast && !this.wantDestinationTracker;
         const trackerInfo = this.getTrackerInfoHTML(node);
+
+        // Get tracker type and color for destination
+        // Get tracker type and color for destination
+        let colorStyle = '';
+        if (color === "custom" && this.customColor) {
+          if (isLast) {
+            colorStyle = ` style="color: ${this.customColor}; font-weight: 600;"`;
+          }
+        }
+        else if (color === "typebased") {
+          if (isLast) {
+            const tracker = this.getTrackerData(node);
+            if (tracker) {
+              const typeColor = this.getTrackerTypeColor(tracker.Type);
+              if (typeColor) {
+                colorStyle = ` style="color: ${typeColor}; font-weight: 600;"`;
+              }
+            }
+          }
+        }
+
         return showFullName
-          ? `${abbr} (${node})${trackerInfo ? ' ' + trackerInfo : ''}`
-          : `${abbr}${trackerInfo ? ' ' + trackerInfo : ''}`;
+          ? `<span${colorStyle}>${abbr} (${node})</span>${trackerInfo ? ' ' + trackerInfo : ''}`
+          : `<span${colorStyle}>${abbr}</span>${trackerInfo ? ' ' + trackerInfo : ''}`;
       })
       .join(" → ");
 
@@ -520,7 +626,7 @@ class UIRenderer {
         : `${mergedRoute.totalDays}-${mergedRoute.maxDays} days`;
 
     let sourcesHTML = `<div class="merged-sources">
-      <div class="merged-sources-header">Starting trackers:</div>`;
+    <div class="merged-sources-header">Starting trackers:</div>`;
 
     mergedRoute.sourceRoutes.forEach(sourceRoute => {
       const firstNode = sourceRoute.source;
@@ -548,35 +654,35 @@ class UIRenderer {
           : "N/A";
 
         sourcesHTML += `
-          <div class="merged-source-item">
-            <div class="merged-source-header">
-              <span class="merged-source-name">${firstNode}</span>
-              <div class="merged-source-meta">
-                <span class="route-step-days">${daysDisplay}</span>
-                <span class="status-badge ${statusClass}">${statusText}</span>
-              </div>
+        <div class="merged-source-item">
+          <div class="merged-source-header">
+            <span class="merged-source-name">${firstNode}</span>
+            <div class="merged-source-meta">
+              <span class="route-step-days">${daysDisplay}</span>
+              <span class="status-badge ${statusClass}">${statusText}</span>
             </div>
-            <div class="merged-source-details">
-              <div class="route-step-detail">
-                <div class="route-step-label">Class needed:</div>
-                <div class="route-step-value">${className}</div>
-              </div>
-              ${requirement &&
+          </div>
+          <div class="merged-source-details">
+            <div class="route-step-detail">
+              <div class="route-step-label">Class needed:</div>
+              <div class="route-step-value">${className}</div>
+            </div>
+            ${requirement &&
             requirement.toLowerCase() !== "none" &&
             requirement.toLowerCase() !== "no requirement"
             ? `
-                <div class="route-step-detail">
-                  <div class="route-step-label">Requirements:</div>
-                  <div class="route-step-value">${requirement}</div>
-                </div>`
+              <div class="route-step-detail">
+                <div class="route-step-label">Requirements:</div>
+                <div class="route-step-value">${requirement}</div>
+              </div>`
             : ""
           }
-              <div class="route-step-detail">
-                <div class="route-step-label">Last checked:</div>
-                <div class="route-step-value">${lastActivity}</div>
-              </div>
+            <div class="route-step-detail">
+              <div class="route-step-label">Last checked:</div>
+              <div class="route-step-value">${lastActivity}</div>
             </div>
-          </div>`;
+          </div>
+        </div>`;
       }
     });
 
@@ -611,11 +717,11 @@ class UIRenderer {
           : "N/A";
 
         detailsHTML += `
-          <div class="route-step-detail">
-            <div class="route-step-label">Class needed:</div>
-            <div class="route-step-value">${className}</div>
-          </div>
-        `;
+        <div class="route-step-detail">
+          <div class="route-step-label">Class needed:</div>
+          <div class="route-step-value">${className}</div>
+        </div>
+      `;
 
         if (
           requirement &&
@@ -623,45 +729,45 @@ class UIRenderer {
           requirement.toLowerCase() !== "no requirement"
         ) {
           detailsHTML += `
-            <div class="route-step-detail">
-              <div class="route-step-label">Requirements:</div>
-              <div class="route-step-value">${requirement}</div>
-            </div>
-          `;
+          <div class="route-step-detail">
+            <div class="route-step-label">Requirements:</div>
+            <div class="route-step-value">${requirement}</div>
+          </div>
+        `;
         }
 
         stepsHTML += `
-          <div class="route-step">
-            <div class="route-step-header">
-              <div class="step-connection">
-                <span>${node} → ${nextNode}</span>
-                <span class="route-step-days">${daysDisplay}</span>
-              </div>
-              <div class="step-meta-right">
-                <span class="status-badge ${statusClass}">${statusText}</span>
-                <span class="last-checked">Checked: ${lastActivity}</span>
-              </div>
+        <div class="route-step">
+          <div class="route-step-header">
+            <div class="step-connection">
+              <span>${node} → ${nextNode}</span>
+              <span class="route-step-days">${daysDisplay}</span>
             </div>
-            ${detailsHTML}
+            <div class="step-meta-right">
+              <span class="status-badge ${statusClass}">${statusText}</span>
+              <span class="last-checked">Checked: ${lastActivity}</span>
+            </div>
           </div>
-        `;
+          ${detailsHTML}
+        </div>
+      `;
       }
     }
 
     card.innerHTML = `
-      <div class="route-header">${displayRoute}</div>
-      <div class="route-summary">
-        <span>Route #${routeNumber} (${mergedRoute.sources.length} sources)</span>
-        <span>${jumps} jump${jumps !== 1 ? "s" : ""} · ${daysRange}</span>
-      </div>
-      ${sourcesHTML}
-      ${stepsHTML}
-    `;
+    <div class="route-header">${displayRoute}</div>
+    <div class="route-summary">
+      <span>Route #${routeNumber} (${mergedRoute.sources.length} sources)</span>
+      <span>${jumps} jump${jumps !== 1 ? "s" : ""} · ${daysRange}</span>
+    </div>
+    ${sourcesHTML}
+    ${stepsHTML}
+  `;
 
     return card;
   }
 
-  createRouteCard(route, routeNumber) {
+  createRouteCard(route, color, routeNumber) {
     const card = document.createElement("div");
     card.className = "route-card";
 
@@ -672,9 +778,29 @@ class UIRenderer {
         const showFullName = isLast && !this.wantDestinationTracker;
         const trackerInfo = this.getTrackerInfoHTML(node);
 
+        // Get tracker type and color for destination
+        // Get tracker type and color for destination
+        let colorStyle = '';
+        if (color === "custom" && this.customColor) {
+          if (isLast) {
+            colorStyle = ` style="color: ${this.customColor}; font-weight: 600;"`;
+          }
+        }
+        else if (color === "typebased") {
+          if (isLast) {
+            const tracker = this.getTrackerData(node);
+            if (tracker) {
+              const typeColor = this.getTrackerTypeColor(tracker.Type);
+              if (typeColor) {
+                colorStyle = ` style="color: ${typeColor}; font-weight: 600;"`;
+              }
+            }
+          }
+        }
+
         return showFullName
-          ? `${abbr} (${node})${trackerInfo ? ' ' + trackerInfo : ''}`
-          : `${abbr}${trackerInfo ? ' ' + trackerInfo : ''}`;
+          ? `<span${colorStyle}>${abbr} (${node})</span>${trackerInfo ? ' ' + trackerInfo : ''}`
+          : `<span${colorStyle}>${abbr}</span>${trackerInfo ? ' ' + trackerInfo : ''}`;
       })
       .join(" → ");
 
@@ -712,11 +838,11 @@ class UIRenderer {
           : "N/A";
 
         detailsHTML += `
-          <div class="route-step-detail">
-            <div class="route-step-label">Class needed:</div>
-            <div class="route-step-value">${className}</div>
-          </div>
-        `;
+      <div class="route-step-detail">
+        <div class="route-step-label">Class needed:</div>
+        <div class="route-step-value">${className}</div>
+      </div>
+    `;
 
         if (
           requirement &&
@@ -724,40 +850,40 @@ class UIRenderer {
           requirement.toLowerCase() !== "no requirement"
         ) {
           detailsHTML += `
-            <div class="route-step-detail">
-              <div class="route-step-label">Requirements:</div>
-              <div class="route-step-value">${requirement}</div>
-            </div>
-          `;
+        <div class="route-step-detail">
+          <div class="route-step-label">Requirements:</div>
+          <div class="route-step-value">${requirement}</div>
+        </div>
+      `;
         }
 
         stepsHTML += `
-          <div class="route-step">
-            <div class="route-step-header">
-              <div class="step-connection">
-                <span>${node} → ${nextNode}</span>
-                <span class="route-step-days">${daysDisplay}</span>
-              </div>
-              <div class="step-meta-right">
-                <span class="status-badge ${statusClass}">${statusText}</span>
-                <span class="last-checked">Checked: ${lastActivity}</span>
-              </div>
-            </div>
-            ${detailsHTML}
+      <div class="route-step">
+        <div class="route-step-header">
+          <div class="step-connection">
+            <span>${node} → ${nextNode}</span>
+            <span class="route-step-days">${daysDisplay}</span>
           </div>
-        `;
+          <div class="step-meta-right">
+            <span class="status-badge ${statusClass}">${statusText}</span>
+            <span class="last-checked">Checked: ${lastActivity}</span>
+          </div>
+        </div>
+        ${detailsHTML}
+      </div>
+    `;
       }
     });
 
     card.innerHTML = `
-      <div class="route-header">${displayRoute}</div>
-      <div class="route-summary">
-        <span>Route #${routeNumber}</span>
-        <span>${jumps} jump${jumps !== 1 ? "s" : ""} · ${totalDays !== null ? totalDays + " days" : "Unknown days"
+  <div class="route-header">${displayRoute}</div>
+  <div class="route-summary">
+    <span>Route #${routeNumber}</span>
+    <span>${jumps} jump${jumps !== 1 ? "s" : ""} · ${totalDays !== null ? totalDays + " days" : "Unknown days"
       }</span>
-      </div>
-      ${stepsHTML}
-    `;
+  </div>
+  ${stepsHTML}
+`;
 
     return card;
   }

@@ -35,6 +35,9 @@ window.addEventListener("load", async function () {
   const maxDaysRadios = document.querySelectorAll("#maxDaysRadios input");
   const sortRadios = document.querySelectorAll("#sortRadios input");
   const mergeRadios = document.querySelectorAll("#mergeRoutesRadios input");
+  const colorSchemeRadios = document.querySelectorAll("#colorSchemeRadios input");
+  const customColorPicker = document.getElementById("customColorPicker");
+  const colorPickerInput = document.getElementById("colorPicker");
 
   // Debounce timers
   let sourceDebounceTimer;
@@ -48,6 +51,7 @@ window.addEventListener("load", async function () {
   let sortOptionValue = localStorage.getItem("sortOption");
   let savedMerge = localStorage.getItem("mergeRoutes") || "no";
   let mergeRoutes = savedMerge;
+  let color = localStorage.getItem("colorScheme") || "default";
 
   const urlParams = new URLSearchParams(window.location.search);
   const fromParam = urlParams.get("from");
@@ -56,6 +60,7 @@ window.addEventListener("load", async function () {
   const daysParam = parseInt(urlParams.get("days"), 10);
   const sortParam = urlParams.get("sort");
   const mergeParam = urlParams.get("merge");
+  const colorParam = urlParams.get("color");
 
   if (fromParam) sourceInput.value = fromParam;
   if (toParam) targetInput.value = toParam;
@@ -63,6 +68,7 @@ window.addEventListener("load", async function () {
   if (!isNaN(daysParam)) maxDays = daysParam;
   if (sortParam) sortOptionValue = sortParam;
   if (mergeParam !== null) mergeRoutes = mergeParam;
+  if (colorParam) color = colorParam;
 
   if (isNaN(maxJumps)) maxJumps = 4;
   if (isNaN(maxDays)) maxDays = 720;
@@ -132,7 +138,7 @@ window.addEventListener("load", async function () {
       routeCalculator.sortRoutes(result.routes, selectedSort);
     }
 
-    uiRenderer.renderResults(result, mergeRoutes);
+    uiRenderer.renderResults(result, mergeRoutes, color, color === "custom" ? colorPickerInput.value : null);
     document.getElementById("loadingIndicator").style.display = "none";
   }
 
@@ -148,7 +154,8 @@ window.addEventListener("load", async function () {
       maxJumps,
       maxDays,
       sortRadios,
-      mergeRoutes
+      mergeRoutes,
+      color
     );
   };
 
@@ -162,7 +169,8 @@ window.addEventListener("load", async function () {
       maxJumps,
       maxDays,
       sortRadios,
-      mergeRoutes
+      mergeRoutes,
+      color
     );
   };
 
@@ -199,7 +207,8 @@ window.addEventListener("load", async function () {
         maxJumps,
         maxDays,
         sortRadios,
-        mergeRoutes
+        mergeRoutes,
+        color
       );
     }, hasCommaAdded ? 0 : 1000);
   });
@@ -228,7 +237,8 @@ window.addEventListener("load", async function () {
         maxJumps,
         maxDays,
         sortRadios,
-        mergeRoutes
+        mergeRoutes,
+        color
       );
     }, hasCommaAdded ? 0 : 1000);
   });
@@ -281,7 +291,8 @@ window.addEventListener("load", async function () {
       maxJumps,
       maxDays,
       sortRadios,
-      mergeRoutes
+      mergeRoutes,
+      color
     );
   }
 
@@ -314,7 +325,8 @@ window.addEventListener("load", async function () {
       maxJumps,
       maxDays,
       sortRadios,
-      mergeRoutes
+      mergeRoutes,
+      color
     );
   }
 
@@ -352,7 +364,8 @@ window.addEventListener("load", async function () {
       maxJumps,
       maxDays,
       sortRadios,
-      mergeRoutes
+      mergeRoutes,
+      color
     );
   }
   mergeRadios.forEach((radio) => {
@@ -361,7 +374,83 @@ window.addEventListener("load", async function () {
     });
   });
 
+  function applyColorScheme(value) {
+    colorSchemeRadios.forEach((r) => (r.checked = r.value === value));
+    color = value;
+    localStorage.setItem("colorScheme", value);
+
+    // Show/hide custom color picker
+    if (value === "custom") {
+      customColorPicker.style.display = "block";
+    } else {
+      customColorPicker.style.display = "none";
+    }
+
+    calculateRoute();
+    updateURL(
+      sourceInput.value,
+      targetInput.value,
+      maxJumps,
+      maxDays,
+      sortRadios,
+      mergeRoutes,
+      color
+    );
+  }
+
+colorSchemeRadios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      if (radio.checked) applyColorScheme(radio.value);
+    });
+  });
+  
+  // Debounce timer for color picker
+  let colorPickerDebounceTimer;
+  
+  // Handle custom color picker changes - LIVE UPDATE with value display and debounce
+  colorPickerInput.addEventListener("input", () => {
+    const colorValue = document.getElementById("colorValue");
+    if (colorValue) {
+      colorValue.textContent = colorPickerInput.value.toUpperCase();
+    }
+    
+    // Clear existing timer
+    clearTimeout(colorPickerDebounceTimer);
+    
+    // Debounce the calculation to prevent lag while dragging
+    if (color === "custom") {
+      colorPickerDebounceTimer = setTimeout(() => {
+        calculateRoute();
+      }, 150); // Wait 150ms after user stops dragging
+    }
+  });
+  
+  // Immediate update when user releases the color picker
+  colorPickerInput.addEventListener("change", () => {
+    clearTimeout(colorPickerDebounceTimer);
+    if (color === "custom") {
+      calculateRoute();
+    }
+  });
+
+  applyColorScheme(color);
   setMergeRoutes(savedMerge);
+
+  // Initialize color value display
+  const colorValueElement = document.getElementById("colorValue");
+  if (colorValueElement) {
+    colorValueElement.textContent = colorPickerInput.value.toUpperCase();
+    
+    // Allow clicking color value to copy to clipboard
+    colorValueElement.addEventListener("click", () => {
+      navigator.clipboard.writeText(colorPickerInput.value);
+      const originalText = colorValueElement.textContent;
+      colorValueElement.textContent = "Copied!";
+      setTimeout(() => {
+        colorValueElement.textContent = originalText;
+      }, 1000);
+    });
+  }
 
   // Fetch last update time
   fetchLastUpdate();

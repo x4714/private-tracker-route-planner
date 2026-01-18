@@ -588,6 +588,95 @@ mark {
 	transition: opacity 0.2s;
 }
 
+.color-picker-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.color-picker-label {
+  font-size: 13px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.color-picker-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.color-picker-container:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+#colorPicker {
+  width: 50px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: transparent;
+  padding: 0;
+  overflow: hidden;
+}
+
+#colorPicker::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: 6px;
+}
+
+#colorPicker::-webkit-color-swatch {
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  transition: border-color 0.2s ease;
+}
+
+#colorPicker:hover::-webkit-color-swatch {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+#colorPicker::-moz-color-swatch {
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+}
+
+.color-value {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #e5e7eb;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  user-select: all;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.color-value:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.setting {
+  margin-bottom: 20px;
+}
+
+.setting > label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #e5e7eb;
+  font-size: 14px;
+}
+
 @media (max-width: 768px) {
 	body {
 		padding: 10px;
