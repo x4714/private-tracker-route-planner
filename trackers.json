@@ -188,6 +188,7 @@
     "HD-Space": [null, "HD Spacer"],
     "HD-Torrents": [null, "HD Monster"],
     "HDBits": [365, "1080i, 1 year, 2FA enabled for at least 1 month, last email/password change must have been more than a month ago; 1080i"],
+    "HomieHelpDesk": [180, "Specialist"],
     "Last Digital Underground": [null, "Disciple"],
     "LST": [120, "Whale"],
     "LzTr": [14, "Power User"],
@@ -407,6 +408,14 @@
       "ExoticaZ": { "days": 120, "reqs": "10k bp, Member Rank, 4 months, seeding 5 torrents, ratio>2.0, 300 GB", "active": "Yes", "updated": "Nov 2025" },
       "PrivateHD": { "days": 120, "reqs": "10k bp, Member Rank, 4 months, seeding 5 torrents, ratio>2.0, 300 GB", "active": "Yes", "updated": "Nov 2025" }
     },
+    "DarkPeers": {
+      "BitPorn": { "days": 30, "reqs": "5 TiB of uploaded, Avg Seedtime >= 1 Month", "active": "Yes", "updated": "Jan 2026" },
+      "DigitalCore.Club": { "days": null, "reqs": "No requirement", "active": "Yes", "updated": "Jan 2026" },
+      "FearNoPeer": { "days": null, "reqs": "No requirement", "active": "Yes", "updated": "Jan 2026" },
+      "HomieHelpDesk": { "days": 120, "reqs": "Account age  >=4 months minimum, 5TB upload, 2 additional proofs", "active": "Yes", "updated": "Jan 2026" },
+      "seedpool": { "days": null, "reqs": "1 TiB Seeding Size", "active": "Yes", "updated": "Jan 2026" },
+      "YuScene": { "days": null, "reqs": "No requirement", "active": "Yes", "updated": "Jan 2026" }
+    },
     "Empornium": {
       "Aither": { "days": 180, "reqs": "6 months", "active": "Yes", "updated": "Jan 2026" },
       "AnimeBytes": { "days": 360, "reqs": "Sextreme Perv+, 12 months", "active": "Yes", "updated": "Mar 2025" },
@@ -538,6 +547,13 @@
       "TheGeeks": { "days": 0, "reqs": "2-3x full tracker profile screenshots (including HDB)", "active": "Yes", "updated": "Nov 2024" },
       "ToTheGlory": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2024" },
       "UHDBits": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2024" }
+    },
+    "HomieHelpDesk": {
+      "DarkPeers": { "days": 0, "reqs": "Specialist", "active": "Yes", "updated": "Jan 2026" },
+      "DigitalCore.Club": { "days": 0, "reqs": "Specialist", "active": "Yes", "updated": "Jan 2026" },
+      "RocketHD": { "days": 0, "reqs": "Specialist", "active": "Yes", "updated": "Jan 2026" },
+      "seedpool": { "days": 0, "reqs": "Specialist", "active": "Yes", "updated": "Jan 2026" },
+      "YuScene": { "days": 0, "reqs": "Specialist", "active": "Yes", "updated": "Jan 2026" }
     },
     "JPopsuki": {
       "Orpheus": { "days": 365, "reqs": "PU+, 1 year", "active": "Yes", "updated": "Jan 2025" },
