@@ -233,16 +233,18 @@
       "Unwalled": { "days": 0, "reqs": "Harmonia+, 5 seeded uploads", "active": "Yes", "updated": "Dec 2025" }
     },
     "AlphaRatio": {
-      "Aither": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
-      "Cathode-Ray.Tube": { "days": 0, "reqs": "Ratio>1.0", "active": "Yes", "updated": "Nov 2025" },
-      "GazelleGames": { "days": 420, "reqs": "Satyr/Adonis (12 TB, 2,400,000 bp, 60 weeks)", "active": "Yes", "updated": "Nov 2025" },
-      "HellasHut": { "days": 360, "reqs": "12 months", "active": "Nov", "updated": "Sep 2025" },
-      "LzTr": { "days": 0, "reqs": "20 uploads", "active": "Yes", "updated": "Nov 2025" },
-      "MoreThanTV": { "days": 0, "reqs": "Ratio>1.5", "active": "Yes", "updated": "Nov 2025" },
-      "Orpheus": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
-      "PixelHD": { "days": 180, "reqs": "2 extra tracker proofs that are 6 months old", "active": "Yes", "updated": "Nov 2025" },
-      "ReelFliX": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
-      "SceneHD": { "days": 360, "reqs": "12 months", "active": "Yes", "updated": "Nov 2025" }
+      "Aither": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Jan 2026" },
+      "Cathode-Ray.Tube": { "days": 0, "reqs": "Ratio>1.0", "active": "Yes", "updated": "Jan 2026" },
+      "GazelleGames": { "days": 420, "reqs": "Satyr/Adonis (12 TB, 2,400,000 bp, 60 weeks)", "active": "Yes", "updated": "Jan 2026" },
+      "HellasHut": { "days": 360, "reqs": "12 months", "active": "Yes", "updated": "Jan 2026" },
+      "LST": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Jan 2026" },
+      "LzTr": { "days": 0, "reqs": "20 uploads", "active": "Yes", "updated": "Jan 2026" },
+      "MoreThanTV": { "days": 0, "reqs": "Ratio>1.5", "active": "Yes", "updated": "Jan 2026" },
+      "Orpheus": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Jan 2026" },
+      "PixelHD": { "days": 180, "reqs": "2 extra tracker proofs that are 6 months old", "active": "Yes", "updated": "Jan 2026" },
+      "Racing4Everyone": { "days": 0, "reqs": "Sphinx+", "active": "Yes", "updated": "Jan 2026" },
+      "ReelFliX": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Jan 2026" },
+      "SceneHD": { "days": 360, "reqs": "12 months", "active": "Yes", "updated": "Jan 2026" }
     },
     "AnimeBytes": {
       "Aither": { "days": 180, "reqs": "6 months", "active": "Yes", "updated": "Jan 2026" },
@@ -519,7 +521,8 @@
       "seedpool": { "days": 30, "reqs": "HD Spacer, 1 month", "active": "Yes", "updated": "Nov 2025" }
     },
     "HD-Torrents": {
-      "DigitalCore.Club": { "days": null, "reqs": "Profile will be reviewed", "active": "Yes", "updated": "Nov 2025" }
+      "DigitalCore.Club": { "days": null, "reqs": "Profile will be reviewed", "active": "Yes", "updated": "Nov 2025" },
+      "Racing4Everyone": { "days": 180, "reqs": "HD Daemon. Proof of a motorsport torrent seeded to ratio of 1", "active": "Yes", "updated": "Jan 2026" }
     },
     "HDBits": {
       "Aither": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2024" },
