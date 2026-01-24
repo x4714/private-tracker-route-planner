@@ -124,6 +124,7 @@
     "RetroFlix": "RTF",
     "RevolutionTT": "RTT",
     "RocketHD": "RHD",
+    "RoTorrent": "ROT",
     "SAMARITANO": "SMR",
     "SceneHD": "SHD",
     "Secret Cinema": "SC",
@@ -522,7 +523,7 @@
     },
     "HD-Torrents": {
       "DigitalCore.Club": { "days": null, "reqs": "Profile will be reviewed", "active": "Yes", "updated": "Nov 2025" },
-      "Racing4Everyone": { "days": 180, "reqs": "HD Daemon. Proof of a motorsport torrent seeded to ratio of 1", "active": "Yes", "updated": "Jan 2026" }
+      "Racing4Everyone": { "days": 180, "reqs": "HD Daemon, 6 months, proof of a motorsport torrent seeded to ratio of 1", "active": "Yes", "updated": "Jan 2026" }
     },
     "HDBits": {
       "Aither": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2024" },
