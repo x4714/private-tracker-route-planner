@@ -553,25 +553,70 @@ class UIRenderer {
   }
 
   filterStrictlyDominatedRoutes(routes) {
+    if (!routes || routes.length === 0) return routes;
+
+    // Extract target from both merged and non-merged routes
+    const getTarget = (route) => {
+      if (route.merged) {
+        return route.path[route.path.length - 1];
+      }
+      return route.target || route.path[route.path.length - 1];
+    };
+
+    // Get path for comparison (handle merged routes)
+    const getPath = (route) => {
+      if (route.merged) {
+        return route.path;
+      }
+      return route.path.slice(1); // Remove source for non-merged routes
+    };
+
+    // Group routes by target
+    const grouped = new Map();
+    for (const r of routes) {
+      const target = getTarget(r);
+      if (!grouped.has(target)) grouped.set(target, []);
+      grouped.get(target).push(r);
+    }
+
     return routes.filter(a => {
-      return !routes.some(b => {
+      const target = getTarget(a);
+      const group = grouped.get(target);
+
+      // If this is the only route to that target, keep it
+      if (group.length === 1) return true;
+
+      const aPath = getPath(a);
+
+      // Check if there's a direct route (single jump) to this target
+      const hasDirectRoute = group.some(r => {
+        const rPath = getPath(r);
+        return rPath.length === 1; // Direct route has only the destination
+      });
+      
+      // If a direct route exists and this route is indirect, exclude it
+      if (hasDirectRoute && aPath.length > 1) return false;
+
+      // Compare against all other routes to same target
+      return !group.some(b => {
         if (a === b) return false;
-        if (a.target !== b.target) return false;
 
-        const aSub = this.normalizePath(a);
-        const bSub = this.normalizePath(b);
+        const bPath = getPath(b);
 
+        // Check if b is a subsequence of a
         let i = 0;
-        for (let j = 0; j < aSub.length && i < bSub.length; j++) {
-          if (aSub[j] === bSub[i]) i++;
+        for (let j = 0; j < aPath.length && i < bPath.length; j++) {
+          if (aPath[j] === bPath[i]) i++;
         }
-
-        const bIsSubsequence = i === bSub.length;
+        const bIsSubsequence = i === bPath.length;
         if (!bIsSubsequence) return false;
 
+        // Dominance conditions
         const betterDays = b.totalDays <= a.totalDays;
-        const betterJumps = bSub.length <= aSub.length;
-        const strictlyBetter = b.totalDays < a.totalDays || bSub.length < aSub.length;
+        const betterJumps = bPath.length <= aPath.length;
+        const strictlyBetter =
+          b.totalDays < a.totalDays ||
+          bPath.length < aPath.length;
 
         return betterDays && betterJumps && strictlyBetter;
       });
