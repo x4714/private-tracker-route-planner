@@ -211,6 +211,7 @@
     "Secret Cinema": [60, "Cinematographer"],
     "seedpool": [180, "SuperPool"],
     "TorrentBD": [180, "Elite"],
+    "ToTheGlory": [56, "TeraByte"],
     "TV-Vault": [182, "Elite"],
     "U2.dmhy": [56, "Power User"],
     "UHDBits": [56, "Extreme"],
@@ -839,6 +840,10 @@
       "ThePlace": { "days": null, "reqs": "PU", "active": "Yes", "updated": "Nov 2024" },
       "TheVault": { "days": 90, "reqs": "30 valuable forum posts or active IRC user, 3 months", "active": "Yes", "updated": "Nov 2024" },
       "Unwalled": { "days": null, "reqs": "PU, 5 uploads", "active": "Yes", "updated": "Nov 2024" }
+    },
+    "ToTheGlory": {
+      "Audiences": { "days": 0, "reqs": "PetaByte, 2TB Audiences official torrents", "active": "Yes", "updated": "Jan 2026" },
+      "TLFBits": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Jan 2026" }
     },
     "TV-Vault": {
       "AlphaRatio": { "days": 90, "reqs": "3 months, ratio>1", "active": "Yes", "updated": "Apr 2025" },
