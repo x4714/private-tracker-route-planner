@@ -30,7 +30,7 @@
     "CGPeers": "CGP",
     "ChileBT": "CHB",
     "Cinemageddon": "CG",
-    "Cinematik": "CTK",
+    "Cinematik": "TiK",
     "CinemaZ": "CZ",
     "ClearJAV": "CJV",
     "Concertos": "CTS",
@@ -110,7 +110,7 @@
     "Phoenix Project": "PHX",
     "PixelCove": "PxC",
     "PixelHD": "PxHD",
-    "PolishTorrent": "PLT",
+    "PolishTorrent": "PTT",
     "PornBay": "PB",
     "Portugas": "PTS",
     "PreToMe": "PTM",
@@ -197,6 +197,7 @@
     "KaraGarga": [0, "No requirement"],
     "Last Digital Underground": [0, "Disciple: 4 TiB upload, ratio>=1"],
     "LST": [120, "Whale: 4 months, 25TiB upload or 6TiB seedsize, ratio>=0.4, avg seedtime>=1 month"],
+    "Luminarr": [90, "Archivist: 3 months, 10TiB upload, 10TiB seedsize, avg seedtime>=2 month, ratio>=1.0, or Elite: 3 month, 10TiB upload, 50 torrents, ratio>=1.0"],
     "LzTr": [14, "PU: 2 weeks, 5 torrents, 25GB upload, ratio>1.05"],
     "M-Team": [56, "Elite: 8 weeks, 400GB download, ratio>3"],
     "Materialize": [56, "Torrent Master: 8 weeks, 250GB upload, 100 torrents, ratio>=0.8"],
@@ -404,9 +405,17 @@
       "PTerClub": { "days": 120, "reqs": "Gold User+, 4 months, 2 proofs from another tracker", "active": "No", "updated": "May 2024" },
       "TeamHD": { "days": 0, "reqs": "No requirement", "active": "Unknown", "updated": "Jan 2024" }
     },
+    "CapybaraBR": {
+      "DarkPeers": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
+      "F1Carreras": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" },
+      "FearNoPeer": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
+      "LST": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" },
+      "OldToonsWorld": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
+      "YuScene": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" }
+    },
     "Cathode-Ray.Tube": {
-      "Aither": { "days": null, "reqs": "Unknown", "active": "Unknown", "updated": "Dec 24" },
-      "hawke-uno": { "days": null, "reqs": "Unknown", "active": "Unknown", "updated": "Dec 24" }
+      "Aither": { "days": null, "reqs": "Unknown", "active": "Unknown", "updated": "Dec 2024" },
+      "hawke-uno": { "days": null, "reqs": "Unknown", "active": "Unknown", "updated": "Dec 2024" }
     },
     "Cinemageddon": {
       "Aither": { "days": 180, "reqs": "Superfan+, 6 months", "active": "No", "updated": "Mar 2025" },
@@ -612,6 +621,9 @@
       "Samaritano": { "days": 0, "reqs": "Profile link and screenshots", "active": "Yes", "updated": "Jan 2026" },
       "seedpool": { "days": 0, "reqs": "Whale", "active": "Yes", "updated": "Nov 2025" },
       "Upload.cx": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" }
+    },
+    "Luminarr": {
+      "RetroFlix": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" }
     },
     "M-Team": {
       "Dajiao PT": { "days": 0, "reqs": "Elite+ or VIP", "active": "Yes", "updated": "Aug 2025" },
