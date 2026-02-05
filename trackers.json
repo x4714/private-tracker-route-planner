@@ -182,6 +182,7 @@
     "BitPorn": [90, "PU: 3 months, ratio>0.6, 100GB upload, average seedtime 1 day"],
     "Blutopia": [30, "BluExtremist: 3 months, 20TiB upload, ratio>=0.4, or BluSeeder+: 1 month, 5TiB seedsize, avg seedtime>=1 month, ratio>=0.4"],
     "BroadcasTheNet": [28, "PU: 4 weeks, 250GB upload/download, 250 snatches (upload/download), 250,000 bonus points"],
+    "CapybaraBR": [30, "Arara: 1 month, 1 TiB upload, ratio>=1.0"],
     "Cathode-Ray.Tube": [112, "Analog Ace: 16 weeks, 5 TiB upload, 5 uploads, 20 forum posts, ratio 1.5"],
     "Cinemageddon": [0, "Superfan: 200GB upload, 20GB download, ratio>1.5"],
     "Dolphin Is Coming": [14, "PU: 2 weeks, 5 torrents, 25GB upload, ratio>=1.05"],
