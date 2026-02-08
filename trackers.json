@@ -10,7 +10,7 @@
     "ArabicSource": "AST",
     "AsianCinema": "ACM",
     "AudioNews": "AN",
-    "AURA4K": "A4K",
+    "Aura4K": "A4K",
     "AvistaZ": "AZ",
     "BakaBT": "BBT",
     "Bemaniso": "SOWS",
@@ -617,6 +617,7 @@
       "DigitalCore.Club": { "days": 0, "reqs": "Whale", "active": "Yes", "updated": "Nov 2025" },
       "ExtremeBits": { "days": 365, "reqs": "Whale, 1 year", "active": "Yes", "updated": "Nov 2025" },
       "FearNoPeer": { "days": 0, "reqs": "Whale", "active": "Yes", "updated": "Nov 2025" },
+      "Luminarr": { "days": 0, "reqs": "Whale", "active": "Yes", "updated": "Feb 2026" },
       "ReelFliX": { "days": 0, "reqs": "Whale", "active": "Yes", "updated": "Nov 2025" },
       "RetroFlix": { "days": 0, "reqs": "Whale", "active": "Yes", "updated": "Nov 2025" },
       "Samaritano": { "days": 0, "reqs": "Profile link and screenshots", "active": "Yes", "updated": "Jan 2026" },
@@ -624,7 +625,8 @@
       "Upload.cx": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" }
     },
     "Luminarr": {
-      "RetroFlix": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" }
+      "RetroFlix": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
+      "YuScene": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" }
     },
     "M-Team": {
       "Dajiao PT": { "days": 0, "reqs": "Elite+ or VIP", "active": "Yes", "updated": "Aug 2025" },
@@ -775,6 +777,7 @@
       "AlphaRatio": { "days": 180, "reqs": "ratio>1.0, 6 months", "active": "YES", "updated": "Dec 2025" },
       "AnimeBytes": { "days": 180, "reqs": "PU, 12 months or Elite+, 6 months", "active": "Yes", "updated": "Dec 2025" },
       "Anthelion": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Dec 2025" },
+      "Aura4K": { "days": 0, "reqs": "Power User+", "active": "Yes", "updated": "Feb 2026" },
       "BakaBT": { "days": 180, "reqs": "6 months", "active": "Yes", "updated": "Dec 2025" },
       "BeyondHD": { "days": 540, "reqs": "TM, 18 months", "active": "Yes", "updated": "Dec 2025" },
       "BroadcasTheNet": { "days": 365, "reqs": "TM, 1 year", "active": "Yes", "updated": "Dec 2025" },
@@ -791,6 +794,7 @@
       "HDBits": { "days": 730, "reqs": "TM, 2 years, >=50% of uploads are music. Additionally, fulfill 2 of the following 4 criteria: 1) Be seeding 500GiB of MUSIC (neutral leech is excluded), 2) Be seeding 100% of your snatches, 3) Have 500 perfect FLACs, 4) 3 years", "active": "Yes", "updated": "Dec 2025" },
       "Immortal-s": { "days": 365, "reqs": "3x 1 year old additional profile links", "active": "Yes", "updated": "Dec 2025" },
       "LearnBits": { "days": 0, "reqs": "1x profile link", "active": "Unknown", "updated": "Dec 2025" },
+      "Luminarr": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
       "LzTr": { "days": 180, "reqs": "6 months", "active": "Yes", "updated": "Dec 2025" },
       "MoreThanTV": { "days": 180, "reqs": "6 months", "active": "Yes", "updated": "Dec 2025" },
       "MyAnonamouse": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Dec 2025" },
@@ -932,6 +936,7 @@
       "DigitalCore.Club": { "days": 0, "reqs": "No requirements", "active": "Yes", "updated": "Jan 2026" },
       "FearNoPeer": { "days": 0, "reqs": "No requirements", "active": "Yes", "updated": "Jan 2026" },
       "HomieHelpDesk": { "days": 120, "reqs": "4 months account age, 3 TB upload, 2 more ratio proofs", "active": "Yes", "updated": "Jan 2026" },
+      "Luminarr": { "days": 90, "reqs": "3 months account age", "active": "Yes", "updated": "Feb 2026" },
       "Samaritano": { "days": 0, "reqs": "Profile link and screenshots", "active": "Yes", "updated": "Jan 2026" },
       "seedpool": { "days": 0, "reqs": "1 TiB seeding size", "active": "Yes", "updated": "Jan 2026" },
       "Upload.cx": { "days": 0, "reqs": "No requirements", "active": "Yes", "updated": "Jan 2026" }
