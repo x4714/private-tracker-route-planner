@@ -694,7 +694,6 @@
       "seedpool": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" }
     },
     "OnlyEncodes+": {
-      "Aura4K": { "days": 0, "reqs": "No requirements", "active": "Yes", "updated": "Feb 2026" },
       "CapybaraBR": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
       "LST": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" },
       "ReelFliX": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" }
