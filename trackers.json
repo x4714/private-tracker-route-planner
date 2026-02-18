@@ -308,7 +308,7 @@
       "Unwalled": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" }
     },
     "AsianCinema": {
-      "Luminarr": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
+      "Luminarr": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" },
       "Nebulance": { "days": 0, "reqs": "No requirement", "active": "YES", "updated": "Nov 2025" }
     },
     "AvistaZ": {
@@ -367,6 +367,7 @@
       "ExtremeBits": { "days": 365, "reqs": "1 year", "active": "Yes", "updated": "Nov 2025" },
       "Immortal-s": { "days": 365, "reqs": "3x 1 year old additional profile links and screenshots", "active": "Yes", "updated": "Aug 2025" },
       "LST": { "days": 0, "reqs": "No requirement", "active": "YES", "updated": "Nov 2025" },
+      "Luminarr": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" },
       "OldToonsWorld": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Aug 2025" },
       "ReelFliX": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Aug 2025" },
       "Unwalled": { "days": 0, "reqs": "5 uploads", "active": "Yes", "updated": "Aug 2025" }
@@ -406,7 +407,7 @@
       "F1Carreras": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" },
       "FearNoPeer": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
       "LST": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" },
-      "Luminarr": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
+      "Luminarr": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" },
       "OldToonsWorld": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
       "YuScene": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" }
     },
@@ -530,13 +531,13 @@
       "NovaHD": { "days": 0, "reqs": "No requirements", "active": "Yes", "updated": "Dec 2025" },
       "OurBits": { "days": 70, "reqs": "PU+, 10 weeks, 10 uploads, ratio>1, 50 completed downloads, 500GB download", "active": "No", "updated": "Dec 2025" },
       "Piggo": { "days": 0, "reqs": "PU+", "active": "Yes", "updated": "Aug 2025" },
-      "PTerClub": { "days": 180, "reqs": "Elite+, 6 months", "active": "No", "updated": "Aug 2025" },
+      "PTerClub": { "days": 180, "reqs": "Elite+, 6 months", "active": "Yes", "updated": "Feb 2026" },
       "PTHome": { "days": 0, "reqs": "Elite+", "active": "Yes", "updated": "Aug 2025" },
       "PuTao": { "days": 180, "reqs": "1 year, Elite or 6 months, TM+", "active": "Yes", "updated": "Aug 2025" },
       "ReelFliX": { "days": 0, "reqs": "PU+", "active": "Yes", "updated": "Aug 2025" },
       "SoulVoice": { "days": 0, "reqs": "PU+", "active": "Yes", "updated": "Aug 2025" },
       "TopTBDev": { "days": 0, "reqs": "4 profile links", "active": "Yes", "updated": "Aug 2025" },
-      "U2.dmhy": { "days": 84, "reqs": "PU+, 12 weeks, one of 2 options: A) Five 1-month-old uploads that are ACG, moderation-checked, and alive B) Photos of your physical ACG collection", "active": "No", "updated": "Dec 2025" },
+      "U2.dmhy": { "days": 84, "reqs": "PU+, 12 weeks, one of 2 options: A) Five 1-month-old uploads that are ACG, moderation-checked, and alive B) Photos of your physical ACG collection", "active": "Yes", "updated": "Feb 2026" },
       "Vicomo": { "days": 0, "reqs": "PU+", "active": "Yes", "updated": "Aug 2025" },
       "Wintersakura": { "days": 0, "reqs": "PU+", "active": "Yes", "updated": "Aug 2025" },
       "ZmPT": { "days": 0, "reqs": "PU+", "active": "Yes", "updated": "Aug 2025" }
@@ -584,8 +585,7 @@
       "YuScene": { "days": 0, "reqs": "Specialist", "active": "Yes", "updated": "Jan 2026" }
     },
     "JPopsuki": {
-      "Orpheus": { "days": 365, "reqs": "PU+, 1 year", "active": "Yes", "updated": "Jan 2025" },
-      "SugoiMusic": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Jan 2026" },
+      "SugoiMusic": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
       "U2.dmhy": { "days": 90, "reqs": "2 unlimited invite posts, one suspended, another active (requiring 3 months, ACG collection proofs)", "active": "Yes", "updated": "Mar 2023" }
     },
     "KaraGarga": {
@@ -604,7 +604,7 @@
       "Kufirc": { "days": 180, "reqs": "6 months, 8TB \"upload volume\", \"No warnings ever\", 2x additional tracker profile screenshots (Not IPT, TL, FL, TD or \"low quality\")", "active": "Yes", "updated": "Jan 2026" }
     },
     "Libble": {
-      "Luminarr": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" }
+      "Luminarr": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" }
     },
     "LST": {
       "Aither": { "days": 180, "reqs": "Whale, 6 months", "active": "Yes", "updated": "Nov 2025" },
@@ -664,7 +664,7 @@
       "HomieHelpDesk": { "days": 210, "reqs": "7 months, 1TiB upload, 2 additional proofs", "active": "Yes", "updated": "Nov 2025" },
       "Immortal-s": { "days": 365, "reqs": "3x 1 year old additional profile links and screenshots", "active": "Yes", "updated": "Nov 2025" },
       "LST": { "days": 180, "reqs": "PU+, 6 months, 1TB upload", "active": "Yes", "updated": "Nov 2025" },
-      "Luminarr": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
+      "Luminarr": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" },
       "Milkie": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
       "Nebulance": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
       "OldToonsWorld": { "days": 180, "reqs": "6 months on MAM or other tracker, 1TB upload, 500GB download", "active": "Yes", "updated": "Nov 2025" },
@@ -818,6 +818,7 @@
       "HDCity": { "days": 0, "reqs": "Elite+, 10TB \"upload size\", (optional) additional tracker profile screenshots", "active": "Yes", "updated": "Aug 2025" },
       "Last Digital Underground": { "days": 0, "reqs": "Elite+", "active": "Yes", "updated": "Aug 2025" },
       "LST": { "days": 90, "reqs": "Elite+, 3 months", "active": "Yes", "updated": "Aug 2025" },
+      "Luminarr": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" },
       "OldToonsWorld": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Aug 2025" },
       "seedpool": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Aug 2025" },
       "YuScene": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Aug 2025" }
@@ -850,6 +851,7 @@
       "HDCity": { "days": 0, "reqs": "SuperPool, 5 TB upload", "active": "Yes", "updated": "Dec 2025" },
       "HomieHelpDesk": { "days": 0, "reqs": "SuperPool", "active": "Yes", "updated": "Dec 2025" },
       "LST": { "days": 0, "reqs": "SuperPool", "active": "Yes", "updated": "Dec 2025" },
+      "Luminarr": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" },
       "ReelFliX": { "days": 0, "reqs": "SuperPool", "active": "Yes", "updated": "Dec 2025" },
       "Upload.cx": { "days": 0, "reqs": "SuperPool", "active": "Yes", "updated": "Dec 2025" },
       "White Rabbit Network": { "days": 0, "reqs": "SuperPool", "active": "Yes", "updated": "Dec 2025" },
@@ -903,7 +905,7 @@
       "Great Poster Wall": { "days": 0, "reqs": "Crazy User+, 1 upload", "active": "YES", "updated": "Nov 2025" },
       "KamePT": { "days": 0, "reqs": "Elite User+", "active": "YES", "updated": "Nov 2025" },
       "Piggo": { "days": 0, "reqs": "Insane User+", "active": "YES", "updated": "Nov 2025" },
-      "PTerClub": { "days": 180, "reqs": "Crazy User+, 6 months", "active": "No", "updated": "Nov 2025" }
+      "PTerClub": { "days": 180, "reqs": "Crazy User+, 6 months", "active": "Yes", "updated": "Feb 2026" }
     },
     "UHDBits": {
       "Aither": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Sep 2025" },
