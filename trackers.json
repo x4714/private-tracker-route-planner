@@ -360,6 +360,12 @@
       "seedpool": { "days": 0, "reqs": "500 GB seed size", "active": "Yes", "updated": "Oct 2025" },
       "SpeedApp": { "days": 0, "reqs": "Screenshot", "active": "No", "updated": "Oct 2025" }
     },
+    "BitPorn": {
+      "Aura4K": { "days": 0, "reqs": "Insane User", "active": "Yes", "updated": "Feb 2026" },
+      "BrokenStones": { "days": 0, "reqs": "Insane User", "active": "Yes", "updated": "Feb 2026" },
+      "DarkPeers": { "days": 0, "reqs": "Insane User", "active": "Yes", "updated": "Feb 2026" },
+      "seedpool": { "days": 0, "reqs": "Insane User", "active": "Yes", "updated": "Feb 2026" }
+    },
     "Blutopia": {
       "BrokenStones": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
       "CapybaraBR": { "days": 0, "reqs": "No requirement", "active": "YES", "updated": "Nov 2025" },
@@ -843,6 +849,7 @@
       "CapybaraBR": { "days": 0, "reqs": "Profile link and screenshots", "active": "Yes", "updated": "Jan 2026" }
     },
     "seedpool": {
+      "Aura4K": { "days": 0, "reqs": "SuperPool", "active": "Yes", "updated": "Feb 2026" },
       "BitPorn": { "days": 0, "reqs": "SuperPool, 5 TiB upload", "active": "Yes", "updated": "Dec 2025" },
       "BrokenStones": { "days": 0, "reqs": "SuperPool", "active": "Yes", "updated": "Dec 2025" },
       "CapybaraBR": { "days": 0, "reqs": "SuperPool", "active": "Yes", "updated": "Dec 2025" },
