@@ -693,7 +693,7 @@
       "BakaBT": { "days": 90, "reqs": "Ensign, 3 months", "active": "Yes", "updated": "Nov 2025" },
       "Cathode-Ray.Tube": { "days": 180, "reqs": "6 months", "active": "Yes", "updated": "Nov 2025" },
       "Great Poster Wall": { "days": 0, "reqs": "Flattop", "active": "Yes", "updated": "Nov 2025" },
-      "Orpheus": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
+      "Orpheus": { "days": 180, "reqs": "6 months", "active": "Yes", "updated": "Feb 2026" },
       "PrivateHD": { "days": 0, "reqs": "Raptor, No HNRs", "active": "Yes", "updated": "Nov 2025" },
       "ReelFliX": { "days": 0, "reqs": "Ensign", "active": "Yes", "updated": "Nov 2025" },
       "RetroFlix": { "days": 0, "reqs": "Ensign", "active": "Yes", "updated": "Nov 2025" },
