@@ -60,7 +60,11 @@ document.addEventListener("DOMContentLoaded", function () {
   if (mergeParam !== null) mergeRoutes = mergeParam;
   if (colorParam) color = colorParam;
 
-  if (isNaN(maxJumps)) maxJumps = 4;
+  // Detect mobile device to set appropriate defaults
+  const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  const defaultMaxJumps = isMobile ? 2 : 3;
+
+  if (isNaN(maxJumps)) maxJumps = defaultMaxJumps;
   if (isNaN(maxDays)) maxDays = 720;
   if (!sortOptionValue) sortOptionValue = "fastest";
 
