@@ -472,7 +472,6 @@
     "FearNoPeer": {
       "BrokenStones": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
       "CapybaraBR": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
-      "LST": { "days": 120, "reqs": "4 months, avg seedtime>=6 days", "active": "Yes", "updated": "Nov 2025" },
       "OldToonsWorld": { "days": 365, "reqs": "1 year, avg seedtime>=6 months, Seedsize>=1 TiB", "active": "Yes", "updated": "Nov 2025" },
       "ReelFliX": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
       "RetroFlix": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
