@@ -332,6 +332,10 @@ class UIRenderer {
 
     this.wantDestinationTracker = wantDestinationTracker;
     this.customColor = customColor;
+    
+    // Capture the current render operation ID - will validate during batching
+    const thisRenderOperationId = this.currentRenderOperationId;
+    
     this.routesGrid.innerHTML = "";
 
     document.querySelectorAll('.tracker-tooltip, .tracker-tooltip-arrow').forEach(el => el.remove());
@@ -351,30 +355,78 @@ class UIRenderer {
     if (result.status === "success") {
       let routes = result.routes;
 
-      if (mergeRoutes === "yes") {
-        routes = this.filterDominatedRoutes(routes);
-        routes = this.filterDetours(routes);
-        routes = this.mergeRoutesByPath(routes);
-      } else if (mergeRoutes === "extreme") {
-        routes = this.mergeRoutesByPath(routes, true);
-        routes = this.filterStrictlyDominatedRoutes(routes);
-        routes = this.filterDetours(routes);
-      }
+      // Wrap route filtering in requestAnimationFrame to not block UI
+      await new Promise((resolve) => {
+        requestAnimationFrame(() => {
+          if (mergeRoutes === "yes") {
+            routes = this.filterDominatedRoutes(routes);
+            routes = this.filterDetours(routes);
+            routes = this.mergeRoutesByPath(routes);
+          } else if (mergeRoutes === "extreme") {
+            routes = this.mergeRoutesByPath(routes, true);
+            routes = this.filterStrictlyDominatedRoutes(routes);
+            routes = this.filterDetours(routes);
+          }
+          resolve();
+        });
+      });
 
       this.resultsInfo.innerHTML = `Found ${routes.length} route${routes.length !== 1 ? "s" : ""}`;
       this.body.classList.add("has-results");
 
+      // Render cards in batches to keep UI responsive
+      const batchSize = 10;
       const fragment = document.createDocumentFragment();
-      routes.forEach((route, index) => {
+      
+      for (let i = 0; i < routes.length; i++) {
+        const route = routes[i];
         fragment.appendChild(
           route.merged
-            ? this.createMergedRouteCard(route, color, index + 1)
-            : this.createRouteCard(route, color, index + 1)
+            ? this.createMergedRouteCard(route, color, i + 1)
+            : this.createRouteCard(route, color, i + 1)
         );
-      });
-      this.routesGrid.appendChild(fragment);
+
+        // Yield to browser every batchSize cards
+        if ((i + 1) % batchSize === 0) {
+          // VALIDATION: Check if this render operation is still valid before yielding
+          if (thisRenderOperationId !== this.currentRenderOperationId) {
+            console.log(`[RENDER] ABORTED render #${thisRenderOperationId} during batching - newer render detected`);
+            return;
+          }
+          
+          await new Promise((resolve) => {
+            requestAnimationFrame(() => {
+              // VALIDATION: Double-check before appending
+              if (thisRenderOperationId !== this.currentRenderOperationId) {
+                console.log(`[RENDER] ABORTED render #${thisRenderOperationId} after RAF - newer render detected`);
+                resolve();
+                return;
+              }
+              
+              this.routesGrid.appendChild(fragment);
+              resolve();
+            });
+          });
+          // Reset fragment for next batch
+          fragment.textContent = '';
+        }
+      }
+
+      // Append remaining cards
+      if (fragment.childNodes.length > 0) {
+        // VALIDATION: Check if this render is still valid before appending remaining cards
+        if (thisRenderOperationId === this.currentRenderOperationId) {
+          this.routesGrid.appendChild(fragment);
+        } else {
+          console.log(`[RENDER] ABORTED render #${thisRenderOperationId} before final append - newer render detected`);
+          return;
+        }
+      }
 
       this.initializeTooltips();
+
+      // let scroll handler know that results changed so the top button can appear
+      window.dispatchEvent(new Event('scroll'));
     }
   }
 
@@ -463,8 +515,28 @@ class UIRenderer {
         }, 200);
       };
 
-      icon.addEventListener('mouseenter', showTooltip);
-      icon.addEventListener('mouseleave', hideTooltip);
+      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+      if (isTouch) {
+        // toggle on tap, hide when tapping elsewhere
+        icon.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (tooltip.style.display === 'block') {
+            hideTooltip();
+          } else {
+            showTooltip();
+          }
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!icon.contains(e.target)) {
+            hideTooltip();
+          }
+        });
+      } else {
+        icon.addEventListener('mouseenter', showTooltip);
+        icon.addEventListener('mouseleave', hideTooltip);
+      }
 
       icon._tooltip = tooltip;
       icon._arrow = arrow;

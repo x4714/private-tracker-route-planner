@@ -11,6 +11,10 @@
   <meta name="keywords" content="private trackers, tracker route, trackersinfo, torrent trackers, tracker jumps" />
   <meta name="author" content="TrackersInfo" />
 
+  <!-- Performance hints -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
   <!-- Open Graph -->
   <meta property="og:title" content="Private Tracker Route Planner" />
   <meta property="og:description"
@@ -23,9 +27,12 @@
   <meta name="twitter:title" content="Private Tracker Route Planner" />
   <meta name="twitter:description" content="Fastest and fewest-jumps tracker route calculator." />
 
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" /></noscript>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
 </head>
@@ -35,6 +42,12 @@
     <h1>Private Tracker Route Planner</h1>
     <p>Official TrackersInfo recruitment route calculator</p>
   </header>
+
+  <!-- settings toggle always visible, placed outside header so it's not hidden during search -->
+  <button id="settingsToggle" aria-label="Settings">⚙️</button>
+
+  <!-- scroll-to-top button always visible, floating on screen -->
+  <button id="scrollTopBtn" title="Scroll to top">↑</button>
 
   <div id="routeContainer">
     <div id="calcForm">
@@ -139,22 +152,23 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div id="loadingIndicator" class="loading-indicator" style="display:none;">
-      Calculating…
-    </div>
+  <div id="loadingIndicator" class="loading-indicator" style="display:none;">
+    Calculating…
+  </div>
 
-    <div class="footer-info">
-      <span id="update-time">Loading...</span>
-      <a href="https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/" target="_blank">TrackersInfo</a>
-      <a href="https://github.com/x4714/private-tracker-route-planner" target="_blank">GitHub</a>
-    </div>
+  <div class="footer-info">
+    <span id="update-time">Loading...</span>
+    <a href="https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/" target="_blank">TrackersInfo</a>
+    <a href="https://github.com/x4714/private-tracker-route-planner" target="_blank">GitHub</a>
+  </div>
 
-    <script src="utils.js"></script>
-    <script src="autocomplete.js"></script>
-    <script src="routeCalculator.js"></script>
-    <script src="ui.js"></script>
-    <script src="app.js"></script>
+  <script src="utils.js" defer></script>
+  <script src="autocomplete.js" defer></script>
+  <script src="routeCalculator.js" defer></script>
+  <script src="ui.js" defer></script>
+  <script src="app.js" defer></script>
 </body>
 
 </html>
