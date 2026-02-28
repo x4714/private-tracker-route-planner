@@ -1,4 +1,4 @@
-# Private Tracker Route Planner
+# Tracker Route - Private Tracker Route Planner
 
 A fast and efficient route planning tool for private trackers. Find the optimal path between trackers with customizable jump limits and timeframes.
 
