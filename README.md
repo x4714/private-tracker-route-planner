@@ -61,7 +61,7 @@ Built with vanilla JavaScript for optimal performance and minimal dependencies. 
 
 ## About This Project
 
-Originally forked from [invite.icu](https://github.com/invite-icu/invite.icu), this tool evolved into a TrackerPathways alternative to address lag issues. It uses AI-generated content combined with real tracker data to provide a fast and reliable route planning experience.
+Originally forked from [ti-or](https://github.com/ti-or/ti-or.github.io), this tool evolved into a TrackerPathways alternative to address lag issues. It uses AI-generated content combined with real tracker data to provide a fast and reliable route planning experience.
 
 ## Credits
 
