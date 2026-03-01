@@ -700,7 +700,8 @@
     "OnlyEncodes+": {
       "CapybaraBR": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
       "LST": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" },
-      "ReelFliX": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" }
+      "ReelFliX": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
+      "YuScene": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" }
     },
     "Orpheus": {
       "Aither": { "days": 180, "reqs": "6 months", "active": "Yes", "updated": "Feb 2026" },
