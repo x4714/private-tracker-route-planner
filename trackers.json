@@ -107,12 +107,10 @@
     "OurBits": "OB",
     "ParabellumHD": "PBH",
     "PassThePopcorn": "PTP",
-    "Pedro's BTMusic": "xbtmusic.org",
     "Phoenix Project": "PHX",
     "PixelCove": "PxC",
     "PixelHD": "PxHD",
     "PolishTorrent": "PTT",
-    "PornBay": "PB",
     "Portugas": "PTS",
     "PreToMe": "PTM",
     "PrivateHD": "PHD",
@@ -160,7 +158,6 @@
     "TurkSeed": "TKS",
     "TV-Vault": "TVV",
     "U2.dmhy": "U2",
-    "UHDBits": "UHD",
     "Unwalled": "UNW",
     "Upload.cx": "ULCX",
     "UpscaleVault": "UV",
@@ -189,18 +186,18 @@
     "Dolphin Is Coming": [14, "PU: 2 weeks, 5 torrents, 25GB upload, ratio>=1.05"],
     "Empornium": [56, "Great Perv: 8 weeks, 100 GB upload, 5 torrents, ratio>1.05 or Sextreme Perv: 13 weeks, 1 TB upload, 50 torrents, ratio>1.05"],
     "FearNoPeer": [60, "Seeder: 2 months, 15 TiB seed size, avg seed time >= 1 month, ratio >= 0.8"],
-    "GazelleGames": [30, "Pro Gamer: 1200 points & 30 days to access Invites forum; Legendary Gamer: 3000 points & 90 days to access Legendary Invites forum"],
+    "GazelleGames": [30, "Pro Gamer: 1200 points, 30 days; Legendary Gamer: 3000 points, 90 days"],
     "Great Poster Wall": [14, "PU: 2 weeks, 200GB download, 1 upload, ratio>=1.2"],
     "HD-Space": [0, "HD Spacer: 100GB upload, ratio>1.05"],
     "HD-Torrents": [0, "HD Monster: 250GB upload, ratio>2"],
-    "HDBits": [28, "1080i, 1 year, 2FA enabled for at least 1 month, last email/password change must have been more than a month ago; 1080i: 4 weeks, 30GB download, ratio>0.95"],
+    "HDBits": [28, "1080i: 1 year, 2FA enabled for at least 1 month, last email/password change must have been more than a month ago; 1080i: 4 weeks, 30GB download, ratio>0.95"],
     "HomieHelpDesk": [180, "Specialist: 5TiB upload, 1 TiB seedsize, 6 months, ave seedtime >= 3 weeks, ratio >= 0.8, 1 torrent upload"],
     "JPopsuki": [0, "No requirement"],
     "KaraGarga": [0, "No requirement"],
     "Last Digital Underground": [0, "Disciple: 4 TiB upload, ratio>=1"],
     "Libble": [28, "Bronze: 4 weeks, top 15%"],
     "LST": [120, "Whale: 4 months, 25TiB upload or 6TiB seedsize, ratio>=0.4, avg seedtime>=1 month"],
-    "Luminarr": [90, "Archivist: 3 months, 10TiB upload, 10TiB seedsize, avg seedtime>=2 month, ratio>=1.0, or Elite: 3 month, 10TiB upload, 50 torrents, ratio>=1.0"],
+    "Luminarr": [90, "Archivist: 3 months, 10TiB upload, 10TiB seedsize, avg seedtime>=2 month, ratio>=1.0, or Elite: 3 months, 10TiB upload, 50 torrents, ratio>=1.0"],
     "LzTr": [14, "PU: 2 weeks, 5 torrents, 25GB upload, ratio>1.05"],
     "M-Team": [56, "Elite: 8 weeks, 400GB download, ratio>3"],
     "Materialize": [56, "Torrent Master: 8 weeks, 250GB upload, 100 torrents, ratio>=0.8"],
@@ -224,7 +221,6 @@
     "ToTheGlory": [56, "TeraByte: 8 weeks, 500GB download, ratio >= 2.5"],
     "TV-Vault": [182, "Elite: Registered for >= 26 weeks, downloaded >1B, uploaded >= 100GB, uploaded >= 20 torrents, ratio >= 1.25"],
     "U2.dmhy": [56, "PU: 8 weeks, 50GB download, ratio >= 1.05"],
-    "UHDBits": [56, "Extreme: 8 weeks, 300GB download, 60 snatches, ratio>2, seed/leech ratio>20"],
     "Upload.cx": [84, "PU: 12 weeks, 3TiB upload, ratio >= 1"],
     "UpscaleVault": [0, "No requirement"],
     "YuScene": [30, "Seeder: 1 month, ratio >=0.40, seed size 4 TiB"]
@@ -355,7 +351,6 @@
       "TheVault": { "days": 180, "reqs": "6 months", "active": "Unknown", "updated": "Nov 2024" }
     },
     "Bit-HDTV": {
-      "Aither": { "days": 0, "reqs": "Screenshot", "active": "Unknown", "updated": "Oct 2025" },
       "PTerClub": { "days": 180, "reqs": "Elite, 6months", "active": "Yes", "updated": "Oct 2025" },
       "seedpool": { "days": 0, "reqs": "500 GB seed size", "active": "Yes", "updated": "Oct 2025" },
       "SpeedApp": { "days": 0, "reqs": "Screenshot", "active": "No", "updated": "Oct 2025" }
@@ -435,7 +430,6 @@
       "TheGeeks": { "days": 0, "reqs": "Abandoned", "active": "No", "updated": "Mar 2025" },
       "TheShow": { "days": 0, "reqs": "Abandoned", "active": "No", "updated": "Mar 2025" },
       "TorrentLeech": { "days": 0, "reqs": "Abandoned", "active": "No", "updated": "Mar 2025" },
-      "UHDBits": { "days": 360, "reqs": "Superfan+, 12 months", "active": "Yes", "updated": "Mar 2025" },
       "Unwalled": { "days": 0, "reqs": "Superfan+, 5 seeded uploads", "active": "Yes", "updated": "Mar 2025" }
     },
     "CinemaZ": {
@@ -459,7 +453,6 @@
       "MoreThanTV": { "days": 180, "reqs": "Great Perv+, ratio>1.5, 6 months", "active": "Yes", "updated": "Mar 2025" },
       "Orpheus": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Mar 2025" },
       "PixelCove": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Mar 2025" },
-      "PornBay": { "days": 180, "reqs": "Great Perv+, 6 months", "active": "Yes", "updated": "Mar 2025" },
       "ReelFliX": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Mar 2025" },
       "SugoiMusic": { "days": 0, "reqs": "Great Perv+", "active": "Yes", "updated": "Mar 2025" },
       "Unwalled": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Mar 2025" }
@@ -574,12 +567,10 @@
       "Orpheus": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2024" },
       "OurBits": { "days": 0, "reqs": "No requirement", "active": "No", "updated": "Nov 2024" },
       "PassThePopcorn": { "days": 730, "reqs": "1080p, 2 years", "active": "Yes", "updated": "Nov 2024" },
-      "Pedro's BTMusic": { "days": 1825, "reqs": "1080p, 5 years, average seeding time of 2 years, not from a blacklisted country https://xbtmusic.org/public/blacklist.txt", "active": "Yes", "updated": "Nov 2024" },
       "PixelHD": { "days": 180, "reqs": "3x 6 months old profile links (including HDBits)", "active": "Yes", "updated": "Nov 2024" },
       "TeamHD": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2024" },
       "TheGeeks": { "days": 0, "reqs": "2-3x full tracker profile screenshots (including HDB)", "active": "Yes", "updated": "Nov 2024" },
-      "ToTheGlory": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2024" },
-      "UHDBits": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2024" }
+      "ToTheGlory": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2024" }
     },
     "HomieHelpDesk": {
       "DarkPeers": { "days": 0, "reqs": "Specialist", "active": "Yes", "updated": "Jan 2026" },
@@ -648,10 +639,8 @@
       "Orpheus": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Sep 2025" },
       "PassThePopcorn": { "days": 730, "reqs": "Engineer+, 2 years", "active": "Yes", "updated": "Sep 2025" },
       "PixelCove": { "days": 0, "reqs": "No requirement", "active": "Unknown", "updated": "Sep 2025" },
-      "PornBay": { "days": 180, "reqs": "6 months", "active": "Yes", "updated": "Sep 2025" },
       "Portugas": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Sep 2025" },
       "TeamHD": { "days": 0, "reqs": "No requirement", "active": "No", "updated": "Sep 2025" },
-      "UHDBits": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Sep 2025" },
       "Upload.cx": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Sep 2025" }
     },
     "MyAnonamouse": {
@@ -759,12 +748,7 @@
       "Secret Cinema": { "days": 180, "reqs": "6 months", "active": "Yes", "updated": "Nov 2024" },
       "TheEmpire": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2024" },
       "TheGeeks": { "days": 0, "reqs": "2-3x full tracker profile screenshots (including PTP)", "active": "Yes", "updated": "Nov 2024" },
-      "TLFBits": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Nov 2024" },
-      "UHDBits": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2024" }
-    },
-    "PornBay": {
-      "Empornium": { "days": 180, "reqs": "Expert User+, 6 months, no warnings", "active": "Unknown", "updated": "Nov 2025" },
-      "MoreThanTV": { "days": 180, "reqs": "Expert User+, 6 months, no warnings", "active": "Unknown", "updated": "Nov 2025" }
+      "TLFBits": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Nov 2024" }
     },
     "PrivateHD": {
       "AvistaZ": { "days": 120, "reqs": "10k bp, Member Rank, 4 months, seeding 5 torrents, ratio>2.0, 300 GB", "active": "Yes", "updated": "Apr 2024" },
@@ -882,7 +866,6 @@
       "PTMSG": { "days": 90, "reqs": "1080i+, 3 months", "active": "Unknown", "updated": "Jun 2025" },
       "SpeedApp": { "days": 0, "reqs": "No requirement", "active": "No", "updated": "Jun 2025" },
       "TLFBits": { "days": 90, "reqs": "1080i+, 3 months", "active": "No", "updated": "Jun 2025" },
-      "UHDBits": { "days": 180, "reqs": "1080p+, 6 months", "active": "No", "updated": "Jun 2025" },
       "YuScene": { "days": 0, "reqs": "No requirement", "active": "Unknown", "updated": "Jun 2025" }
     },
     "TheGeeks": {
@@ -914,15 +897,6 @@
       "KamePT": { "days": 0, "reqs": "Elite User+", "active": "YES", "updated": "Nov 2025" },
       "Piggo": { "days": 0, "reqs": "Insane User+", "active": "YES", "updated": "Nov 2025" },
       "PTerClub": { "days": 180, "reqs": "Crazy User+, 6 months", "active": "Yes", "updated": "Feb 2026" }
-    },
-    "UHDBits": {
-      "Aither": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Sep 2025" },
-      "Anthelion": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Sep 2025" },
-      "BrokenStones": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Sep 2025" },
-      "Dajiao PT": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Sep 2025" },
-      "FileList": { "days": 180, "reqs": "6 months", "active": "No", "updated": "Sep 2025" },
-      "Orpheus": { "days": 0, "reqs": "No requirement", "active": "No", "updated": "Sep 2025" },
-      "ReelFliX": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Sep 2025" }
     },
     "Upload.cx": {
       "DigitalCore.Club": { "days": 0, "reqs": "PU+", "active": "Yes", "updated": "Dec 2025" },
