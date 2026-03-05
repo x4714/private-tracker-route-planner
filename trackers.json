@@ -185,7 +185,7 @@
     "DarkPeers": [120, "ExtremeUser: 4 months, 20TiB upload, ratio>0.8, avg seedtime >= 2 months, 15 torrents"],
     "Dolphin Is Coming": [14, "PU: 2 weeks, 5 torrents, 25GB upload, ratio>=1.05"],
     "Empornium": [56, "Great Perv: 8 weeks, 100 GB upload, 5 torrents, ratio>1.05 or Sextreme Perv: 13 weeks, 1 TB upload, 50 torrents, ratio>1.05"],
-    "FearNoPeer": [60, "Seeder: 2 months, 15 TiB seed size, avg seed time >= 1 month, ratio >= 0.8"],
+    "FearNoPeer": [60, "Seeder: 2 months, 15 TiB seedsize, avg seed time >= 1 month, ratio >= 0.8"],
     "GazelleGames": [30, "Pro Gamer: 1200 points, 30 days; Legendary Gamer: 3000 points, 90 days"],
     "Great Poster Wall": [14, "PU: 2 weeks, 200GB download, 1 upload, ratio>=1.2"],
     "HD-Space": [0, "HD Spacer: 100GB upload, ratio>1.05"],
@@ -196,7 +196,7 @@
     "KaraGarga": [0, "No requirement"],
     "Last Digital Underground": [0, "Disciple: 4 TiB upload, ratio>=1"],
     "Libble": [28, "Bronze: 4 weeks, top 15%"],
-    "LST": [120, "Whale: 4 months, 25TiB upload or 6TiB seedsize, ratio>=0.4, avg seedtime>=1 month"],
+    "LST": [120, "Whale: 4 months, 25 TiB upload or 6 TiB seedsize, 10 uploads, ratio >= 1.0, avg seedtime >= 1 month; Sailboat: 6 months, 10 TiB seedsize, ratio >= 1.0, avg seedtime >= 2 months"],
     "Luminarr": [90, "Archivist: 3 months, 10TiB upload, 10TiB seedsize, avg seedtime>=2 month, ratio>=1.0, or Elite: 3 months, 10TiB upload, 50 torrents, ratio>=1.0"],
     "LzTr": [14, "PU: 2 weeks, 5 torrents, 25GB upload, ratio>1.05"],
     "M-Team": [56, "Elite: 8 weeks, 400GB download, ratio>3"],
@@ -223,7 +223,7 @@
     "U2.dmhy": [56, "PU: 8 weeks, 50GB download, ratio >= 1.05"],
     "Upload.cx": [84, "PU: 12 weeks, 3TiB upload, ratio >= 1"],
     "UpscaleVault": [0, "No requirement"],
-    "YuScene": [30, "Seeder: 1 month, ratio >=0.40, seed size 4 TiB"]
+    "YuScene": [30, "Seeder: 1 month, ratio >=0.40, seedsize 4 TiB"]
   },
   "routeInfo": {
     "Aither": {
@@ -272,7 +272,7 @@
       "HDBits": { "days": 365, "reqs": "Legend, 1 year, 3 profile links", "active": "Yes", "updated": "Jan 2026" },
       "LST": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Jan 2026" },
       "LzTr": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Jan 2026" },
-      "OldToonsWorld": { "days": 90, "reqs": "3 months, Seedsize>=1TB OR Average Seedtime>=1month", "active": "Yes", "updated": "Jan 2026" },
+      "OldToonsWorld": { "days": 90, "reqs": "3 months, seedsize>=1TB OR Average Seedtime>=1month", "active": "Yes", "updated": "Jan 2026" },
       "Orpheus": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Jan 2026" },
       "PassThePopcorn": { "days": 730, "reqs": "Legend, 2 years", "active": "Yes", "updated": "Jan 2026" },
       "PixelHD": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Jan 2026" },
@@ -352,7 +352,7 @@
     },
     "Bit-HDTV": {
       "PTerClub": { "days": 180, "reqs": "Elite, 6months", "active": "Yes", "updated": "Oct 2025" },
-      "seedpool": { "days": 0, "reqs": "500 GB seed size", "active": "Yes", "updated": "Oct 2025" },
+      "seedpool": { "days": 0, "reqs": "500 GB seedsize", "active": "Yes", "updated": "Oct 2025" },
       "SpeedApp": { "days": 0, "reqs": "Screenshot", "active": "No", "updated": "Oct 2025" }
     },
     "BitPorn": {
@@ -386,7 +386,7 @@
       "FunFile": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2024" },
       "GazelleGames": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Nov 2024" },
       "HD-Forever": { "days": 180, "reqs": "6 months", "active": "Yes", "updated": "Nov 2024" },
-      "HDBits": { "days": 730, "reqs": "Master, 2 years, seed size >2TB, avg seedtime >1500 hrs", "active": "Yes", "updated": "May 2025" },
+      "HDBits": { "days": 730, "reqs": "Master, 2 years, seedsize >2TB, avg seedtime >1500 hrs", "active": "Yes", "updated": "May 2025" },
       "Immortal-s": { "days": 365, "reqs": "3x 1 year old additional profile links", "active": "Yes", "updated": "Nov 2024" },
       "Lat-Team": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2024" },
       "LzTr": { "days": 180, "reqs": "6 months", "active": "Yes", "updated": "Nov 2024" },
@@ -465,7 +465,7 @@
     "FearNoPeer": {
       "BrokenStones": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
       "CapybaraBR": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
-      "OldToonsWorld": { "days": 365, "reqs": "1 year, avg seedtime>=6 months, Seedsize>=1 TiB", "active": "Yes", "updated": "Nov 2025" },
+      "OldToonsWorld": { "days": 365, "reqs": "1 year, avg seedtime>=6 months, seedsize>=1 TiB", "active": "Yes", "updated": "Nov 2025" },
       "ReelFliX": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
       "RetroFlix": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
       "Upload.cx": { "days": 0, "reqs": "SuperUser+", "active": "Yes", "updated": "Nov 2025" }
@@ -481,7 +481,7 @@
       "Cathode-Ray.Tube": { "days": 0, "reqs": "Ratio>=1.0", "active": "Yes", "updated": "Nov 2025" },
       "Dolphin Is Coming": { "days": 0, "reqs": "10 music torrents or 15 other torrents", "active": "Yes", "updated": "Nov 2025" },
       "FunFile": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
-      "HDBits": { "days": 730, "reqs": "Master Gamer, 2 years, 250 seeded uploads, Seedsize > 2TB AND avg. seedtime > 2 months OR avg. seedtime > 5 months, Legendary Invites forum", "active": "Yes", "updated": "Nov 2025" },
+      "HDBits": { "days": 730, "reqs": "Master Gamer, 2 years, 250 seeded uploads, seedsize > 2TB AND avg. seedtime > 2 months OR avg. seedtime > 5 months, Legendary Invites forum", "active": "Yes", "updated": "Nov 2025" },
       "Last Digital Underground": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
       "LzTr": { "days": 180, "reqs": "6 months", "active": "Yes", "updated": "Nov 2025" },
       "MoreThanTV": { "days": 180, "reqs": "Elite Gamer, 6 months, ratio>=1.5", "active": "Yes", "updated": "Nov 2025" },
@@ -783,7 +783,7 @@
       "MoreThanTV": { "days": 180, "reqs": "6 months, ratio > 1.0", "active": "Yes", "updated": "Feb 2026" },
       "MyAnonamouse": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
       "Nebulance": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
-      "OldToonsWorld": { "days": 90, "reqs": "3 months, 90%+ seeding percentage OR 100GB seed size", "active": "Yes", "updated": "Feb 2026" },
+      "OldToonsWorld": { "days": 90, "reqs": "3 months, 90%+ seeding percentage OR 100GB seedsize", "active": "Yes", "updated": "Feb 2026" },
       "Orpheus": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
       "PassThePopcorn": { "days": 730, "reqs": "TM, 2 years, >=50% of uploads are music", "active": "Yes", "updated": "Feb 2026" },
       "Phoenix Project": { "days": 365, "reqs": "1 year,  ratio>=1.1", "active": "Yes", "updated": "Feb 2026" },
