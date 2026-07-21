@@ -70,7 +70,6 @@
     "HELLENIC-HD": "HLN",
     "HomieHelpDesk": "HHD",
     "Immortal-s": "IMT",
-    "Infinity": "INF",
     "InfinityHD": "IHD",
     "inTheShadow": "iTS",
     "IPTorrents": "IPT",
@@ -204,6 +203,7 @@
     "MyAnonamouse": [180, "PU: 6 months, 1 TiB upload, ratio>=2"],
     "MySpleen": [0, "No requirement"],
     "Nebulance": [28, "Ensign: 4 weeks, 100GB upload, 100 snatches, 100k BP"],
+    "OldToonsWorld": [90, "ExtremeUser: 3 months, 20 TB upload, ratio >=0.4"],
     "OnlyEncodes+": [60, "Trailblazer: 2 months, 5 TB upload, seedsize 100 GB, ratio >=0.4"],
     "Orpheus": [28, "Elite: 4 weeks, 100GiB upload, 50 torrents, ratio>1.05"],
     "PassThePopcorn": [28, "PU: 4 weeks, 80GB upload, 1 torrent, ratio>1.05"],
@@ -710,6 +710,9 @@
       "RetroFlix": { "days": 0, "reqs": "Ensign", "active": "Yes", "updated": "Jun 2026" },
       "seedpool": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Jun 2026" }
     },
+    "OldToonsWorld": {
+      "BrokenStones": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Jul 2026" }
+    },
     "OnlyEncodes+": {
       "CapybaraBR": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
       "LST": { "days": 90, "reqs": "3 months", "active": "Yes", "updated": "Feb 2026" },
@@ -791,6 +794,7 @@
       "Aura4K": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
       "BakaBT": { "days": 180, "reqs": "6 months", "active": "Yes", "updated": "Feb 2026" },
       "BeyondHD": { "days": 540, "reqs": "TM+, 18 months", "active": "Yes", "updated": "Feb 2026" },
+      "Blutopia": { "days": 0, "reqs": "PU+, 1 personal \"perfect FLAC\" physical media rip", "active": "Yes", "updated": "Jul 2026" },
       "BroadcasTheNet": { "days": 365, "reqs": "TM+, 1 year", "active": "Yes", "updated": "Feb 2026" },
       "Concertos": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Feb 2026" },
       "Cryptichaven Comedy Club": { "days": 0, "reqs": "Additional profile links (one or two other reputable trackers)", "active": "Yes", "updated": "Feb 2026" },
@@ -841,8 +845,7 @@
     "RetroFlix": {
       "DarkPeers": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Jul 2026" },
       "LST": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Jul 2026" },
-      "MidnightScene": { "days": 180, "reqs": "6 months, 3 TB upload", "active": "Yes", "updated": "Jul 2026" },
-      "SpeedApp": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Jul 2026" }
+      "MidnightScene": { "days": 180, "reqs": "6 months, 3 TB upload", "active": "Yes", "updated": "Jul 2026" }
     },
     "RocketHD": {
       "AnimeWorld": { "days": 0, "reqs": "No requirement", "active": "Yes", "updated": "Nov 2025" },
